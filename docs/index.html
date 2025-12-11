@@ -17,9 +17,33 @@
                 <a href="catalog.html" class="nav-btn">Каталог</a>
                 <a href="about.html" class="nav-btn">О компании</a>
                 <a href="contacts.html" class="nav-btn">Контакты</a>
+                <a href="#" class="nav-btn" id="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
             </div>
         </div>
     </header>
+
+    <!-- Модальное окно корзины -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ваша корзина</h2>
+            <div id="cart-items"></div>
+            <div class="cart-total">
+                <strong>Итого:</strong> <span id="cart-total">0 ₽</span>
+            </div>
+            <form id="checkout-form">
+                <div class="cart-form">
+                    <input type="text" id="name" placeholder="Ваше имя*" required>
+                    <input type="tel" id="phone" placeholder="Ваш телефон*" required>
+                    <textarea id="comment" placeholder="Комментарий к заказу"></textarea>
+                    <button type="submit" id="checkout-btn" class="btn" disabled>Оформить заказ</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Hero Section with Parallax -->
     <section class="parallax parallax-hero" style="background-image: url('images/hero/hero-image.jpg');">
@@ -48,8 +72,13 @@
                         <div class="product-price">14 500 ₽ <span class="old-price">21 000 ₽</span></div>
                         <p class="product-description">Современная тумба для ТВ с качественной фурнитурой и надежной конструкцией</p>
                         <div class="product-actions">
+                            <button class="btn contact-btn add-to-cart"
+                                data-id="tv-stand-1"
+                                data-name="Тумба ТВ 1600×860×420 мм"
+                                data-price="14500">
+                                <i class="fas fa-cart-plus"></i> В корзину
+                            </button>
                             <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                            <a href="https://t.me/" class="btn contact-btn telegram-btn">Telegram</a>
                         </div>
                     </div>
                 </div>
@@ -63,8 +92,13 @@
                         <div class="product-price">6 400 ₽</div>
                         <p class="product-description">Компактная тумба для хранения документов и аксессуаров</p>
                         <div class="product-actions">
+                            <button class="btn contact-btn add-to-cart"
+                                data-id="small-cabinet-1"
+                                data-name="Тумба 530×450×250 мм"
+                                data-price="6400">
+                                <i class="fas fa-cart-plus"></i> В корзину
+                            </button>
                             <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                            <a href="https://t.me/" class="btn contact-btn telegram-btn">Telegram</a>
                         </div>
                     </div>
                 </div>
@@ -78,8 +112,13 @@
                         <div class="product-price">1 200 ₽</div>
                         <p class="product-description">Надежная мойка для кухонь и санузлов с комплектом сифона</p>
                         <div class="product-actions">
+                            <button class="btn contact-btn add-to-cart"
+                                data-id="sink-1"
+                                data-name="Мойка с сифоном"
+                                data-price="1200">
+                                <i class="fas fa-cart-plus"></i> В корзину
+                            </button>
                             <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                            <a href="https://t.me/" class="btn contact-btn telegram-btn">Telegram</a>
                         </div>
                     </div>
                 </div>
@@ -139,6 +178,8 @@
             </div>
         </div>
     </footer>
+
+    <div id="toast-container"></div>
 
     <script src="js/main.js"></script>
 </body>
