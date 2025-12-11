@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Фабрика торгового оборудования</title>
+    <title>Фабрика торгового оборудования | Производство мебели под заказ</title>
+    <meta name="description" content="Проектируем, производим и устанавливаем торговое и офисное оборудование в Нижнем Новгороде. Тумбы, мойки, мебель под заказ.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #2c3e50;
             --accent-color: #3498db;
             --light-color: #ecf0f1;
+            --dark-color: #1a252f;
             --success-color: #27ae60;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         * {
@@ -19,10 +23,64 @@
         }
         
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
+            overflow-x: hidden;
             background-color: #f8f9fa;
+        }
+        
+        /* Параллакс эффекты */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .parallax-hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .parallax-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            max-width: 900px;
+            padding: 0 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section {
+            padding: 100px 0;
         }
         
         .container {
@@ -32,349 +90,685 @@
             padding: 0 15px;
         }
         
-        header {
-            background: var(--primary-color);
-            color: white;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
         }
         
-        .header-content {
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition);
+        }
+        
+        header.scrolled {
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
+            font-size: 1.8rem;
+            font-weight: 700;
             color: white;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
         }
         
         .nav-buttons {
             display: flex;
-            gap: 10px;
+            gap: 25px;
         }
         
         .nav-btn {
-            background: var(--accent-color);
             color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
             text-decoration: none;
-            display: inline-block;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 5px 0;
+            transition: var(--transition);
+        }
+        
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: var(--transition);
+        }
+        
+        .nav-btn:hover::after,
+        .nav-btn.active::after {
+            width: 100%;
         }
         
         .nav-btn:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
+            color: var(--accent-color);
         }
         
-        .section {
-            padding: 60px 0;
-        }
-        
-        .hero {
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: white;
-            text-align: center;
-            padding: 80px 20px;
-            margin-bottom: 40px;
-        }
-        
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 30px;
-        }
-        
-        .contact-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .contact-btn {
-            background: white;
-            color: var(--primary-color);
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            text-decoration: none;
+        .btn {
             display: inline-block;
-            margin: 5px;
-        }
-        
-        .contact-btn.phone {
-            background: var(--success-color);
+            padding: 15px 35px;
+            background: var(--accent-color);
             color: white;
-        }
-        
-        .contact-btn.telegram {
-            background: #0088cc;
-            color: white;
-        }
-        
-        .contact-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .section-title {
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
             text-align: center;
-            font-size: 2rem;
-            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            margin: 10px;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
             color: var(--primary-color);
         }
         
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
+            gap: 40px;
+            margin-top: 50px;
         }
         
         .product-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            position: relative;
+            height: 450px;
         }
         
         .product-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-15px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--success-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
         }
         
         .product-content {
-            padding: 20px;
+            padding: 25px;
+            text-align: center;
         }
         
         .product-title {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             margin-bottom: 10px;
             color: var(--primary-color);
         }
         
         .product-price {
+            font-size: 1.8rem;
+            font-weight: 700;
             color: var(--accent-color);
-            font-weight: bold;
-            font-size: 1.3rem;
-            margin: 10px 0;
+            margin: 15px 0;
         }
         
         .old-price {
             text-decoration: line-through;
             color: #999;
+            font-size: 1.2rem;
             margin-left: 10px;
-            font-size: 0.9rem;
-        }
-        
-        .product-description {
-            color: #666;
-            margin: 15px 0;
         }
         
         .product-actions {
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .contact-btn {
+            flex: 1;
+            padding: 12px;
+            font-size: 0.95rem;
+        }
+        
+        .phone-btn {
+            background: #27ae60;
+        }
+        
+        .telegram-btn {
+            background: #0088cc;
+        }
+        
+        .about-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .about-content h2 {
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+        }
+        
+        .about-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
         }
         
         .contacts-section {
             background: var(--light-color);
-            border-radius: 10px;
+            position: relative;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .contact-card {
+            background: white;
+            border-radius: 15px;
             padding: 40px;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
         }
         
-        .contact-info {
-            margin: 20px 0;
-            font-size: 1.1rem;
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
         }
         
-        .contact-info a {
+        .contact-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 25px;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .contact-text {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+        
+        .contact-link {
             color: var(--accent-color);
             text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
         }
         
-        .contact-info a:hover {
+        .contact-link:hover {
+            color: #2980b9;
             text-decoration: underline;
         }
         
         footer {
-            background: var(--primary-color);
+            background: var(--dark-color);
             color: white;
             text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
+            padding: 40px 0;
+            position: relative;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            background: var(--accent-color);
+            transform: translateY(-5px);
         }
         
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
+            .parallax-hero {
+                height: 80vh;
             }
             
-            .nav-buttons {
-                flex-wrap: wrap;
-                justify-content: center;
+            .section {
+                padding: 70px 0;
             }
             
-            .hero h1 {
+            .section-title {
                 font-size: 2rem;
             }
             
-            .contact-buttons {
-                flex-direction: column;
-                align-items: center;
+            .nav-buttons {
+                display: none;
             }
             
-            .contact-btn {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
                 width: 100%;
-                max-width: 300px;
+                margin: 10px 0;
             }
         }
+        
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .product-card {
+                height: auto;
+            }
+        }
+        
+        /* Анимации для параллакса */
+        .parallax-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+        
+        .parallax-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stagger-animation .parallax-item:nth-child(1) { transition-delay: 0.1s; }
+        .stagger-animation .parallax-item:nth-child(2) { transition-delay: 0.2s; }
+        .stagger-animation .parallax-item:nth-child(3) { transition-delay: 0.3s; }
+        .stagger-animation .parallax-item:nth-child(4) { transition-delay: 0.4s; }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">ФАБРИКА ТОРГОВОГО ОБОРУДОВАНИЯ</div>
-                <div class="nav-buttons">
-                    <a href="#catalog" class="nav-btn">Каталог</a>
-                    <a href="#contacts" class="nav-btn">Контакты</a>
-                    <a href="#about" class="nav-btn">О компании</a>
-                </div>
+        <div class="container header-container">
+            <a href="#" class="logo">Фабрика<span>Торгового</span>Оборудования</a>
+            <div class="nav-buttons">
+                <a href="#products" class="nav-btn active">Каталог</a>
+                <a href="#about" class="nav-btn">О компании</a>
+                <a href="#contacts" class="nav-btn">Контакты</a>
             </div>
         </div>
     </header>
 
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h1>Проектируем и производим торговое оборудование</h1>
-                <p>Компания, которая проектирует, производит и устанавливает торговое и офисное оборудование в Нижнем Новгороде</p>
-                <div class="contact-buttons">
-                    <a href="tel:+79601786738" class="contact-btn phone">Позвонить: +7 (960) 178-67-38</a>
-                    <a href="https://t.me/" class="contact-btn telegram">Написать в Telegram</a>
-                </div>
+    <!-- Hero Section with Parallax -->
+    <section class="parallax parallax-hero" style="background-image: url('https://images.unsplash.com/photo-1561070791-37d1a761e6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+        <div class="hero-content">
+            <h1>Проектируем и производим<br>торговое оборудование</h1>
+            <p style="font-size: 1.3rem; margin: 25px 0; opacity: 0.9;">Качественная мебель для вашего бизнеса с гарантией и индивидуальным подходом</p>
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
+                <a href="tel:+79601786738" class="btn btn-secondary">Позвонить: +7 (960) 178-67-38</a>
+                <a href="https://t.me/" class="btn btn-secondary">Написать в Telegram</a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="catalog" class="section">
-            <div class="container">
-                <h2 class="section-title">Наши товары</h2>
-                <div class="products-grid">
-                    <div class="product-card">
-                        <div class="product-content">
-                            <h3 class="product-title">Тумба ТВ 1600×860×420 мм</h3>
-                            <div class="product-price">14 500 ₽ <span class="old-price">21 000 ₽</span></div>
-                            <p class="product-description">Современная тумба для ТВ с качественной фурнитурой и надежной конструкцией</p>
-                            <div class="product-actions">
-                                <a href="tel:+79601786738" class="contact-btn phone">Позвонить</a>
-                                <a href="https://t.me/" class="contact-btn telegram">Telegram</a>
-                            </div>
-                        </div>
+    <!-- Products Section -->
+    <section id="products" class="section">
+        <div class="container">
+            <h2 class="section-title">Наши товары</h2>
+            <div class="products-grid stagger-animation">
+                <div class="product-card parallax-item">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1556901587-7c176b8a7f8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Тумба ТВ">
+                        <div class="product-badge">-30%</div>
                     </div>
-
-                    <div class="product-card">
-                        <div class="product-content">
-                            <h3 class="product-title">Тумба 530×450×250 мм</h3>
-                            <div class="product-price">6 400 ₽</div>
-                            <p class="product-description">Компактная тумба для хранения документов и аксессуаров</p>
-                            <div class="product-actions">
-                                <a href="tel:+79601786738" class="contact-btn phone">Позвонить</a>
-                                <a href="https://t.me/" class="contact-btn telegram">Telegram</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product-card">
-                        <div class="product-content">
-                            <h3 class="product-title">Мойка с сифоном</h3>
-                            <div class="product-price">1 200 ₽</div>
-                            <p class="product-description">Надежная мойка для кухонь и санузлов с комплектом сифона</p>
-                            <div class="product-actions">
-                                <a href="tel:+79601786738" class="contact-btn phone">Позвонить</a>
-                                <a href="https://t.me/" class="contact-btn telegram">Telegram</a>
-                            </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Тумба ТВ 1600×860×420 мм</h3>
+                        <div class="product-price">14 500 ₽ <span class="old-price">21 000 ₽</span></div>
+                        <p class="product-description">Современная тумба для ТВ с качественной фурнитурой и надежной конструкцией</p>
+                        <div class="product-actions">
+                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
+                            <a href="https://t.me/" class="btn contact-btn telegram-btn">Telegram</a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section id="about" class="section">
-            <div class="container">
-                <h2 class="section-title">О компании</h2>
-                <div class="contacts-section">
-                    <p>Фабрика торгового оборудования - это компания которая проектирует, производит и устанавливает офисное оборудование.</p>
-                    <p>Мы предлагаем качественные решения для вашего бизнеса по выгодным ценам.</p>
+                <div class="product-card parallax-item">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1556906149-462b99e62c0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Тумба">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Тумба 530×450×250 мм</h3>
+                        <div class="product-price">6 400 ₽</div>
+                        <p class="product-description">Компактная тумба для хранения документов и аксессуаров</p>
+                        <div class="product-actions">
+                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
+                            <a href="https://t.me/" class="btn contact-btn telegram-btn">Telegram</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </section>
 
-        <section id="contacts" class="section">
-            <div class="container">
-                <h2 class="section-title">Контакты</h2>
-                <div class="contacts-section">
-                    <div class="contact-info">
-                        <strong>Телефон:</strong> <a href="tel:+79601786738">+7 (960) 178-67-38</a>
+                <div class="product-card parallax-item">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Мойка">
                     </div>
-                    <div class="contact-info">
-                        <strong>Email:</strong> <a href="mailto:a20072005@yandex.ru">a20072005@yandex.ru</a>
-                    </div>
-                    <div class="contact-info">
-                        <strong>Адрес:</strong> ул. Тургенева, 9, Нижний Новгород
-                    </div>
-                    <div class="contact-info">
-                        <strong>График работы:</strong> до 18:00
-                    </div>
-                    <div class="contact-info">
-                        <strong>Сайт:</strong> <a href="https://kpostavka.com" target="_blank">https://kpostavka.com</a>
+                    <div class="product-content">
+                        <h3 class="product-title">Мойка с сифоном</h3>
+                        <div class="product-price">1 200 ₽</div>
+                        <p class="product-description">Надежная мойка для кухонь и санузлов с комплектом сифона</p>
+                        <div class="product-actions">
+                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
+                            <a href="https://t.me/" class="btn contact-btn telegram-btn">Telegram</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
+    <!-- About Section with Parallax -->
+    <section id="about" class="about-section parallax" style="background-image: url('https://images.unsplash.com/photo-1525909940839-d2490d84e2b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+        <div class="container">
+            <div class="about-content">
+                <h2>О нашей компании</h2>
+                <p>Фабрика торгового оборудования - это компания, которая проектирует, производит и устанавливает торговое и офисное оборудование в Нижнем Новгороде.</p>
+                <p>Мы предлагаем качественные решения для вашего бизнеса по выгодным ценам с гарантией качества.</p>
+                
+                <div class="features-grid stagger-animation">
+                    <div class="feature-card parallax-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3 class="feature-title">Производство</h3>
+                        <p>Собственное производство с современным оборудованием и квалифицированными специалистами</p>
+                    </div>
+                    
+                    <div class="feature-card parallax-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <h3 class="feature-title">Доставка</h3>
+                        <p>Быстрая доставка по Нижнему Новгороду и области в оговоренные сроки</p>
+                    </div>
+                    
+                    <div class="feature-card parallax-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3 class="feature-title">Гарантия</h3>
+                        <p>Гарантия на все изделия от 1 года с возможностью сервисного обслуживания</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacts Section -->
+    <section id="contacts" class="section contacts-section">
+        <div class="container">
+            <h2 class="section-title">Контакты</h2>
+            <div class="contact-grid stagger-animation">
+                <div class="contact-card parallax-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Телефон</h3>
+                        <p class="contact-text">Позвоните нам для консультации и заказа</p>
+                        <a href="tel:+79601786738" class="contact-link contact-text">+7 (960) 178-67-38</a>
+                    </div>
+                </div>
+                
+                <div class="contact-card parallax-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Email</h3>
+                        <p class="contact-text">Напишите нам на почту</p>
+                        <a href="mailto:a20072005@yandex.ru" class="contact-link contact-text">a20072005@yandex.ru</a>
+                    </div>
+                </div>
+                
+                <div class="contact-card parallax-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Адрес</h3>
+                        <p class="contact-text">Приходите к нам в офис или на производство</p>
+                        <p class="contact-text">ул. Тургенева, 9,<br>Нижний Новгород</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2025 Фабрика торгового оборудования. Все права защищены.</p>
+            <div class="footer-content">
+                <p style="font-size: 1.1rem; margin-bottom: 20px;">© 2025 Фабрика торгового оборудования. Все права защищены.</p>
+                <p style="opacity: 0.8; margin-bottom: 20px;">Проектируем, производим и устанавливаем торговое и офисное оборудование</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="https://kpostavka.com" class="social-link" target="_blank"><i class="fas fa-globe"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
         </div>
     </footer>
 
     <script>
-        // Плавная прокрутка к разделам
+        // Плавная прокрутка
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
                     });
                 }
             });
+        });
+
+        // Эффект при прокрутке для хедера
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Анимация появления элементов при прокрутке
+        const parallaxItems = document.querySelectorAll('.parallax-item');
+        
+        function checkScroll() {
+            parallaxItems.forEach(item => {
+                const itemPosition = item.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (itemPosition < screenPosition) {
+                    item.classList.add('visible');
+                }
+            });
+        }
+        
+        // Запуск анимации при загрузке страницы
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.querySelector('.hero-content').style.opacity = '1';
+                document.querySelector('.hero-content').style.transform = 'translateY(0)';
+            }, 300);
+            
+            checkScroll();
+        });
+        
+        // Проверка при прокрутке
+        window.addEventListener('scroll', checkScroll);
+        
+        // Проверка при изменении размера окна
+        window.addEventListener('resize', checkScroll);
+
+        // Инициализация анимации для видимых элементов при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            // Активный пункт меню
+            const navLinks = document.querySelectorAll('.nav-btn');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Имитация фото для товаров (в реальном проекте заменить на реальные изображения)
+            console.log('Сайт готов к работе! Замените изображения на реальные фото продукции.');
         });
     </script>
 </body>
