@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О компании | Фабрика торгового оборудования</title>
+    <meta name="description" content="Информация о фабрике торгового оборудования в Нижнем Новгороде: история, производство, гарантии">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">Фабрика<span>Торгового</span>Оборудования</a>
+            <div class="nav-buttons">
+                <a href="catalog.html" class="nav-btn catalog-btn">Каталог</a>
+                <a href="about.html" class="nav-btn active">О компании</a>
+                <a href="contacts.html" class="nav-btn">Контакты</a>
+                <a href="#" class="nav-btn" id="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Модальное окно корзины -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ваша корзина</h2>
+            <div id="cart-items"></div>
+            <div class="cart-total">
+                <strong>Итого:</strong> <span id="cart-total">0 ₽</span>
+            </div>
+            <form id="checkout-form">
+                <div class="cart-form">
+                    <input type="text" id="name" placeholder="Ваше имя*" required>
+                    <input type="tel" id="phone" placeholder="Ваш телефон*" required>
+                    <textarea id="comment" placeholder="Комментарий к заказу"></textarea>
+                    <button type="submit" id="checkout-btn" class="btn" disabled>Оформить заказ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="parallax parallax-hero" style="background-image: url('https://images.unsplash.com/photo-1525909940839-d2490d84e2b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+        <div class="hero-content">
+            <h1>О нашей компании</h1>
+            <p style="font-size: 1.3rem; margin: 25px 0; opacity: 0.9;">Фабрика торгового оборудования - ваш надежный партнер в Нижнем Новгороде</p>
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
+                <a href="tel:+79601786738" class="btn btn-secondary">Позвонить: +7 (960) 178-67-38</a>
+                <a href="https://t.me/" class="btn btn-secondary">Написать в Telegram</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Наша история</h2>
+            <div class="about-content">
+                <p style="font-size: 1.2rem; line-height: 1.8; text-align: center; max-width: 800px; margin: 0 auto;">
+                    Фабрика торгового оборудования - это компания, которая проектирует, производит и устанавливает торговое и офисное оборудование в Нижнем Новгороде. Мы работаем на рынке с 2010 года и за это время завоевали доверие сотен клиентов.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section about-section parallax" style="background-image: url('https://images.unsplash.com/photo-1556906149-462b99e62c0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+        <div class="container">
+            <div class="about-content">
+                <h2>Наши преимущества</h2>
+                <p>Мы предлагаем качественные решения для вашего бизнеса по выгодным ценам с гарантией качества.</p>
+                
+                <div class="features-grid stagger-animation">
+                    <div class="feature-card parallax-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3 class="feature-title">Собственное производство</h3>
+                        <p>Современное оборудование и квалифицированные специалисты позволяют нам изготавливать продукцию высокого качества</p>
+                    </div>
+                    
+                    <div class="feature-card parallax-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <h3 class="feature-title">Быстрая доставка</h3>
+                        <p>Доставляем заказы по Нижнему Новгороду и области в кратчайшие сроки</p>
+                    </div>
+                    
+                    <div class="feature-card parallax-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3 class="feature-title">Гарантия качества</h3>
+                        <p>Предоставляем гарантию на все изделия от 1 года с возможностью сервисного обслуживания</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Наша команда</h2>
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p style="font-size: 1.1rem; line-height: 1.8;">
+                    Наша команда состоит из опытных специалистов с многолетним стажем работы в сфере производства мебели и торгового оборудования. Мы постоянно совершенствуем свои навыки и следим за новыми технологиями в отрасли.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p style="font-size: 1.1rem; margin-bottom: 20px;">© 2025 Фабрика торгового оборудования. Все права защищены.</p>
+                <p style="opacity: 0.8; margin-bottom: 20px;">Проектируем, производим и устанавливаем торговое и офисное оборудование</p>
+                <div class="social-links">
+                    <a href="https://t.me/" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="https://vk.com/ooofto" class="social-link" target="_blank"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast-container"></div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
