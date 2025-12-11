@@ -36,9 +36,9 @@
             </div>
             <form id="checkout-form">
                 <div class="cart-form">
-                    <input type="text" id="name" placeholder="Ваше имя*" required>
-                    <input type="tel" id="phone" placeholder="Ваш телефон*" required>
-                    <textarea id="comment" placeholder="Комментарий к заказу"></textarea>
+                    <input type="text" id="name" name="name" placeholder="Ваше имя*" required autocomplete="name">
+                    <input type="tel" id="phone" name="phone" placeholder="Ваш телефон*" required autocomplete="tel">
+                    <textarea id="comment" name="comment" placeholder="Комментарий к заказу" autocomplete="off"></textarea>
                     <button type="submit" id="checkout-btn" class="btn" disabled>Оформить заказ</button>
                 </div>
             </form>
@@ -62,174 +62,17 @@
         <div class="container">
             <h2 class="section-title">Категории товаров</h2>
             <div class="categories-grid">
-                <a href="#furniture" class="category-card">
-                    <div class="category-image">
-                        <img src="https://images.unsplash.com/photo-1556906149-462b99e62c0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Мебель" loading="lazy">
-                    </div>
-                    <h3 class="category-title">Мебель</h3>
-                    <p>Офисная и кухонная мебель под заказ</p>
-                </a>
-                
-                <a href="#equipment" class="category-card">
-                    <div class="category-image">
-                        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Торговое оборудование" loading="lazy">
-                    </div>
-                    <h3 class="category-title">Торговое оборудование</h3>
-                    <p>Стеллажи, прилавки, витрины</p>
-                </a>
-                
-                <a href="#hardware" class="category-card">
-                    <div class="category-image">
-                        <img src="https://images.unsplash.com/photo-1525909940839-d2490d84e2b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Мебельная фурнитура" loading="lazy">
-                    </div>
-                    <h3 class="category-title">Мебельная фурнитура</h3>
-                    <p>Ручки, петли, направляющие</p>
-                </a>
+                <!-- Категории будут загружены динамически -->
             </div>
         </div>
     </section>
 
-    <!-- Furniture Section -->
-    <section id="furniture" class="section">
+    <!-- All Products Section -->
+    <section class="section">
         <div class="container">
-            <h2 class="section-title">Мебель</h2>
+            <h2 class="section-title">Все товары</h2>
             <div class="products-grid stagger-animation">
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1556901587-7c176b8a7f8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Тумба ТВ" loading="lazy">
-                        <div class="product-badge">-30%</div>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Тумба ТВ 1600×860×420 мм</h3>
-                        <div class="product-price">14 500 ₽ <span class="old-price">21 000 ₽</span></div>
-                        <p class="product-description">Современная тумба для ТВ с качественной фурнитурой и надежной конструкцией</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="tv-stand-1"
-                                data-name="Тумба ТВ 1600×860×420 мм"
-                                data-price="14500">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1556906149-462b99e62c0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Тумба" loading="lazy">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Тумба 530×450×250 мм</h3>
-                        <div class="product-price">6 400 ₽</div>
-                        <p class="product-description">Компактная тумба для хранения документов и аксессуаров</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="small-cabinet-1"
-                                data-name="Тумба 530×450×250 мм"
-                                data-price="6400">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1525909940839-d2490d84e2b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Офисный стол" loading="lazy">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Офисный стол 1600×800 мм</h3>
-                        <div class="product-price">18 900 ₽</div>
-                        <p class="product-description">Эргономичный офисный стол с выдвижными ящиками</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="office-desk-1"
-                                data-name="Офисный стол 1600×800 мм"
-                                data-price="18900">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Equipment Section -->
-    <section id="equipment" class="section">
-        <div class="container">
-            <h2 class="section-title">Торговое оборудование</h2>
-            <div class="products-grid stagger-animation">
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Стеллаж" loading="lazy">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Стеллаж торговый 2000×1000 мм</h3>
-                        <div class="product-price">25 500 ₽</div>
-                        <p class="product-description">Металлический стеллаж для магазина с регулируемыми полками</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="shelf-1"
-                                data-name="Стеллаж торговый 2000×1000 мм"
-                                data-price="25500">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1525909940839-d2490d84e2b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Мойка" loading="lazy">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Мойка с сифоном</h3>
-                        <div class="product-price">1 200 ₽</div>
-                        <p class="product-description">Надежная мойка для кухонь и санузлов с комплектом сифона</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="sink-1"
-                                data-name="Мойка с сифоном"
-                                data-price="1200">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Hardware Section -->
-    <section id="hardware" class="section">
-        <div class="container">
-            <h2 class="section-title">Мебельная фурнитура</h2>
-            <div class="products-grid stagger-animation">
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1556906149-462b99e62c0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ручки" loading="lazy">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Ручки мебельные набор</h3>
-                        <div class="product-price">850 ₽</div>
-                        <p class="product-description">Стильные ручки для мебели из нержавеющей стали</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="handles-1"
-                                data-name="Ручки мебельные набор"
-                                data-price="850">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
+                <!-- Товары будут загружены динамически -->
             </div>
         </div>
     </section>
