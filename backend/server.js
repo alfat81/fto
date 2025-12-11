@@ -1,37 +1,40 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const fetch = require('node-fetch');
+const { createRequire } = require('module');
+const require = createRequire(import.meta.url);
+const fetch = require('node-fetch').default;
 const { v4: uuidv4 } = require('uuid');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 // Middleware
-app.use(cors({
-  origin: ['https://fabrika-mebeli.github.io', 'http://localhost:8080'], // Замените на ваш GitHub Pages URL
-  methods: ['GET', 'POST'],
-  credentials: true
-}));
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || 'https://alfat81.github.io',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
 
-app.use(express.json({
-  limit: '10mb'
-}));
+app.use(cors(corsOptions));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-app.use(express.urlencoded({
-  extended: true,
-  limit: '10mb'
-}));
+// Health check эндпоинт
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development',
+    version: '1.0.0',
+    nodeVersion: process.version,
+    telegramConfigured: process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID
+  });
+});
 
-// Проверка конфигурации
-const requiredEnvVars = ['TELEGRAM_BOT_TOKEN', 'TELEGRAM_CHAT_ID'];
-const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
-
-if (missingVars.length > 0) {
-  console.warn('⚠️ Внимание! Отсутствуют следующие переменные окружения:');
-  missingVars.forEach(varName => console.warn(`- ${varName}`));
-  console.warn('Пожалуйста, установите их в настройках Render.com');
-}
+// Preflight requests
+app.options('*', cors(corsOptions));
 
 // Форматирование заказа для Telegram
 function formatOrderMessage(order) {
@@ -60,8 +63,8 @@ ${itemsList}
   minute: '2-digit'
 })}
 
-📍 Адрес доставки: ул. Тургенева, 9, Нижний Новгород
-📞 Контактный телефон для связи: +7 (960) 178-67-38
+📍 Адрес: ул. Тургенева, 9, Нижний Новгород
+📞 Контактный телефон: +7 (960) 178-67-38
 ✉️ Email: a20072005@yandex.ru
   `.trim();
 }
@@ -94,13 +97,13 @@ async function sendTelegramMessage(text) {
       body: JSON.stringify(payload)
     });
 
-    const result = await response.json();
-    
-    if (!response.ok || !result.ok) {
-      console.error('❌ Ошибка при отправке в Telegram:', result);
-      throw new Error(result.description || 'Неизвестная ошибка Telegram API');
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('❌ Ошибка Telegram API:', errorData);
+      throw new Error(`Telegram API error: ${errorData.description || 'Unknown error'}`);
     }
-    
+
+    const result = await response.json();
     console.log('✅ Сообщение успешно отправлено в Telegram');
     return result;
   } catch (error) {
@@ -112,7 +115,11 @@ async function sendTelegramMessage(text) {
 // API эндпоинты
 app.post('/api/order', async (req, res) => {
   try {
-    console.log('📡 Получен новый заказ:', req.body);
+    console.log('📡 Получен новый заказ:', {
+      itemsCount: req.body.items?.length,
+      total: req.body.total,
+      customerName: req.body.customer?.name
+    });
     
     const { items, customer, total, date } = req.body;
     
@@ -169,46 +176,32 @@ app.post('/api/order', async (req, res) => {
       telegramMessageId: telegramResult?.result?.message_id
     });
     
-    // Логирование успешного заказа
     console.log(`🎉 Успешный заказ: ${order.orderId}, сумма: ${order.total.toLocaleString('ru-RU')} ₽`);
     
   } catch (error) {
     console.error('❌ Ошибка при обработке заказа:', error);
     
-    // Отправка ошибки клиенту
     res.status(500).json({ 
-      error: error.message || 'Ошибка при обработке заказа',
+      error: 'Ошибка при обработке заказа. Пожалуйста, попробуйте позже.',
       success: false,
-      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
     
     // Попытка отправить уведомление об ошибке в Telegram
     try {
       if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
         await sendTelegramMessage(`
-🚨 КРИТИЧЕСКАЯ ОШИБКА В СИСТЕМЕ ЗАКАЗОВ
+🚨 ОШИБКА ОБРАБОТКИ ЗАКАЗА
 
 ❌ Ошибка: ${error.message}
 🕐 Время: ${new Date().toLocaleString('ru-RU')}
-💻 Детали: ${error.stack?.slice(0, 500) || 'Нет деталей'}
-
-Пожалуйста, проверьте логи сервера!
+📋 Данные заказа: ${JSON.stringify(req.body, null, 2)}
         `);
       }
     } catch (telegramError) {
       console.error('❌ Не удалось отправить уведомление об ошибке в Telegram:', telegramError);
     }
   }
-});
-
-// Health check эндпоинт
-app.get('/health', (req, res) => {
-  res.status(200).json({
-    status: 'ok',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development',
-    telegramConfigured: !!(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID)
-  });
 });
 
 // Root эндпоинт
@@ -219,7 +212,7 @@ app.get('/', (req, res) => {
       order: 'POST /api/order',
       health: 'GET /health'
     },
-    documentation: 'https://github.com/yourusername/fabrika-mebeli-backend'
+    documentation: 'https://github.com/alfat81/fto'
   });
 });
 
@@ -244,15 +237,13 @@ app.use((err, req, res, next) => {
 });
 
 // Запуск сервера
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Сервер запущен на порту ${PORT}`);
   console.log(`🌐 URL: http://localhost:${PORT}`);
-  console.log('🔧 Конфигурация:');
-  console.log(`- Telegram Bot Token: ${process.env.TELEGRAM_BOT_TOKEN ? '✅ Настроен' : '❌ Не настроен'}`);
-  console.log(`- Telegram Chat ID: ${process.env.TELEGRAM_CHAT_ID ? '✅ Настроен' : '❌ Не настроен'}`);
-  console.log(`- CORS origin: ${process.env.CORS_ORIGIN || 'https://fabrika-mebeli.github.io'}`);
+  console.log(`✅ CORS origin: ${process.env.CORS_ORIGIN}`);
+  console.log(`🔧 Node.js version: ${process.version}`);
   
-  // Тестовое сообщение при запуске
+  // Тестовое сообщение при запуске (только в production)
   if (process.env.NODE_ENV === 'production' && process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
     sendTelegramMessage(`
 ✅ СИСТЕМА УСПЕШНО ЗАПУЩЕНА
@@ -260,28 +251,13 @@ app.listen(PORT, () => {
 🕐 Время запуска: ${new Date().toLocaleString('ru-RU')}
 ⚙️ Версия: 1.0.0
 📍 Сервер: Render.com
-🔗 URL: ${process.env.RENDER_EXTERNAL_URL || 'https://your-render-app.onrender.com'}
+🔗 URL: ${process.env.RENDER_SERVICE_NAME ? `https://${process.env.RENDER_SERVICE_NAME}.onrender.com` : 'localhost'}
+🎯 Порт: ${PORT}
+🔧 Node.js: ${process.version}
 
 Система готова принимать заказы!
     `).catch(console.error);
   }
-});
-
-// Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('🛑 Получен сигнал SIGTERM. Завершение работы...');
-  
-  sendTelegramMessage(`
-⚠️ СИСТЕМА ЗАВЕРШАЕТ РАБОТУ
-
-🕐 Время: ${new Date().toLocaleString('ru-RU')}
-⚙️ Причина: SIGTERM signal
-📍 Сервер: Render.com
-
-Все текущие заказы будут обработаны.
-    `).finally(() => {
-      process.exit(0);
-    });
 });
 
 module.exports = app;
