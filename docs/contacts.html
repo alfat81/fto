@@ -17,9 +17,33 @@
                 <a href="catalog.html" class="nav-btn">Каталог</a>
                 <a href="about.html" class="nav-btn">О компании</a>
                 <a href="contacts.html" class="nav-btn active">Контакты</a>
+                <a href="#" class="nav-btn" id="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
             </div>
         </div>
     </header>
+
+    <!-- Модальное окно корзины -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ваша корзина</h2>
+            <div id="cart-items"></div>
+            <div class="cart-total">
+                <strong>Итого:</strong> <span id="cart-total">0 ₽</span>
+            </div>
+            <form id="checkout-form">
+                <div class="cart-form">
+                    <input type="text" id="name" placeholder="Ваше имя*" required>
+                    <input type="tel" id="phone" placeholder="Ваш телефон*" required>
+                    <textarea id="comment" placeholder="Комментарий к заказу"></textarea>
+                    <button type="submit" id="checkout-btn" class="btn" disabled>Оформить заказ</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="parallax parallax-hero" style="background-image: url('images/hero/contacts-hero.jpg');">
@@ -127,6 +151,8 @@
             </div>
         </div>
     </footer>
+
+    <div id="toast-container"></div>
 
     <script src="js/main.js"></script>
 </body>
