@@ -14,39 +14,15 @@
         <div class="container header-container">
             <a href="index.html" class="logo">Фабрика<span>Торгового</span>Оборудования</a>
             <div class="nav-buttons">
-                <a href="catalog.html" class="nav-btn catalog-btn">Каталог</a>
+                <a href="catalog.html" class="nav-btn">Каталог</a>
                 <a href="about.html" class="nav-btn active">О компании</a>
                 <a href="contacts.html" class="nav-btn">Контакты</a>
-                <a href="#" class="nav-btn" id="cart-btn">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="cart-count">0</span>
-                </a>
             </div>
         </div>
     </header>
 
-    <!-- Модальное окно корзины -->
-    <div id="cart-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Ваша корзина</h2>
-            <div id="cart-items"></div>
-            <div class="cart-total">
-                <strong>Итого:</strong> <span id="cart-total">0 ₽</span>
-            </div>
-            <form id="checkout-form">
-                <div class="cart-form">
-                    <input type="text" id="name" placeholder="Ваше имя*" required>
-                    <input type="tel" id="phone" placeholder="Ваш телефон*" required>
-                    <textarea id="comment" placeholder="Комментарий к заказу"></textarea>
-                    <button type="submit" id="checkout-btn" class="btn" disabled>Оформить заказ</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Hero Section -->
-    <section class="parallax parallax-hero" style="background-image: url('https://images.unsplash.com/photo-1525909940839-d2490d84e2b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+    <section class="parallax parallax-hero" style="background-image: url('images/hero/about-hero.jpg');">
         <div class="hero-content">
             <h1>О нашей компании</h1>
             <p style="font-size: 1.3rem; margin: 25px 0; opacity: 0.9;">Фабрика торгового оборудования - ваш надежный партнер в Нижнем Новгороде</p>
@@ -69,36 +45,53 @@
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="section about-section parallax" style="background-image: url('https://images.unsplash.com/photo-1556906149-462b99e62c0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+    <!-- Mission Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Наша миссия</h2>
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="mission-title">Качество</h3>
+                    <p class="mission-text">Мы используем только качественные материалы и современное оборудование для производства изделий, которые прослужат вам долгие годы.</p>
+                </div>
+                
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="mission-title">Клиентоориентированность</h3>
+                    <p class="mission-text">Для нас важно удовлетворение потребностей каждого клиента. Мы всегда готовы предложить индивидуальные решения под ваши задачи.</p>
+                </div>
+                
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="mission-title">Инновации</h3>
+                    <p class="mission-text">Мы постоянно следим за новыми технологиями и трендами в отрасли, чтобы предлагать нашим клиентам самые современные решения.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Production Section -->
+    <section class="section about-section">
         <div class="container">
             <div class="about-content">
-                <h2>Наши преимущества</h2>
-                <p>Мы предлагаем качественные решения для вашего бизнеса по выгодным ценам с гарантией качества.</p>
-                
-                <div class="features-grid stagger-animation">
-                    <div class="feature-card parallax-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <h3 class="feature-title">Собственное производство</h3>
-                        <p>Современное оборудование и квалифицированные специалисты позволяют нам изготавливать продукцию высокого качества</p>
+                <h2>Наше производство</h2>
+                <p>Мы гордимся нашим современным производством, оснащенным передовым оборудованием и квалифицированными специалистами.</p>
+                <div class="gallery-grid" style="margin-top: 30px;">
+                    <div class="gallery-item">
+                        <img src="images/gallery/workshop1.jpg" alt="Производство" loading="lazy">
                     </div>
-                    
-                    <div class="feature-card parallax-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-shipping-fast"></i>
-                        </div>
-                        <h3 class="feature-title">Быстрая доставка</h3>
-                        <p>Доставляем заказы по Нижнему Новгороду и области в кратчайшие сроки</p>
+                    <div class="gallery-item">
+                        <img src="images/gallery/workshop2.jpg" alt="Мастерская" loading="lazy">
                     </div>
-                    
-                    <div class="feature-card parallax-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-award"></i>
-                        </div>
-                        <h3 class="feature-title">Гарантия качества</h3>
-                        <p>Предоставляем гарантию на все изделия от 1 года с возможностью сервисного обслуживания</p>
+                    <div class="gallery-item">
+                        <img src="images/gallery/project1.jpg" alt="Сборка" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -130,8 +123,6 @@
             </div>
         </div>
     </footer>
-
-    <div id="toast-container"></div>
 
     <script src="js/main.js"></script>
 </body>
