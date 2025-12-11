@@ -236,3 +236,38 @@
         transform: translateX(100%);
     }
 }
+/* Заглушки для изображений */
+.product-image img,
+.gallery-item img,
+.category-image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* Если изображение не загружено, показать заглушку */
+.product-image img[src$=".jpg"]:not([src*="/"]),
+.gallery-item img[src$=".jpg"]:not([src*="/"]),
+.category-image img[src$=".jpg"]:not([src*="/"]) {
+    display: none;
+}
+
+.product-image::after,
+.gallery-item::after,
+.category-image::after {
+    content: '📸 Изображение';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 20px;
+}
