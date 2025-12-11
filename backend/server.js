@@ -247,7 +247,7 @@ app.listen(PORT, '0.0.0.0', () => {
 🕐 Время запуска: ${new Date().toLocaleString('ru-RU')}
 ⚙️ Версия: 1.0.0
 📍 Сервер: Render.com
-🔗 URL: ${process.env.RENDER_EXTERNAL_URL || 'https://your-app.onrender.com'}
+🔗 URL: ${process.env.RENDER_EXTERNAL_URL || 'https://fto-tdks.onrender.com'}
 🎯 Порт: ${PORT}
 🔧 Node.js: ${process.version}
 
