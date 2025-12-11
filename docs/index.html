@@ -14,39 +14,15 @@
         <div class="container header-container">
             <a href="index.html" class="logo">Фабрика<span>Торгового</span>Оборудования</a>
             <div class="nav-buttons">
-                <a href="catalog.html" class="nav-btn catalog-btn">Каталог</a>
+                <a href="catalog.html" class="nav-btn">Каталог</a>
                 <a href="about.html" class="nav-btn">О компании</a>
                 <a href="contacts.html" class="nav-btn">Контакты</a>
-                <a href="#" class="nav-btn" id="cart-btn">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="cart-count">0</span>
-                </a>
             </div>
         </div>
     </header>
 
-    <!-- Модальное окно корзины -->
-    <div id="cart-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Ваша корзина</h2>
-            <div id="cart-items"></div>
-            <div class="cart-total">
-                <strong>Итого:</strong> <span id="cart-total">0 ₽</span>
-            </div>
-            <form id="checkout-form">
-                <div class="cart-form">
-                    <input type="text" id="name" placeholder="Ваше имя*" required>
-                    <input type="tel" id="phone" placeholder="Ваш телефон*" required>
-                    <textarea id="comment" placeholder="Комментарий к заказу"></textarea>
-                    <button type="submit" id="checkout-btn" class="btn" disabled>Оформить заказ</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Hero Section with Parallax -->
-    <section class="parallax parallax-hero" style="background-image: url('https://images.unsplash.com/photo-1561070791-37d1a761e6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+    <section class="parallax parallax-hero" style="background-image: url('images/hero/hero-image.jpg');">
         <div class="hero-content">
             <h1>Проектируем и производим<br>торговое оборудование</h1>
             <p style="font-size: 1.3rem; margin: 25px 0; opacity: 0.9;">Качественная мебель для вашего бизнеса с гарантией и индивидуальным подходом</p>
@@ -64,7 +40,7 @@
             <div class="products-grid stagger-animation">
                 <div class="product-card parallax-item">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1556901587-7c176b8a7f8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Тумба ТВ" loading="lazy">
+                        <img src="images/products/tv-stand.jpg" alt="Тумба ТВ" loading="lazy">
                         <div class="product-badge">-30%</div>
                     </div>
                     <div class="product-content">
@@ -72,53 +48,38 @@
                         <div class="product-price">14 500 ₽ <span class="old-price">21 000 ₽</span></div>
                         <p class="product-description">Современная тумба для ТВ с качественной фурнитурой и надежной конструкцией</p>
                         <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="tv-stand-1"
-                                data-name="Тумба ТВ 1600×860×420 мм"
-                                data-price="14500">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
                             <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
+                            <a href="https://t.me/" class="btn contact-btn telegram-btn">Telegram</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="product-card parallax-item">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1556906149-462b99e62c0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Тумба" loading="lazy">
+                        <img src="images/products/small-cabinet.jpg" alt="Тумба" loading="lazy">
                     </div>
                     <div class="product-content">
                         <h3 class="product-title">Тумба 530×450×250 мм</h3>
                         <div class="product-price">6 400 ₽</div>
                         <p class="product-description">Компактная тумба для хранения документов и аксессуаров</p>
                         <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="small-cabinet-1"
-                                data-name="Тумба 530×450×250 мм"
-                                data-price="6400">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
                             <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
+                            <a href="https://t.me/" class="btn contact-btn telegram-btn">Telegram</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="product-card parallax-item">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Мойка" loading="lazy">
+                        <img src="images/products/sink.jpg" alt="Мойка" loading="lazy">
                     </div>
                     <div class="product-content">
                         <h3 class="product-title">Мойка с сифоном</h3>
                         <div class="product-price">1 200 ₽</div>
                         <p class="product-description">Надежная мойка для кухонь и санузлов с комплектом сифона</p>
                         <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="sink-1"
-                                data-name="Мойка с сифоном"
-                                data-price="1200">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
                             <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
+                            <a href="https://t.me/" class="btn contact-btn telegram-btn">Telegram</a>
                         </div>
                     </div>
                 </div>
@@ -132,23 +93,35 @@
             <h2 class="section-title">Наши работы</h2>
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1525909940839-d2490d84e2b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Производство" loading="lazy">
+                    <img src="images/gallery/workshop1.jpg" alt="Производство" loading="lazy">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1556906149-462b99e62c0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Мастерская" loading="lazy">
+                    <img src="images/gallery/workshop2.jpg" alt="Мастерская" loading="lazy">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1561070791-37d1a761e6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Проект" loading="lazy">
+                    <img src="images/gallery/project1.jpg" alt="Проект" loading="lazy">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Реализация" loading="lazy">
+                    <img src="images/gallery/project2.jpg" alt="Реализация" loading="lazy">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1556901587-7c176b8a7f8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Клиент" loading="lazy">
+                    <img src="images/gallery/project3.jpg" alt="Клиент" loading="lazy">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1525909940839-d2490d84e2b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Объект" loading="lazy">
+                    <img src="images/gallery/project4.jpg" alt="Объект" loading="lazy">
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section">
+        <div class="container">
+            <div class="about-content">
+                <h2>О нашей компании</h2>
+                <p>Фабрика торгового оборудования - это компания которая проектирует, производит и устанавливает торговое и офисное оборудование в Нижнем Новгороде.</p>
+                <p>Мы предлагаем качественные решения для вашего бизнеса по выгодным ценам с гарантией качества.</p>
+                <a href="about.html" class="btn" style="margin-top: 20px;">Подробнее о компании</a>
             </div>
         </div>
     </section>
@@ -166,8 +139,6 @@
             </div>
         </div>
     </footer>
-
-    <div id="toast-container"></div>
 
     <script src="js/main.js"></script>
 </body>
