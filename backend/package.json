@@ -1,7 +1,7 @@
 {
-  "name": "fabrika-mebeli-backend",
+  "name": "fto-backend",
   "version": "1.0.0",
-  "description": "Backend for Fabrika Mebeli Telegram bot integration",
+  "description": "Backend for Фабрика торгового оборудования",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -17,7 +17,7 @@
     "node-fetch": "^3.3.2",
     "uuid": "^10.0.0"
   },
-  "devDependencies": {
-    "nodemon": "^3.1.4"
-  }
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
