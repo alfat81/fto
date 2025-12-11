@@ -17,40 +17,36 @@
                 <a href="catalog.html" class="nav-btn catalog-btn">Каталог</a>
                 <a href="about.html" class="nav-btn">О компании</a>
                 <a href="contacts.html" class="nav-btn active">Контакты</a>
-            </div>
-        </div>
-        
-        <!-- Выпадающее меню каталога -->
-        <div class="catalog-menu">
-            <div class="container catalog-container">
-                <div class="catalog-item">
-                    <span class="catalog-title">Каталог</span>
-                    <a href="catalog.html" class="catalog-link">Все товары</a>
-                </div>
-                <div class="catalog-item">
-                    <span class="catalog-title">Мебель</span>
-                    <a href="furniture.html" class="catalog-link">Офисная мебель</a>
-                    <a href="furniture.html#kitchen" class="catalog-link">Кухонная мебель</a>
-                    <a href="furniture.html#storage" class="catalog-link">Системы хранения</a>
-                </div>
-                <div class="catalog-item">
-                    <span class="catalog-title">Торговое оборудование</span>
-                    <a href="equipment.html" class="catalog-link">Стеллажи</a>
-                    <a href="equipment.html#counters" class="catalog-link">Прилавки</a>
-                    <a href="equipment.html#display" class="catalog-link">Витрины</a>
-                </div>
-                <div class="catalog-item">
-                    <span class="catalog-title">Мебельная фурнитура</span>
-                    <a href="hardware.html" class="catalog-link">Ручки</a>
-                    <a href="hardware.html#hinges" class="catalog-link">Петли</a>
-                    <a href="hardware.html#slides" class="catalog-link">Направляющие</a>
-                </div>
+                <a href="#" class="nav-btn" id="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
             </div>
         </div>
     </header>
 
+    <!-- Модальное окно корзины -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ваша корзина</h2>
+            <div id="cart-items"></div>
+            <div class="cart-total">
+                <strong>Итого:</strong> <span id="cart-total">0 ₽</span>
+            </div>
+            <form id="checkout-form">
+                <div class="cart-form">
+                    <input type="text" id="name" placeholder="Ваше имя*" required>
+                    <input type="tel" id="phone" placeholder="Ваш телефон*" required>
+                    <textarea id="comment" placeholder="Комментарий к заказу"></textarea>
+                    <button type="submit" id="checkout-btn" class="btn" disabled>Оформить заказ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Hero Section -->
-    <section class="parallax parallax-hero" style="background-image: url('images/hero/contacts-hero.jpg');">
+    <section class="parallax parallax-hero" style="background-image: url('https://images.unsplash.com/photo-1525909940839-d2490d84e2b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
         <div class="hero-content">
             <h1>Наши контакты</h1>
             <p style="font-size: 1.3rem; margin: 25px 0; opacity: 0.9;">Свяжитесь с нами для заказа или консультации</p>
@@ -105,23 +101,6 @@
         </div>
     </section>
 
-    <!-- Map Section -->
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">Как нас найти</h2>
-            <div style="text-align: center; margin-top: 40px;">
-                <div style="background: #e9ecef; border-radius: 15px; padding: 40px; margin: 20px auto; max-width: 800px;">
-                    <p style="font-size: 1.2rem; margin-bottom: 20px;">
-                        На карте ниже показано наше местоположение. Для построения маршрута нажмите на маркер и выберите "Как доехать".
-                    </p>
-                    <div style="background: white; height: 400px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #6c757d;">
-                        <p>Карта будет доступна после подключения Яндекс.Карт</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -130,12 +109,13 @@
                 <p style="opacity: 0.8; margin-bottom: 20px;">Проектируем, производим и устанавливаем торговое и офисное оборудование</p>
                 <div class="social-links">
                     <a href="https://t.me/" class="social-link"><i class="fab fa-telegram"></i></a>
-                    <a href="https://kpostavka.com" class="social-link" target="_blank"><i class="fas fa-globe"></i></a>
                     <a href="https://vk.com/ooofto" class="social-link" target="_blank"><i class="fab fa-vk"></i></a>
                 </div>
             </div>
         </div>
     </footer>
+
+    <div id="toast-container"></div>
 
     <script src="js/main.js"></script>
 </body>
