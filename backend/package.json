@@ -17,7 +17,12 @@
     "node-fetch": "^3.3.2",
     "uuid": "^10.0.0"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "express",
+    "telegram",
+    "render",
+    "ecommerce"
+  ],
+  "author": "alfat81",
   "license": "ISC"
 }
