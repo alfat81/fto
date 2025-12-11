@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: fabrika-mebeli-backend
+    env: node
+    repo: https://github.com/alfat81/fto
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.15.1
+      - key: NODE_ENV
+        value: production
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: CORS_ORIGIN
+        value: https://alfat81.github.io
+      - key: PORT
+        value: 10000
