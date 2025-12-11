@@ -4,7 +4,7 @@
 
 ## Контакты:
 - **Телефон:** +7 (960) 178-67-38
-- **Email:** a20072005@yandex.ru  
+- **Email:** a20072005@yandex.ru
 - **Адрес:** ул. Тургенева, 9, Нижний Новгород
 - **Сайт:** https://alfat81.github.io/fto/
 
@@ -36,3 +36,11 @@
 2. Создайте Web Service из этого репозитория
 3. В Root Directory укажите: `backend`
 4. Добавьте Environment Variables:
+   - TELEGRAM_BOT_TOKEN: ваш токен Telegram бота
+   - TELEGRAM_CHAT_ID: ваш ID чата
+   - CORS_ORIGIN: https://alfat81.github.io
+5. Build Command: `npm install`
+6. Start Command: `npm start`
+
+## Лицензия:
+MIT License
