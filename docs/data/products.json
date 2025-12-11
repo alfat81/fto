@@ -1,0 +1,77 @@
+{
+  "categories": [
+    {
+      "id": "furniture",
+      "name": "Мебель",
+      "description": "Офисная и кухонная мебель под заказ"
+    },
+    {
+      "id": "equipment",
+      "name": "Торговое оборудование",
+      "description": "Стеллажи, прилавки, витрины"
+    },
+    {
+      "id": "hardware",
+      "name": "Мебельная фурнитура",
+      "description": "Ручки, петли, направляющие"
+    }
+  ],
+  "products": [
+    {
+      "id": "tv-stand-1",
+      "category": "furniture",
+      "name": "Тумба ТВ 1600×860×420 мм",
+      "price": 14500,
+      "oldPrice": 21000,
+      "description": "Современная тумба для ТВ с качественной фурнитурой и надежной конструкцией",
+      "imageUrl": "https://images.unsplash.com/photo-1556901587-7c176b8a7f8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "badge": "-30%",
+      "inStock": true
+    },
+    {
+      "id": "small-cabinet-1",
+      "category": "furniture",
+      "name": "Тумба 530×450×250 мм",
+      "price": 6400,
+      "description": "Компактная тумба для хранения документов и аксессуаров",
+      "imageUrl": "https://images.unsplash.com/photo-1556906149-462b99e62c0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "inStock": true
+    },
+    {
+      "id": "sink-1",
+      "category": "equipment",
+      "name": "Мойка с сифоном",
+      "price": 1200,
+      "description": "Надежная мойка для кухонь и санузлов с комплектом сифона",
+      "imageUrl": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "inStock": true
+    },
+    {
+      "id": "office-desk-1",
+      "category": "furniture",
+      "name": "Офисный стол 1600×800 мм",
+      "price": 18900,
+      "description": "Эргономичный офисный стол с выдвижными ящиками",
+      "imageUrl": "https://images.unsplash.com/photo-1525909940839-d2490d84e2b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "inStock": true
+    },
+    {
+      "id": "shelf-1",
+      "category": "equipment",
+      "name": "Стеллаж торговый 2000×1000 мм",
+      "price": 25500,
+      "description": "Металлический стеллаж для магазина с регулируемыми полками",
+      "imageUrl": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "inStock": true
+    },
+    {
+      "id": "handles-1",
+      "category": "hardware",
+      "name": "Ручки мебельные набор",
+      "price": 850,
+      "description": "Стильные ручки для мебели из нержавеющей стали",
+      "imageUrl": "https://images.unsplash.com/photo-1556906149-462b99e62c0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      "inStock": true
+    }
+  ]
+}
