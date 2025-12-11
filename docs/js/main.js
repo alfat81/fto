@@ -1,6 +1,6 @@
 // Инициализация корзины
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-const API_URL = 'https://fto-tdks.onrender.com/api/order'; // УБРАЛ ЛИШНИЕ ПРОБЕЛЫ В КОНЦЕ
+const API_URL = 'https://fto-tdks.onrender.com/api/order';
 
 // Обновление отображения корзины
 function updateCartDisplay() {
@@ -28,15 +28,26 @@ function updateCartDisplay() {
         total += item.price;
         const itemElement = document.createElement('div');
         itemElement.className = 'cart-item';
-        itemElement.innerHTML = `
-            <div class="cart-item-info">
-                <strong>${item.name}</strong>
-                <div class="cart-item-price">${item.price.toLocaleString('ru-RU')} ₽</div>
-            </div>
-            <button class="remove-item" data-index="${index}">
-                <i class="fas fa-trash"></i>
-            </button>
-        `;
+        
+        const itemInfo = document.createElement('div');
+        itemInfo.className = 'cart-item-info';
+        
+        const itemName = document.createElement('strong');
+        itemName.textContent = item.name;
+        itemInfo.appendChild(itemName);
+        
+        const itemPrice = document.createElement('div');
+        itemPrice.className = 'cart-item-price';
+        itemPrice.textContent = `${item.price.toLocaleString('ru-RU')} ₽`;
+        itemInfo.appendChild(itemPrice);
+        
+        const removeButton = document.createElement('button');
+        removeButton.className = 'remove-item';
+        removeButton.setAttribute('data-index', index);
+        removeButton.innerHTML = '<i class="fas fa-trash"></i>';
+        
+        itemElement.appendChild(itemInfo);
+        itemElement.appendChild(removeButton);
         cartItemsContainer.appendChild(itemElement);
     });
     
@@ -106,76 +117,85 @@ async function sendOrderToServer(orderData) {
 // Оформление заказа
 const checkoutForm = document.getElementById('checkout-form');
 if (checkoutForm) {
-    checkoutForm.addEventListener('submit', async function(e) {
+    checkoutForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        
-        if (cart.length === 0) {
-            showToast('Корзина пуста!', 'error');
-            return;
-        }
-        
-        const phone = document.getElementById('phone')?.value.trim() || '';
-        const name = document.getElementById('name')?.value.trim() || '';
-        const comment = document.getElementById('comment')?.value.trim() || '';
-        
-        // Валидация телефона
-        if (!phone || !/^\+?7[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$/.test(phone.replace(/\D/g, ''))) {
-            showToast('Пожалуйста, введите корректный номер телефона', 'error');
-            return;
-        }
-        
-        // Валидация имени
-        if (!name || name.length < 2) {
-            showToast('Пожалуйста, введите ваше имя', 'error');
-            return;
-        }
-        
-        const order = {
-            items: cart,
-            customer: {
-                name: name,
-                phone: phone,
-                comment: comment
-            },
-            total: calculateTotal(cart),
-            date: new Date().toISOString()
-        };
-        
-        const checkoutBtn = document.getElementById('checkout-btn');
-        if (checkoutBtn) {
-            // Показать индикатор загрузки
-            checkoutBtn.disabled = true;
-            checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
-        }
-        
-        try {
-            const result = await sendOrderToServer(order);
-            
-            // Очистка корзины после успешного заказа
-            cart = [];
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartDisplay();
-            
-            // Очистка формы
-            if (checkoutForm) checkoutForm.reset();
-            
-            // Закрытие модального окна
-            const cartModal = document.getElementById('cart-modal');
-            if (cartModal) cartModal.style.display = 'none';
-            
-            // Показать сообщение об успехе
-            showToast('✅ Заказ успешно отправлен!\nМенеджер свяжется с вами в ближайшее время.', 'success', 5000);
-            
-        } catch (error) {
-            showToast(`❌ Ошибка при отправке заказа: ${error.message}`, 'error', 5000);
-        } finally {
-            // Восстановить кнопку
-            if (checkoutBtn) {
-                checkoutBtn.disabled = false;
-                checkoutBtn.innerHTML = 'Оформить заказ';
-            }
-        }
+        handleOrderSubmission();
     });
+}
+
+async function handleOrderSubmission() {
+    if (cart.length === 0) {
+        showToast('Корзина пуста!', 'error');
+        return;
+    }
+    
+    const phoneElement = document.getElementById('phone');
+    const nameElement = document.getElementById('name');
+    const commentElement = document.getElementById('comment');
+    
+    if (!phoneElement || !nameElement) return;
+    
+    const phone = phoneElement.value.trim();
+    const name = nameElement.value.trim();
+    const comment = commentElement ? commentElement.value.trim() : '';
+    
+    // Валидация телефона
+    if (!phone || !/^\+?7[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$/.test(phone.replace(/\D/g, ''))) {
+        showToast('Пожалуйста, введите корректный номер телефона', 'error');
+        return;
+    }
+    
+    // Валидация имени
+    if (!name || name.length < 2) {
+        showToast('Пожалуйста, введите ваше имя', 'error');
+        return;
+    }
+    
+    const order = {
+        items: cart,
+        customer: {
+            name: name,
+            phone: phone,
+            comment: comment
+        },
+        total: calculateTotal(cart),
+        date: new Date().toISOString()
+    };
+    
+    const checkoutBtn = document.getElementById('checkout-btn');
+    if (checkoutBtn) {
+        // Показать индикатор загрузки
+        checkoutBtn.disabled = true;
+        checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+    }
+    
+    try {
+        const result = await sendOrderToServer(order);
+        
+        // Очистка корзины после успешного заказа
+        cart = [];
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartDisplay();
+        
+        // Очистка формы
+        if (checkoutForm) checkoutForm.reset();
+        
+        // Закрытие модального окна
+        const cartModal = document.getElementById('cart-modal');
+        if (cartModal) cartModal.style.display = 'none';
+        
+        // Показать сообщение об успехе
+        showToast('✅ Заказ успешно отправлен!\nМенеджер свяжется с вами в ближайшее время.', 'success', 5000);
+        
+    } catch (error) {
+        showToast(`❌ Ошибка при отправке заказа: ${error.message}`, 'error', 5000);
+    } finally {
+        // Восстановить кнопку
+        if (checkoutBtn) {
+            checkoutBtn.disabled = false;
+            checkoutBtn.innerHTML = 'Оформить заказ';
+        }
+    }
 }
 
 // Вспомогательная функция расчета итога
@@ -190,44 +210,47 @@ function showToast(message, type = 'info', duration = 3000) {
     if (!toastContainer) {
         toastContainer = document.createElement('div');
         toastContainer.id = 'toast-container';
-        toastContainer.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            max-width: 350px;
-        `;
+        toastContainer.style.position = 'fixed';
+        toastContainer.style.top = '20px';
+        toastContainer.style.right = '20px';
+        toastContainer.style.zIndex = '9999';
+        toastContainer.style.maxWidth = '350px';
         document.body.appendChild(toastContainer);
     }
     
     // Создать тост
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
-    toast.style.cssText = `
-        background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
-        color: white;
-        padding: 15px 20px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        animation: slideIn 0.3s, fadeOut 0.5s ${duration}ms forwards;
-        max-width: 100%;
-        word-wrap: break-word;
-    `;
-    toast.innerHTML = message;
+    
+    // Установить стили
+    const backgroundColor = type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8';
+    toast.style.background = backgroundColor;
+    toast.style.color = 'white';
+    toast.style.padding = '15px 20px';
+    toast.style.borderRadius = '8px';
+    toast.style.marginBottom = '10px';
+    toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+    toast.style.animation = `slideIn 0.3s, fadeOut 0.5s ${duration}ms forwards`;
+    toast.style.maxWidth = '100%';
+    toast.style.wordWrap = 'break-word';
+    
+    toast.textContent = message;
     
     // Добавить в контейнер
     toastContainer.appendChild(toast);
     
-    // Удалить после анимации
-    setTimeout(() => {
+    // Функция для удаления тоста
+    function removeToast() {
         toast.style.animation = 'fadeOut 0.5s forwards';
         setTimeout(() => {
             if (toast.parentNode) {
                 toast.parentNode.removeChild(toast);
             }
         }, 500);
-    }, duration);
+    }
+    
+    // Удалить после анимации
+    setTimeout(removeToast, duration);
 }
 
 // Обработчики для модального окна
