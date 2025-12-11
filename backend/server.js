@@ -1,15 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { createRequire } = require('module');
-const require = createRequire(import.meta.url);
 const fetch = require('node-fetch').default;
 const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Middleware
+// Настройка CORS
 const corsOptions = {
   origin: process.env.CORS_ORIGIN || 'https://alfat81.github.io',
   methods: ['GET', 'POST', 'OPTIONS'],
@@ -21,22 +19,21 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Health check эндпоинт
+// Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development',
     version: '1.0.0',
     nodeVersion: process.version,
-    telegramConfigured: process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID
+    telegramConfigured: !!process.env.TELEGRAM_BOT_TOKEN
   });
 });
 
 // Preflight requests
 app.options('*', cors(corsOptions));
 
-// Форматирование заказа для Telegram
+// Форматирование сообщения для Telegram
 function formatOrderMessage(order) {
   const itemsList = order.items.map(item => 
     `📦 ${item.name}\n💰 ${item.price.toLocaleString('ru-RU')} ₽`
@@ -112,7 +109,7 @@ async function sendTelegramMessage(text) {
   }
 }
 
-// API эндпоинты
+// API endpoint для заказов
 app.post('/api/order', async (req, res) => {
   try {
     console.log('📡 Получен новый заказ:', {
@@ -164,7 +161,7 @@ app.post('/api/order', async (req, res) => {
     console.log('📤 Отправка сообщения в Telegram...');
     
     // Отправка в Telegram
-    const telegramResult = await sendTelegramMessage(message);
+    await sendTelegramMessage(message);
     
     console.log('✅ Заказ успешно обработан');
     
@@ -172,8 +169,7 @@ app.post('/api/order', async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Заказ успешно отправлен! Менеджер свяжется с вами в ближайшее время.',
-      orderId: order.orderId,
-      telegramMessageId: telegramResult?.result?.message_id
+      orderId: order.orderId
     });
     
     console.log(`🎉 Успешный заказ: ${order.orderId}, сумма: ${order.total.toLocaleString('ru-RU')} ₽`);
@@ -187,7 +183,7 @@ app.post('/api/order', async (req, res) => {
       details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
     
-    // Попытка отправить уведомление об ошибке в Telegram
+    // Отправка уведомления об ошибке в Telegram
     try {
       if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
         await sendTelegramMessage(`
@@ -204,10 +200,10 @@ app.post('/api/order', async (req, res) => {
   }
 });
 
-// Root эндпоинт
+// Root endpoint
 app.get('/', (req, res) => {
   res.status(200).json({
-    message: 'Backend для Фабрики торгового оборудования',
+    message: 'Backend Фабрики торгового оборудования',
     api: {
       order: 'POST /api/order',
       health: 'GET /health'
@@ -239,24 +235,26 @@ app.use((err, req, res, next) => {
 // Запуск сервера
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Сервер запущен на порту ${PORT}`);
-  console.log(`🌐 URL: http://localhost:${PORT}`);
-  console.log(`✅ CORS origin: ${process.env.CORS_ORIGIN}`);
+  console.log(`🌐 URL: http://0.0.0.0:${PORT}`);
+  console.log(`✅ CORS origin: ${process.env.CORS_ORIGIN || 'https://alfat81.github.io'}`);
   console.log(`🔧 Node.js version: ${process.version}`);
   
-  // Тестовое сообщение при запуске (только в production)
+  // Приветственное сообщение в Telegram при запуске
   if (process.env.NODE_ENV === 'production' && process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
-    sendTelegramMessage(`
+    const startupMessage = `
 ✅ СИСТЕМА УСПЕШНО ЗАПУЩЕНА
 
 🕐 Время запуска: ${new Date().toLocaleString('ru-RU')}
 ⚙️ Версия: 1.0.0
 📍 Сервер: Render.com
-🔗 URL: ${process.env.RENDER_SERVICE_NAME ? `https://${process.env.RENDER_SERVICE_NAME}.onrender.com` : 'localhost'}
+🔗 URL: ${process.env.RENDER_EXTERNAL_URL || 'https://your-app.onrender.com'}
 🎯 Порт: ${PORT}
 🔧 Node.js: ${process.version}
 
 Система готова принимать заказы!
-    `).catch(console.error);
+    `;
+    
+    sendTelegramMessage(startupMessage).catch(console.error);
   }
 });
 
