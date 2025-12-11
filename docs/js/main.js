@@ -4,9 +4,14 @@ const API_URL = 'https://fto-tdks.onrender.com/api/order'; // Адрес Render
 
 // Обновление отображения корзины
 function updateCartDisplay() {
-    document.getElementById('cart-count').textContent = cart.length;
+    const cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) {
+        cartCountElement.textContent = cart.length;
+    }
     
     const cartItemsContainer = document.getElementById('cart-items');
+    if (!cartItemsContainer) return;
+    
     cartItemsContainer.innerHTML = '';
     
     if (cart.length === 0) {
@@ -63,10 +68,12 @@ function addToCart(product) {
     
     // Анимация кнопки корзины
     const cartBtn = document.getElementById('cart-btn');
-    cartBtn.style.transform = 'scale(1.2)';
-    setTimeout(() => {
-        cartBtn.style.transform = 'scale(1)';
-    }, 300);
+    if (cartBtn) {
+        cartBtn.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+            cartBtn.style.transform = 'scale(1)';
+        }, 300);
+    }
 }
 
 // Отправка заказа на сервер
@@ -270,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Плавная прокрутка
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+        anchor.addEventListener('click', function(e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
@@ -285,9 +292,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Эффект при прокрутке для хедера
     window.addEventListener('scroll', function() {
         const header = document.querySelector('header');
-        if (window.scrollY > 100) {
+        if (window.scrollY > 100 && header) {
             header.classList.add('scrolled');
-        } else {
+        } else if (header) {
             header.classList.remove('scrolled');
         }
     });
@@ -312,12 +319,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Проверка при загрузке страницы
     window.addEventListener('load', function() {
         setTimeout(() => {
-            document.querySelector('.hero-content').style.opacity = '1';
-            document.querySelector('.hero-content').style.transform = 'translateY(0)';
+            const heroContent = document.querySelector('.hero-content');
+            if (heroContent) {
+                heroContent.style.opacity = '1';
+                heroContent.style.transform = 'translateY(0)';
+            }
         }, 300);
         
         checkScroll();
     });
 });
 
-console.log('Корзина успешно восстановлена. API URL:', API_URL);
+console.log('Корзина успешно инициализирована. API URL:', API_URL);
