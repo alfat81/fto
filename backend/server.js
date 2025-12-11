@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const fetch = require('node-fetch').default;
 const { v4: uuidv4 } = require('uuid');
 
 const app = express();
@@ -66,7 +65,7 @@ ${itemsList}
   `.trim();
 }
 
-// Отправка сообщения в Telegram
+// Отправка сообщения в Telegram (используем встроенный fetch)
 async function sendTelegramMessage(text) {
   if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_CHAT_ID) {
     console.error('❌ Отсутствуют переменные окружения для Telegram');
