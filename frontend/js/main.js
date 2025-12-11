@@ -1,6 +1,6 @@
 // Инициализация корзины
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
-const API_URL = 'https://YOUR-RENDER-APP.onrender.com/api/order'; // ЗАМЕНИТЕ НА ВАШ URL
+const API_URL = 'https://fto-tdks.onrender.com'; // ЗАМЕНИТЕ НА ВАШ URL
 
 // Обновление отображения корзины
 function updateCartDisplay() {
