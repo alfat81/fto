@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты | Фабрика торгового оборудования</title>
+    <meta name="description" content="Контактная информация фабрики торгового оборудования: телефон, email, адрес в Нижнем Новгороде">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">Фабрика<span>Торгового</span>Оборудования</a>
+            <div class="nav-buttons">
+                <a href="catalog.html" class="nav-btn catalog-btn">Каталог</a>
+                <a href="about.html" class="nav-btn">О компании</a>
+                <a href="contacts.html" class="nav-btn active">Контакты</a>
+            </div>
+        </div>
+        
+        <!-- Выпадающее меню каталога -->
+        <div class="catalog-menu">
+            <div class="container catalog-container">
+                <div class="catalog-item">
+                    <span class="catalog-title">Каталог</span>
+                    <a href="catalog.html" class="catalog-link">Все товары</a>
+                </div>
+                <div class="catalog-item">
+                    <span class="catalog-title">Мебель</span>
+                    <a href="furniture.html" class="catalog-link">Офисная мебель</a>
+                    <a href="furniture.html#kitchen" class="catalog-link">Кухонная мебель</a>
+                    <a href="furniture.html#storage" class="catalog-link">Системы хранения</a>
+                </div>
+                <div class="catalog-item">
+                    <span class="catalog-title">Торговое оборудование</span>
+                    <a href="equipment.html" class="catalog-link">Стеллажи</a>
+                    <a href="equipment.html#counters" class="catalog-link">Прилавки</a>
+                    <a href="equipment.html#display" class="catalog-link">Витрины</a>
+                </div>
+                <div class="catalog-item">
+                    <span class="catalog-title">Мебельная фурнитура</span>
+                    <a href="hardware.html" class="catalog-link">Ручки</a>
+                    <a href="hardware.html#hinges" class="catalog-link">Петли</a>
+                    <a href="hardware.html#slides" class="catalog-link">Направляющие</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="parallax parallax-hero" style="background-image: url('images/hero/contacts-hero.jpg');">
+        <div class="hero-content">
+            <h1>Наши контакты</h1>
+            <p style="font-size: 1.3rem; margin: 25px 0; opacity: 0.9;">Свяжитесь с нами для заказа или консультации</p>
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
+                <a href="tel:+79601786738" class="btn btn-secondary">+7 (960) 178-67-38</a>
+                <a href="mailto:a20072005@yandex.ru" class="btn btn-secondary">Написать на почту</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacts Section -->
+    <section class="section contacts-section">
+        <div class="container">
+            <h2 class="section-title">Контактная информация</h2>
+            <div class="contact-grid stagger-animation">
+                <div class="contact-card parallax-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Телефон</h3>
+                        <p class="contact-text">Позвоните нам для консультации и заказа</p>
+                        <a href="tel:+79601786738" class="contact-link contact-text">+7 (960) 178-67-38</a>
+                        <p class="contact-text" style="margin-top: 10px; font-size: 1rem; opacity: 0.8;">Пн-Пт: 9:00-18:00</p>
+                    </div>
+                </div>
+                
+                <div class="contact-card parallax-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Email</h3>
+                        <p class="contact-text">Напишите нам на почту</p>
+                        <a href="mailto:a20072005@yandex.ru" class="contact-link contact-text">a20072005@yandex.ru</a>
+                        <p class="contact-text" style="margin-top: 10px; font-size: 1rem; opacity: 0.8;">Ответим в течение 24 часов</p>
+                    </div>
+                </div>
+                
+                <div class="contact-card parallax-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Адрес</h3>
+                        <p class="contact-text">Приходите к нам в офис или на производство</p>
+                        <p class="contact-text">ул. Тургенева, 9,<br>Нижний Новгород</p>
+                        <p class="contact-text" style="margin-top: 10px; font-size: 1rem; opacity: 0.8;">Как нас найти: рядом с метро</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Как нас найти</h2>
+            <div style="text-align: center; margin-top: 40px;">
+                <div style="background: #e9ecef; border-radius: 15px; padding: 40px; margin: 20px auto; max-width: 800px;">
+                    <p style="font-size: 1.2rem; margin-bottom: 20px;">
+                        На карте ниже показано наше местоположение. Для построения маршрута нажмите на маркер и выберите "Как доехать".
+                    </p>
+                    <div style="background: white; height: 400px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #6c757d;">
+                        <p>Карта будет доступна после подключения Яндекс.Карт</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p style="font-size: 1.1rem; margin-bottom: 20px;">© 2025 Фабрика торгового оборудования. Все права защищены.</p>
+                <p style="opacity: 0.8; margin-bottom: 20px;">Проектируем, производим и устанавливаем торговое и офисное оборудование</p>
+                <div class="social-links">
+                    <a href="https://t.me/" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="https://kpostavka.com" class="social-link" target="_blank"><i class="fas fa-globe"></i></a>
+                    <a href="https://vk.com/ooofto" class="social-link" target="_blank"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
