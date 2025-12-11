@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -65,7 +64,7 @@ ${itemsList}
   `.trim();
 }
 
-// Отправка сообщения в Telegram (используем встроенный fetch)
+// Отправка сообщения в Telegram
 async function sendTelegramMessage(text) {
   if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_CHAT_ID) {
     console.error('❌ Отсутствуют переменные окружения для Telegram');
@@ -142,7 +141,7 @@ app.post('/api/order', async (req, res) => {
     }
     
     // Генерация уникального ID заказа
-    const orderId = `ORD-${uuidv4().slice(0, 8).toUpperCase()}-${Date.now().toString().slice(-4)}`;
+    const orderId = `ORD-${require('crypto').randomBytes(4).toString('hex').toUpperCase()}-${Date.now().toString().slice(-4)}`;
     
     // Формирование заказа
     const order = {
@@ -181,21 +180,6 @@ app.post('/api/order', async (req, res) => {
       success: false,
       details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
-    
-    // Отправка уведомления об ошибке в Telegram
-    try {
-      if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
-        await sendTelegramMessage(`
-🚨 ОШИБКА ОБРАБОТКИ ЗАКАЗА
-
-❌ Ошибка: ${error.message}
-🕐 Время: ${new Date().toLocaleString('ru-RU')}
-📋 Данные заказа: ${JSON.stringify(req.body, null, 2)}
-        `);
-      }
-    } catch (telegramError) {
-      console.error('❌ Не удалось отправить уведомление об ошибке в Telegram:', telegramError);
-    }
   }
 });
 
@@ -237,24 +221,6 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`🌐 URL: http://0.0.0.0:${PORT}`);
   console.log(`✅ CORS origin: ${process.env.CORS_ORIGIN || 'https://alfat81.github.io'}`);
   console.log(`🔧 Node.js version: ${process.version}`);
-  
-  // Приветственное сообщение в Telegram при запуске
-  if (process.env.NODE_ENV === 'production' && process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
-    const startupMessage = `
-✅ СИСТЕМА УСПЕШНО ЗАПУЩЕНА
-
-🕐 Время запуска: ${new Date().toLocaleString('ru-RU')}
-⚙️ Версия: 1.0.0
-📍 Сервер: Render.com
-🔗 URL: ${process.env.RENDER_EXTERNAL_URL || 'https://fto-tdks.onrender.com'}
-🎯 Порт: ${PORT}
-🔧 Node.js: ${process.version}
-
-Система готова принимать заказы!
-    `;
-    
-    sendTelegramMessage(startupMessage).catch(console.error);
-  }
 });
 
 module.exports = app;
