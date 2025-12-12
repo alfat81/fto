@@ -22,9 +22,8 @@ app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
     timestamp: new Date().toISOString(),
-    version: '1.1.0',
-    nodeVersion: process.version,
-    telegramConfigured: !!process.env.TELEGRAM_BOT_TOKEN
+    version: '1.0.0',
+    nodeVersion: process.version
   });
 });
 
@@ -62,9 +61,7 @@ async function sendTelegramMessage(text) {
       throw new Error(`Telegram API error: ${errorData.description || 'Unknown error'}`);
     }
 
-    const result = await response.json();
-    console.log('✅ Сообщение успешно отправлено в Telegram');
-    return result;
+    return await response.json();
   } catch (error) {
     console.error('🔥 Критическая ошибка при отправке в Telegram:', error);
     throw error;
@@ -74,68 +71,40 @@ async function sendTelegramMessage(text) {
 // API endpoint для заказов
 app.post('/api/order', async (req, res) => {
   try {
-    console.log('📦 Получен новый заказ:', {
-      itemsCount: req.body.items?.length,
-      total: req.body.total,
-      customerName: req.body.customer?.name
-    });
-    
     const { items, customer, total, date } = req.body;
     
     // Валидация данных
     if (!items || !Array.isArray(items) || items.length === 0) {
-      return res.status(400).json({ 
-        error: 'Отсутствуют товары в заказе',
-        success: false
-      });
+      return res.status(400).json({ error: 'Отсутствуют товары в заказе' });
     }
     
     if (!customer?.name || !customer?.phone) {
-      return res.status(400).json({ 
-        error: 'Отсутствуют данные клиента',
-        success: false
-      });
+      return res.status(400).json({ error: 'Отсутствуют данные клиента' });
     }
     
     if (typeof total !== 'number' || total <= 0) {
-      return res.status(400).json({ 
-        error: 'Некорректная сумма заказа',
-        success: false
-      });
+      return res.status(400).json({ error: 'Некорректная сумма заказа' });
     }
     
-    // Генерация уникального ID заказа
-    const orderId = `ORD-${require('crypto').randomBytes(4).toString('hex').toUpperCase()}-${Date.now().toString().slice(-4)}`;
-    
-    // Формирование заказа
-    const order = {
-      orderId,
-      items,
-      customer,
-      total,
-      date: date || new Date().toISOString(),
-      status: 'new'
-    };
-    
-    // Форматирование сообщения для Telegram
-    const itemsList = order.items.map(item => 
+    // Формирование сообщения для Telegram
+    const itemsList = items.map(item => 
       `📦 ${item.name}\n💰 ${item.price.toLocaleString('ru-RU')} ₽`
     ).join('\n\n');
 
     const message = `
-🛒 НОВЫЙ ЗАКАЗ #${order.orderId}
+🛒 НОВЫЙ ЗАКАЗ
 
 📋 ТОВАРЫ:
 ${itemsList}
 
-💰 ИТОГО: ${order.total.toLocaleString('ru-RU')} ₽
+💰 ИТОГО: ${total.toLocaleString('ru-RU')} ₽
 
 👤 КЛИЕНТ:
-👤 Имя: ${order.customer.name}
-📱 Телефон: ${order.customer.phone}
-💬 Комментарий: ${order.customer.comment || 'Не указан'}
+👤 Имя: ${customer.name}
+📱 Телефон: ${customer.phone}
+💬 Комментарий: ${customer.comment || 'Не указан'}
 
-⏰ Дата заказа: ${new Date(order.date).toLocaleString('ru-RU', {
+⏰ Дата заказа: ${new Date(date || new Date()).toLocaleString('ru-RU', {
   day: '2-digit',
   month: '2-digit',
   year: 'numeric',
@@ -145,63 +114,30 @@ ${itemsList}
 
 📍 Адрес: ул. Тургенева, 9, Нижний Новгород
 📞 Контактный телефон: +7 (960) 178-67-38
-✉️ Email: a20072005@yandex.ru
     `.trim();
-    
-    console.log('📤 Отправка сообщения в Telegram...');
     
     // Отправка в Telegram
     await sendTelegramMessage(message);
     
-    console.log('✅ Заказ успешно обработан');
-    
     // Отправка ответа клиенту
     res.status(200).json({
       success: true,
-      message: 'Заказ успешно отправлен! Менеджер свяжется с вами в ближайшее время.',
-      orderId: order.orderId
+      message: 'Заказ успешно отправлен! Менеджер свяжется с вами в ближайшее время.'
     });
-    
-    console.log(`🎉 Успешный заказ: ${order.orderId}, сумма: ${order.total.toLocaleString('ru-RU')} ₽`);
     
   } catch (error) {
     console.error('❌ Ошибка при обработке заказа:', error);
-    
     res.status(500).json({ 
       error: 'Ошибка при обработке заказа. Пожалуйста, попробуйте позже.',
-      success: false,
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      success: false
     });
   }
-});
-
-// Root endpoint
-app.get('/', (req, res) => {
-  res.status(200).json({
-    message: 'Backend Фабрики торгового оборудования',
-    api: {
-      order: 'POST /api/order',
-      health: 'GET /health'
-    },
-    documentation: 'https://github.com/alfat81/fto'
-  });
-});
-
-// Обработка 404
-app.use((req, res) => {
-  res.status(404).json({
-    error: 'Эндпоинт не найден',
-    path: req.path,
-    method: req.method
-  });
 });
 
 // Запуск сервера
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Сервер запущен на порту ${PORT}`);
-  console.log(`🌐 URL: http://0.0.0.0:${PORT}`);
   console.log(`✅ CORS origin: ${process.env.CORS_ORIGIN || 'https://alfat81.github.io'}`);
-  console.log(`🔧 Node.js version: ${process.version}`);
 });
 
 module.exports = app;
