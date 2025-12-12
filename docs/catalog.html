@@ -7,7 +7,6 @@
     <meta name="description" content="Полный каталог товаров фабрики торгового оборудования: мебель, торговое оборудование, фурнитура">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/header.css">
 </head>
 <body>
     <!-- Header (динамически загружается) -->
@@ -32,38 +31,38 @@
     <section class="section">
         <div class="container">
             <h2 class="section-title">Категории товаров</h2>
-            <div class="categories-grid">
-                <!-- Категории будут загружены динамически -->
+            <div class="categories-grid" id="categories-container">
+                <!-- Категории будут загружены из JSON -->
             </div>
         </div>
     </section>
 
     <!-- Furniture Section -->
-    <section id="furniture-section" class="section">
+    <section id="furniture" class="section">
         <div class="container">
             <h2 class="section-title">Мебель</h2>
-            <div class="products-grid stagger-animation">
-                <!-- Товары будут загружены динамически -->
+            <div class="products-grid stagger-animation" id="furniture-container">
+                <!-- Товары будут загружены из JSON -->
             </div>
         </div>
     </section>
 
     <!-- Equipment Section -->
-    <section id="equipment-section" class="section">
+    <section id="equipment" class="section">
         <div class="container">
             <h2 class="section-title">Торговое оборудование</h2>
-            <div class="products-grid stagger-animation">
-                <!-- Товары будут загружены динамически -->
+            <div class="products-grid stagger-animation" id="equipment-container">
+                <!-- Товары будут загружены из JSON -->
             </div>
         </div>
     </section>
 
     <!-- Hardware Section -->
-    <section id="hardware-section" class="section">
+    <section id="hardware" class="section">
         <div class="container">
             <h2 class="section-title">Мебельная фурнитура</h2>
-            <div class="products-grid stagger-animation">
-                <!-- Товары будут загружены динамически -->
+            <div class="products-grid stagger-animation" id="hardware-container">
+                <!-- Товары будут загружены из JSON -->
             </div>
         </div>
     </section>
@@ -78,10 +77,72 @@
     <script src="js/cart.js"></script>
     <script src="js/main.js"></script>
     <script>
-        // Инициализация страницы каталога
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof window.renderCatalogPage === 'function') {
-                window.renderCatalogPage();
+        // Загрузка и отображение каталога
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                const response = await fetch('data/catalog.json');
+                const catalogData = await response.json();
+                
+                // Отображение категорий
+                const categoriesContainer = document.getElementById('categories-container');
+                catalogData.categories.forEach(category => {
+                    const categoryCard = document.createElement('a');
+                    categoryCard.href = `#${category.id}`;
+                    categoryCard.className = 'category-card';
+                    categoryCard.innerHTML = `
+                        <div class="category-image">
+                            <img src="${category.image}" alt="${category.name}" loading="lazy">
+                        </div>
+                        <h3 class="category-title">${category.name}</h3>
+                        <p>${category.description}</p>
+                    `;
+                    categoriesContainer.appendChild(categoryCard);
+                });
+                
+                // Отображение товаров по категориям
+                catalogData.products.forEach(product => {
+                    let container;
+                    if (product.category === 'furniture') {
+                        container = document.getElementById('furniture-container');
+                    } else if (product.category === 'equipment') {
+                        container = document.getElementById('equipment-container');
+                    } else if (product.category === 'hardware') {
+                        container = document.getElementById('hardware-container');
+                    }
+                    
+                    if (container && product.inStock) {
+                        const productCard = document.createElement('div');
+                        productCard.className = 'product-card parallax-item';
+                        productCard.innerHTML = `
+                            <div class="product-image">
+                                <img src="${product.imageUrl}" alt="${product.name}" loading="lazy">
+                                ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                            </div>
+                            <div class="product-content">
+                                <h3 class="product-title">${product.name}</h3>
+                                <div class="product-price">
+                                    ${product.price.toLocaleString('ru-RU')} ₽
+                                    ${product.oldPrice ? `<span class="old-price">${product.oldPrice.toLocaleString('ru-RU')} ₽</span>` : ''}
+                                </div>
+                                <p class="product-description">${product.description}</p>
+                                <div class="product-actions">
+                                    <button class="btn contact-btn add-to-cart"
+                                        data-id="${product.id}"
+                                        data-name="${product.name}"
+                                        data-price="${product.price}">
+                                        <i class="fas fa-cart-plus"></i> В корзину
+                                    </button>
+                                    <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
+                                </div>
+                            </div>
+                        `;
+                        container.appendChild(productCard);
+                    }
+                });
+                
+                console.log('✅ Каталог успешно загружен и отображен');
+            } catch (error) {
+                console.error('❌ Ошибка загрузки каталога:', error);
             }
         });
     </script>
