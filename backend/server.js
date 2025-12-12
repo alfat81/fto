@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Настройка CORS с логированием для отладки
+// Настройка CORS
 const corsOptions = {
   origin: process.env.CORS_ORIGIN || 'https://alfat81.github.io',
   methods: ['GET', 'POST', 'OPTIONS'],
@@ -17,49 +17,26 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Health check endpoint с подробной информацией
+// Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
     timestamp: new Date().toISOString(),
     version: '1.1.0',
     nodeVersion: process.version,
-    telegramConfigured: !!process.env.TELEGRAM_BOT_TOKEN,
-    corsOrigin: process.env.CORS_ORIGIN,
-    env: process.env.NODE_ENV
+    telegramConfigured: !!process.env.TELEGRAM_BOT_TOKEN
   });
 });
 
-// Отладочный endpoint для проверки Telegram
-app.post('/api/test-telegram', async (req, res) => {
-  try {
-    const testMessage = `
-✅ ТЕСТОВОЕ СООБЩЕНИЕ
-Тестовая отправка из бэкенда работает!
-Время: ${new Date().toLocaleString('ru-RU')}
-    `;
-    
-    await sendTelegramMessage(testMessage);
-    res.status(200).json({ success: true, message: 'Тестовое сообщение отправлено' });
-  } catch (error) {
-    console.error('❌ Ошибка тестовой отправки:', error);
-    res.status(500).json({ 
-      success: false, 
-      error: error.message,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
-    });
-  }
-});
-
-// Отправка сообщения в Telegram (улучшенная версия)
+// Отправка сообщения в Telegram
 async function sendTelegramMessage(text) {
   if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_CHAT_ID) {
     console.error('❌ Отсутствуют переменные окружения для Telegram');
     throw new Error('Не настроены параметры Telegram бота');
   }
 
-  const botToken = process.env.TELEGRAM_BOT_TOKEN.trim(); // Убираем пробелы
-  const chatId = process.env.TELEGRAM_CHAT_ID.trim(); // Убираем пробелы
+  const botToken = process.env.TELEGRAM_BOT_TOKEN.trim();
+  const chatId = process.env.TELEGRAM_CHAT_ID.trim();
   
   const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
   
@@ -70,8 +47,6 @@ async function sendTelegramMessage(text) {
     disable_web_page_preview: true
   };
 
-  console.log('📤 Отправка в Telegram:', { url, chatId });
-
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -81,29 +56,29 @@ async function sendTelegramMessage(text) {
       body: JSON.stringify(payload)
     });
 
-    const responseData = await response.json();
-    console.log('📨 Ответ Telegram API:', responseData);
-
-    if (!response.ok || !responseData.ok) {
-      console.error('❌ Ошибка Telegram API:', responseData);
-      throw new Error(`Telegram API error: ${responseData.description || 'Unknown error'}`);
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('❌ Ошибка Telegram API:', errorData);
+      throw new Error(`Telegram API error: ${errorData.description || 'Unknown error'}`);
     }
 
-    console.log('✅ Успешно отправлено в Telegram');
-    return responseData;
+    const result = await response.json();
+    console.log('✅ Сообщение успешно отправлено в Telegram');
+    return result;
   } catch (error) {
-    console.error('🔥 Критическая ошибка при отправке в Telegram:', {
-      message: error.message,
-      stack: error.stack
-    });
+    console.error('🔥 Критическая ошибка при отправке в Telegram:', error);
     throw error;
   }
 }
 
-// API endpoint для заказов (улучшенная версия)
+// API endpoint для заказов
 app.post('/api/order', async (req, res) => {
   try {
-    console.log('📦 Получен заказ:', JSON.stringify(req.body, null, 2));
+    console.log('📦 Получен новый заказ:', {
+      itemsCount: req.body.items?.length,
+      total: req.body.total,
+      customerName: req.body.customer?.name
+    });
     
     const { items, customer, total, date } = req.body;
     
@@ -130,28 +105,37 @@ app.post('/api/order', async (req, res) => {
     }
     
     // Генерация уникального ID заказа
-    const crypto = require('crypto');
-    const orderId = `ORD-${crypto.randomBytes(4).toString('hex').toUpperCase()}-${Date.now().toString().slice(-4)}`;
+    const orderId = `ORD-${require('crypto').randomBytes(4).toString('hex').toUpperCase()}-${Date.now().toString().slice(-4)}`;
     
-    // Формирование сообщения для Telegram
-    const itemsList = items.map(item => 
+    // Формирование заказа
+    const order = {
+      orderId,
+      items,
+      customer,
+      total,
+      date: date || new Date().toISOString(),
+      status: 'new'
+    };
+    
+    // Форматирование сообщения для Telegram
+    const itemsList = order.items.map(item => 
       `📦 ${item.name}\n💰 ${item.price.toLocaleString('ru-RU')} ₽`
     ).join('\n\n');
 
     const message = `
-🛒 НОВЫЙ ЗАКАЗ #${orderId}
+🛒 НОВЫЙ ЗАКАЗ #${order.orderId}
 
 📋 ТОВАРЫ:
 ${itemsList}
 
-💰 ИТОГО: ${total.toLocaleString('ru-RU')} ₽
+💰 ИТОГО: ${order.total.toLocaleString('ru-RU')} ₽
 
 👤 КЛИЕНТ:
-👤 Имя: ${customer.name}
-📱 Телефон: ${customer.phone}
-💬 Комментарий: ${customer.comment || 'Не указан'}
+👤 Имя: ${order.customer.name}
+📱 Телефон: ${order.customer.phone}
+💬 Комментарий: ${order.customer.comment || 'Не указан'}
 
-⏰ Дата заказа: ${new Date(date || new Date()).toLocaleString('ru-RU', {
+⏰ Дата заказа: ${new Date(order.date).toLocaleString('ru-RU', {
   day: '2-digit',
   month: '2-digit',
   year: 'numeric',
@@ -164,10 +148,10 @@ ${itemsList}
 ✉️ Email: a20072005@yandex.ru
     `.trim();
     
-    console.log('📋 Форматированное сообщение:', message);
+    console.log('📤 Отправка сообщения в Telegram...');
     
     // Отправка в Telegram
-    const telegramResult = await sendTelegramMessage(message);
+    await sendTelegramMessage(message);
     
     console.log('✅ Заказ успешно обработан');
     
@@ -175,44 +159,36 @@ ${itemsList}
     res.status(200).json({
       success: true,
       message: 'Заказ успешно отправлен! Менеджер свяжется с вами в ближайшее время.',
-      orderId: orderId,
-      telegramMessageId: telegramResult?.result?.message_id
+      orderId: order.orderId
     });
+    
+    console.log(`🎉 Успешный заказ: ${order.orderId}, сумма: ${order.total.toLocaleString('ru-RU')} ₽`);
     
   } catch (error) {
     console.error('❌ Ошибка при обработке заказа:', error);
     
-    // Отправка ошибки клиенту
     res.status(500).json({ 
-      error: error.message || 'Внутренняя ошибка сервера',
+      error: 'Ошибка при обработке заказа. Пожалуйста, попробуйте позже.',
       success: false,
-      details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
-    
-    // Отправка уведомления об ошибке в Telegram (если возможно)
-    try {
-      if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
-        const errorData = req.body || {};
-        await sendTelegramMessage(`
-🚨 КРИТИЧЕСКАЯ ОШИБКА В СИСТЕМЕ ЗАКАЗОВ
-
-❌ Ошибка: ${error.message}
-🕐 Время: ${new Date().toLocaleString('ru-RU')}
-📦 Данные заказа: ${JSON.stringify(errorData, null, 2).slice(0, 500)}
-💻 Стек: ${error.stack?.slice(0, 200) || 'Нет данных'}
-
-Пожалуйста, проверьте логи сервера!
-        `);
-      }
-    } catch (telegramError) {
-      console.error('❌ Не удалось отправить уведомление об ошибке в Telegram:', telegramError);
-    }
   }
+});
+
+// Root endpoint
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'Backend Фабрики торгового оборудования',
+    api: {
+      order: 'POST /api/order',
+      health: 'GET /health'
+    },
+    documentation: 'https://github.com/alfat81/fto'
+  });
 });
 
 // Обработка 404
 app.use((req, res) => {
-  console.log('🔍 Запрос к несуществующему эндпоинту:', req.method, req.url);
   res.status(404).json({
     error: 'Эндпоинт не найден',
     path: req.path,
@@ -220,43 +196,12 @@ app.use((req, res) => {
   });
 });
 
-// Глобальный обработчик ошибок
-app.use((err, req, res, next) => {
-  console.error('❌ Глобальная ошибка:', err);
-  
-  res.status(500).json({
-    error: 'Внутренняя ошибка сервера',
-    message: process.env.NODE_ENV === 'development' ? err.message : undefined,
-    success: false
-  });
-});
-
-// Запуск сервера с отладочной информацией
+// Запуск сервера
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Сервер запущен на порту ${PORT}`);
   console.log(`🌐 URL: http://0.0.0.0:${PORT}`);
   console.log(`✅ CORS origin: ${process.env.CORS_ORIGIN || 'https://alfat81.github.io'}`);
   console.log(`🔧 Node.js version: ${process.version}`);
-  console.log(`🔑 Telegram бот настроен: ${!!process.env.TELEGRAM_BOT_TOKEN}`);
-  console.log(`📞 Telegram chat ID: ${process.env.TELEGRAM_CHAT_ID?.slice(0, 4)}...${process.env.TELEGRAM_CHAT_ID?.slice(-4)}`);
-  
-  // Тестовое сообщение при запуске
-  if (process.env.NODE_ENV === 'production' && process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
-    const startupMessage = `
-✅ СИСТЕМА УСПЕШНО ЗАПУЩЕНА
-
-🕐 Время запуска: ${new Date().toLocaleString('ru-RU')}
-⚙️ Версия: 1.1.0
-📍 Сервер: Render.com
-🔗 URL: ${process.env.RENDER_EXTERNAL_URL || 'https://fto-tdks.onrender.com'}
-🎯 Порт: ${PORT}
-🔧 Node.js: ${process.version}
-
-Система готова принимать заказы!
-    `;
-    
-    sendTelegramMessage(startupMessage).catch(console.error);
-  }
 });
 
 module.exports = app;
