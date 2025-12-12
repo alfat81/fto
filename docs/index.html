@@ -9,11 +9,41 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Header (динамически загружается) -->
-    <header id="header-container"></header>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">Фабрика<span>Торгового</span>Оборудования</a>
+            <div class="nav-buttons">
+                <a href="catalog.html" class="nav-btn">Каталог</a>
+                <a href="about.html" class="nav-btn">О компании</a>
+                <a href="contacts.html" class="nav-btn">Контакты</a>
+                <a href="#" class="nav-btn" id="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
 
-    <!-- Модальное окно корзины (динамически загружается) -->
-    <div id="cart-modal-container"></div>
+    <!-- Модальное окно корзины -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ваша корзина</h2>
+            <div id="cart-items"></div>
+            <div class="cart-total">
+                <strong>Итого:</strong> <span id="cart-total">0 ₽</span>
+            </div>
+            <form id="checkout-form">
+                <div class="cart-form">
+                    <input type="text" id="name" name="name" placeholder="Ваше имя*" required autocomplete="name">
+                    <input type="tel" id="phone" name="phone" placeholder="Ваш телефон*" required autocomplete="tel">
+                    <textarea id="comment" name="comment" placeholder="Комментарий к заказу" autocomplete="off"></textarea>
+                    <button type="submit" id="checkout-btn" class="btn" disabled>Оформить заказ</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Hero Section with Parallax -->
     <section class="parallax parallax-hero" style="background-image: url('images/hero/hero-image.jpg');">
@@ -135,14 +165,22 @@
         </div>
     </section>
 
-    <!-- Footer (динамически загружается) -->
-    <footer id="footer-container"></footer>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p style="font-size: 1.1rem; margin-bottom: 20px;">© 2025 Фабрика торгового оборудования. Все права защищены.</p>
+                <p style="opacity: 0.8; margin-bottom: 20px;">Проектируем, производим и устанавливаем торговое и офисное оборудование</p>
+                <div class="social-links">
+                    <a href="https://t.me/FTO_NN" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="https://vk.com/ooofto" class="social-link" target="_blank"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <div id="toast-container"></div>
 
-    <!-- Загрузка скриптов -->
-    <script src="js/header.js"></script>
-    <script src="js/cart.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
