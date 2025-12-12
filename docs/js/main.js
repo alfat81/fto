@@ -1,138 +1,130 @@
-// Загрузка данных каталога
-async function loadCatalogData() {
-    try {
-        const response = await fetch('data/catalog.json');
-        if (!response.ok) {
-            throw new Error(`Ошибка загрузки каталога: ${response.status}`);
-        }
-        return await response.json();
-    } catch (error) {
-        console.error('❌ Ошибка загрузки каталога:', error);
-        // Резервные данные
-        return {
-            categories: [
-                { id: 'furniture', name: 'Мебель', description: 'Офисная и кухонная мебель' },
-                { id: 'equipment', name: 'Торговое оборудование', description: 'Стеллажи, прилавки, витрины' },
-                { id: 'hardware', name: 'Мебельная фурнитура', description: 'Ручки, петли, направляющие' }
-            ],
-            products: [
-                {
-                    id: 'tv-stand-1',
-                    category: 'furniture',
-                    name: 'Тумба ТВ 1600×860×420 мм',
-                    price: 14500,
-                    oldPrice: 21000,
-                    description: 'Современная тумба для ТВ',
-                    imageUrl: 'images/products/tv-stand.jpg',
-                    badge: '-30%',
-                    inStock: true
-                }
-                // ... остальные товары
-            ]
-        };
+// Инициализация корзины при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ DOM полностью загружен');
+    
+    // Инициализация корзины
+    if (typeof window.cart !== 'undefined') {
+        window.cart = JSON.parse(localStorage.getItem('cart')) || [];
+        console.log('🛒 Загружена корзина из localStorage:', window.cart);
+    }
+    
+    // Инициализация кнопок корзины
+    if (document.querySelector('.add-to-cart')) {
+        initAddToCartButtons();
+    }
+    
+    console.log('🎉 Инициализация скрипта завершена успешно');
+});
+
+// Функция инициализации кнопок добавления в корзину
+function initAddToCartButtons() {
+    console.log('🔧 Инициализация кнопок добавления в корзину');
+    
+    // Удаляем все существующие обработчики со всех кнопок
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.removeEventListener('click', addToCartHandler);
+        button.addEventListener('click', addToCartHandler);
+    });
+}
+
+// Обработчик клика по кнопке "В корзину"
+function addToCartHandler(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    
+    console.log('🛒 Клик по кнопке "В корзину"');
+    console.log('🎯 Целевая кнопка:', this);
+    
+    const product = {
+        id: this.getAttribute('data-id') || 'product-' + Date.now(),
+        name: this.getAttribute('data-name') || 'Без названия',
+        price: parseInt(this.getAttribute('data-price')) || 0,
+        image: this.getAttribute('data-image') || ''
+    };
+    
+    console.log('📦 Создан объект товара:', product);
+    addToCart(product);
+}
+
+// Функция добавления товара в корзину
+function addToCart(product) {
+    console.log('➕ Добавление товара в корзину:', product);
+    
+    if (!window.cart) {
+        window.cart = JSON.parse(localStorage.getItem('cart')) || [];
+    }
+    
+    window.cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(window.cart));
+    console.log('💾 Корзина сохранена в localStorage');
+    console.log('🛒 Корзина после добавления:', window.cart);
+    
+    // Обновление отображения корзины, если функция доступна
+    if (typeof updateCartDisplay === 'function') {
+        updateCartDisplay();
+    }
+    
+    showToast(`✅ "${product.name}" добавлен в корзину!`, 'success', 3000);
+    
+    // Анимация кнопки корзины
+    const cartBtn = document.getElementById('cart-btn');
+    if (cartBtn) {
+        cartBtn.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+            cartBtn.style.transform = 'scale(1)';
+        }, 300);
     }
 }
 
-// Отображение категорий
-async function renderCategories() {
-    const catalogData = await loadCatalogData();
-    const container = document.querySelector('.categories-grid');
+// Функция показа уведомления
+function showToast(message, type = 'info', duration = 3000) {
+    let toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toast-container';
+        toastContainer.style.position = 'fixed';
+        toastContainer.style.top = '20px';
+        toastContainer.style.right = '20px';
+        toastContainer.style.zIndex = '9999';
+        toastContainer.style.maxWidth = '350px';
+        document.body.appendChild(toastContainer);
+    }
     
-    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
     
-    container.innerHTML = '';
+    const backgroundColor = type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8';
+    toast.style.background = backgroundColor;
+    toast.style.color = 'white';
+    toast.style.padding = '15px 20px';
+    toast.style.borderRadius = '8px';
+    toast.style.marginBottom = '10px';
+    toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+    toast.style.animation = `slideIn 0.3s, fadeOut 0.5s ${duration}ms forwards`;
+    toast.style.maxWidth = '100%';
+    toast.style.wordWrap = 'break-word';
+    toast.style.fontFamily = 'Arial, sans-serif';
+    toast.style.display = 'flex';
+    toast.style.alignItems = 'center';
     
-    catalogData.categories.forEach(category => {
-        const categoryCard = document.createElement('a');
-        categoryCard.href = `#${category.id}`;
-        categoryCard.className = 'category-card';
-        categoryCard.innerHTML = `
-            <div class="category-image">
-                <img src="${category.image || 'images/placeholder-category.jpg'}" alt="${category.name}" loading="lazy">
-            </div>
-            <h3 class="category-title">${category.name}</h3>
-            <p>${category.description}</p>
-        `;
-        container.appendChild(categoryCard);
-    });
+    const icon = document.createElement('i');
+    icon.className = type === 'success' ? 'fas fa-check-circle' : type === 'error' ? 'fas fa-exclamation-circle' : 'fas fa-info-circle';
+    icon.style.marginRight = '10px';
+    icon.style.fontSize = '1.2em';
+    
+    const text = document.createElement('span');
+    text.textContent = message;
+    
+    toast.appendChild(icon);
+    toast.appendChild(text);
+    toastContainer.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.animation = 'fadeOut 0.5s forwards';
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+            }
+        }, 500);
+    }, duration);
 }
-
-// Отображение товаров по категориям
-async function renderProductsByCategory() {
-    const catalogData = await loadCatalogData();
-    const sections = document.querySelectorAll('[id^="category-"], [id^="furniture"], [id^="equipment"], [id^="hardware"]');
-    
-    sections.forEach(section => {
-        const sectionId = section.id;
-        const categoryMap = {
-            'furniture-section': 'furniture',
-            'equipment-section': 'equipment', 
-            'hardware-section': 'hardware'
-        };
-        
-        const categoryId = categoryMap[sectionId] || sectionId.replace('category-', '');
-        const container = section.querySelector('.products-grid');
-        
-        if (!container) return;
-        
-        // Фильтрация товаров по категории
-        const categoryProducts = catalogData.products.filter(product => 
-            product.category === categoryId && product.inStock
-        );
-        
-        if (categoryProducts.length === 0) {
-            container.innerHTML = '<p class="no-products">В этой категории пока нет товаров</p>';
-            return;
-        }
-        
-        container.innerHTML = '';
-        
-        categoryProducts.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.className = 'product-card parallax-item';
-            productCard.innerHTML = `
-                <div class="product-image">
-                    <img src="${product.imageUrl}" alt="${product.name}" loading="lazy">
-                    ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">${product.name}</h3>
-                    <div class="product-price">
-                        ${product.price.toLocaleString('ru-RU')} ₽
-                        ${product.oldPrice ? `<span class="old-price">${product.oldPrice.toLocaleString('ru-RU')} ₽</span>` : ''}
-                    </div>
-                    <p class="product-description">${product.description}</p>
-                    <div class="product-actions">
-                        <button class="btn contact-btn add-to-cart"
-                            data-id="${product.id}"
-                            data-name="${product.name}"
-                            data-price="${product.price}"
-                            data-image="${product.imageUrl}">
-                            <i class="fas fa-cart-plus"></i> В корзину
-                        </button>
-                        <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                    </div>
-                </div>
-            `;
-            container.appendChild(productCard);
-        });
-    });
-}
-
-// Обновленная версия catalog.html с компонентами
-function renderCatalogPage() {
-    // Инициализация после загрузки DOM
-    document.addEventListener('DOMContentLoaded', async function() {
-        // Загрузка и отображение данных
-        await renderCategories();
-        await renderProductsByCategory();
-        
-        console.log('✅ Каталог успешно загружен и отображен');
-    });
-}
-
-// Экспорт функций для использования в других файлах
-window.renderCatalogPage = renderCatalogPage;
-window.loadCatalogData = loadCatalogData;
-
-console.log('✅ Основной скрипт сайта загружен');
