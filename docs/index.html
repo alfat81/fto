@@ -9,44 +9,14 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <a href="index.html" class="logo">Фабрика<span>Торгового</span>Оборудования</a>
-            <div class="nav-buttons">
-                <a href="catalog.html" class="nav-btn">Каталог</a>
-                <a href="about.html" class="nav-btn">О компании</a>
-                <a href="contacts.html" class="nav-btn">Контакты</a>
-                <a href="#" class="nav-btn" id="cart-btn">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="cart-count">0</span>
-                </a>
-            </div>
-        </div>
-    </header>
+    <!-- Header (динамически загружается) -->
+    <header id="header-container"></header>
 
-    <!-- Модальное окно корзины -->
-    <div id="cart-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Ваша корзина</h2>
-            <div id="cart-items"></div>
-            <div class="cart-total">
-                <strong>Итого:</strong> <span id="cart-total">0 ₽</span>
-            </div>
-            <form id="checkout-form">
-                <div class="cart-form">
-                    <input type="text" id="name" placeholder="Ваше имя*" required>
-                    <input type="tel" id="phone" placeholder="Ваш телефон*" required>
-                    <textarea id="comment" placeholder="Комментарий к заказу"></textarea>
-                    <button type="submit" id="checkout-btn" class="btn" disabled>Оформить заказ</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <!-- Модальное окно корзины (динамически загружается) -->
+    <div id="cart-modal-container"></div>
 
     <!-- Hero Section with Parallax -->
-    <section class="parallax parallax-hero" style="background-image: url('https://images.unsplash.com/photo-1561070791-37d1a761e6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+    <section class="parallax parallax-hero" style="background-image: url('images/hero/hero-image.jpg');">
         <div class="hero-content">
             <h1>Проектируем и производим<br>торговое оборудование</h1>
             <p style="font-size: 1.3rem; margin: 25px 0; opacity: 0.9;">Качественная мебель для вашего бизнеса с гарантией и индивидуальным подходом</p>
@@ -64,7 +34,7 @@
             <div class="products-grid stagger-animation">
                 <div class="product-card parallax-item">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1556901587-7c176b8a7f8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Тумба ТВ" loading="lazy">
+                        <img src="images/products/tv-stand.jpg" alt="Тумба ТВ" loading="lazy">
                         <div class="product-badge">-30%</div>
                     </div>
                     <div class="product-content">
@@ -85,7 +55,7 @@
 
                 <div class="product-card parallax-item">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1556906149-462b99e62c0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Тумба" loading="lazy">
+                        <img src="images/products/small-cabinet.jpg" alt="Тумба" loading="lazy">
                     </div>
                     <div class="product-content">
                         <h3 class="product-title">Тумба 530×450×250 мм</h3>
@@ -105,7 +75,7 @@
 
                 <div class="product-card parallax-item">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Мойка" loading="lazy">
+                        <img src="images/products/sink.jpg" alt="Мойка" loading="lazy">
                     </div>
                     <div class="product-content">
                         <h3 class="product-title">Мойка с сифоном</h3>
@@ -132,22 +102,22 @@
             <h2 class="section-title">Наши работы</h2>
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1525909940839-d2490d84e2b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Производство" loading="lazy">
+                    <img src="images/gallery/workshop1.jpg" alt="Производство" loading="lazy">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1556906149-462b99e62c0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Мастерская" loading="lazy">
+                    <img src="images/gallery/workshop2.jpg" alt="Мастерская" loading="lazy">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Проект" loading="lazy">
+                    <img src="images/gallery/project1.jpg" alt="Проект" loading="lazy">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1525909940839-d2490d84e2b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Реализация" loading="lazy">
+                    <img src="images/gallery/project2.jpg" alt="Реализация" loading="lazy">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1556901587-7c176b8a7f8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Клиент" loading="lazy">
+                    <img src="images/gallery/project3.jpg" alt="Клиент" loading="lazy">
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1525909940839-d2490d84e2b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Объект" loading="lazy">
+                    <img src="images/gallery/project4.jpg" alt="Объект" loading="lazy">
                 </div>
             </div>
         </div>
@@ -165,22 +135,14 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <p style="font-size: 1.1rem; margin-bottom: 20px;">© 2025 Фабрика торгового оборудования. Все права защищены.</p>
-                <p style="opacity: 0.8; margin-bottom: 20px;">Проектируем, производим и устанавливаем торговое и офисное оборудование</p>
-                <div class="social-links">
-                    <a href="https://t.me/FTO_NN" class="social-link"><i class="fab fa-telegram"></i></a>
-                    <a href="https://vk.com/ooofto" class="social-link" target="_blank"><i class="fab fa-vk"></i></a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <!-- Footer (динамически загружается) -->
+    <footer id="footer-container"></footer>
 
     <div id="toast-container"></div>
 
+    <!-- Загрузка скриптов -->
+    <script src="js/header.js"></script>
+    <script src="js/cart.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
