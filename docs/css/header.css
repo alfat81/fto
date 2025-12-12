@@ -1,0 +1,128 @@
+/* Стили для шапки */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 20px 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+header.scrolled {
+    background: rgba(44, 62, 80, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 10px 0;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: #3498db;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-btn {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    position: relative;
+    padding: 5px 0;
+    transition: all 0.3s ease;
+}
+
+.nav-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #3498db;
+    transition: width 0.3s ease;
+}
+
+.nav-btn:hover::after,
+.nav-btn.active::after {
+    width: 100%;
+}
+
+.nav-btn:hover {
+    color: #3498db;
+}
+
+#cart-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #e74c3c;
+    color: white !important;
+    padding: 8px 15px !important;
+    border-radius: 20px !important;
+    transition: all 0.3s ease !important;
+}
+
+#cart-btn:hover {
+    background: #c0392b !important;
+    transform: translateY(-2px) !important;
+}
+
+#cart-count {
+    background: white;
+    color: #e74c3c;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    min-width: 22px;
+    text-align: center;
+}
+
+/* Адаптивный дизайн для шапки */
+@media (max-width: 768px) {
+    .nav-buttons {
+        gap: 15px;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+    }
+    
+    .nav-btn {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-buttons {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .nav-btn {
+        padding: 3px 0;
+        font-size: 0.9rem;
+    }
+}
