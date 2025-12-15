@@ -23,7 +23,8 @@ app.get('/health', (req, res) => {
     status: 'ok',
     timestamp: new Date().toISOString(),
     version: '1.0.0',
-    nodeVersion: process.version
+    nodeVersion: process.version,
+    telegramConfigured: !!process.env.TELEGRAM_BOT_TOKEN
   });
 });
 
@@ -57,13 +58,11 @@ async function sendTelegramMessage(text) {
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('❌ Ошибка Telegram API:', errorData);
       throw new Error(`Telegram API error: ${errorData.description || 'Unknown error'}`);
     }
 
     return await response.json();
   } catch (error) {
-    console.error('🔥 Критическая ошибка при отправке в Telegram:', error);
     throw error;
   }
 }
@@ -75,15 +74,24 @@ app.post('/api/order', async (req, res) => {
     
     // Валидация данных
     if (!items || !Array.isArray(items) || items.length === 0) {
-      return res.status(400).json({ error: 'Отсутствуют товары в заказе' });
+      return res.status(400).json({ 
+        error: 'Отсутствуют товары в заказе',
+        success: false
+      });
     }
     
     if (!customer?.name || !customer?.phone) {
-      return res.status(400).json({ error: 'Отсутствуют данные клиента' });
+      return res.status(400).json({ 
+        error: 'Отсутствуют данные клиента',
+        success: false
+      });
     }
     
     if (typeof total !== 'number' || total <= 0) {
-      return res.status(400).json({ error: 'Некорректная сумма заказа' });
+      return res.status(400).json({ 
+        error: 'Некорректная сумма заказа',
+        success: false
+      });
     }
     
     // Формирование сообщения для Telegram
@@ -132,6 +140,26 @@ ${itemsList}
       success: false
     });
   }
+});
+
+// Root endpoint
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'Backend Фабрики торгового оборудования',
+    api: {
+      order: 'POST /api/order',
+      health: 'GET /health'
+    }
+  });
+});
+
+// Обработка 404
+app.use((req, res) => {
+  res.status(404).json({
+    error: 'Эндпоинт не найден',
+    path: req.path,
+    method: req.method
+  });
 });
 
 // Запуск сервера
