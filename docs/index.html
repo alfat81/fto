@@ -31,10 +31,10 @@
                     <button class="search-btn">
                         <i class="fas fa-search"></i>
                     </button>
-                    <a href="#" class="cart-btn">
+                    <button class="cart-toggle-btn">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count">0</span>
-                    </a>
+                        <span class="cart-count-badge" style="display: none;">0</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -66,17 +66,15 @@
         </div>
     </header>
 
-    <!-- Banner Slider -->
-    <section class="banner-slider">
-        <div class="banner-item active" style="background-image: url('images/banner/main-banner-1.jpg');">
-            <div class="container">
-                <div class="banner-content">
-                    <h1 class="banner-title">Торговое оборудование <br>для вашего бизнеса</h1>
-                    <p class="banner-subtitle">Производим и устанавливаем качественные решения под ваши задачи</p>
-                    <div class="banner-buttons">
-                        <a href="catalog.html" class="btn btn-large">Каталог товаров</a>
-                        <a href="about.html" class="btn btn-large btn-outline">О компании</a>
-                    </div>
+    <!-- Banner Section -->
+    <section class="banner-section">
+        <div class="container">
+            <div class="banner-content">
+                <h1>Торговое оборудование <br>для вашего бизнеса</h1>
+                <p class="banner-subtitle">Производим и устанавливаем качественные решения под ваши задачи</p>
+                <div class="banner-buttons">
+                    <a href="catalog.html" class="btn btn-large">Каталог товаров</a>
+                    <a href="about.html" class="btn btn-large btn-outline">О компании</a>
                 </div>
             </div>
         </div>
@@ -103,7 +101,7 @@
                         </div>
                         <p class="product-description">Современная тумба для ТВ с качественной фурнитурой и надежной конструкцией</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary add-to-cart" data-id="tv-stand-1" data-name="Тумба ТВ 1600×860×420 мм" data-price="14500">
+                            <button class="btn btn-primary add-to-cart" data-id="tv-stand-1" data-name="Тумба ТВ 1600×860×420 мм" data-price="14500" data-image="images/products/tv-stand.jpg">
                                 <i class="fas fa-shopping-cart"></i> В корзину
                             </button>
                             <a href="tel:+79601786738" class="btn btn-outline">Позвонить</a>
@@ -122,7 +120,7 @@
                         </div>
                         <p class="product-description">Компактная тумба для хранения документов и аксессуаров</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary add-to-cart" data-id="small-cabinet-1" data-name="Тумба 530×450×250 мм" data-price="6400">
+                            <button class="btn btn-primary add-to-cart" data-id="small-cabinet-1" data-name="Тумба 530×450×250 мм" data-price="6400" data-image="images/products/small-cabinet.jpg">
                                 <i class="fas fa-shopping-cart"></i> В корзину
                             </button>
                             <a href="tel:+79601786738" class="btn btn-outline">Позвонить</a>
@@ -141,7 +139,7 @@
                         </div>
                         <p class="product-description">Надежная мойка для кухонь и санузлов с комплектом сифона</p>
                         <div class="product-actions">
-                            <button class="btn btn-primary add-to-cart" data-id="sink-1" data-name="Мойка с сифоном" data-price="1200">
+                            <button class="btn btn-primary add-to-cart" data-id="sink-1" data-name="Мойка с сифоном" data-price="1200" data-image="images/products/sink.jpg">
                                 <i class="fas fa-shopping-cart"></i> В корзину
                             </button>
                             <a href="tel:+79601786738" class="btn btn-outline">Позвонить</a>
@@ -315,27 +313,34 @@
         </div>
     </footer>
 
-    <!-- Cart Modal -->
-    <div id="cart-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Ваша корзина</h2>
-            <div id="cart-items"></div>
-            <div class="cart-total">
-                <strong>Итого:</strong> <span id="cart-total">0 ₽</span>
+    <!-- Cart Container -->
+    <div class="cart-overlay"></div>
+    <div class="cart-container">
+        <div class="cart-header">
+            <h2 class="cart-title">Ваша корзина</h2>
+            <button class="cart-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-content">
+            <div id="cart-items-container"></div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total-container">
+                <span class="cart-total-label">Итого:</span>
+                <div class="cart-total" id="cart-total">0 ₽</div>
             </div>
-            <form id="checkout-form">
-                <div class="cart-form">
-                    <input type="text" id="name" name="name" placeholder="Ваше имя*" required autocomplete="name">
-                    <input type="tel" id="phone" name="phone" placeholder="Ваш телефон*" required autocomplete="tel">
-                    <textarea id="comment" name="comment" placeholder="Комментарий к заказу" autocomplete="off"></textarea>
-                    <button type="submit" id="checkout-btn" class="btn btn-primary" disabled>Оформить заказ</button>
-                </div>
+            <form class="checkout-form" id="checkout-form">
+                <input type="text" class="cart-input" id="name" name="name" placeholder="Ваше имя*" required autocomplete="name">
+                <input type="tel" class="cart-input" id="phone" name="phone" placeholder="Ваш телефон*" required autocomplete="tel">
+                <textarea class="cart-input" id="comment" name="comment" placeholder="Комментарий к заказу" autocomplete="off" rows="3"></textarea>
+                <button type="submit" class="checkout-btn" id="checkout-btn" disabled>Оформить заказ</button>
             </form>
         </div>
     </div>
 
     <div id="toast-container"></div>
     <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
 </body>
 </html>
