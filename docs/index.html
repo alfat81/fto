@@ -4,28 +4,318 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Фабрика торгового оборудования | Нижний Новгород</title>
-    <meta name="description" content="Проектируем, производим и устанавливаем торговое и офисное оборудование в Нижнем Новгороде. Тумбы, мойки, мебель под заказ.">
+    <meta name="description" content="Производство и продажа торгового оборудования для бизнеса в Нижнем Новгороде. Офисная мебель, стеллажи, витрины, мебель под заказ.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <a href="index.html" class="logo">Фабрика<span>Торгового</span>Оборудования</a>
-            <div class="nav-buttons">
-                <a href="catalog.html" class="nav-btn">Каталог</a>
-                <a href="about.html" class="nav-btn">О компании</a>
-                <a href="contacts.html" class="nav-btn">Контакты</a>
-                <a href="#" class="nav-btn" id="cart-btn">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="cart-count">0</span>
+    <header class="header">
+        <div class="container">
+            <div class="header-container">
+                <a href="index.html" class="logo">
+                    <span>Фабрика</span>Торгового<span>Оборудования</span>
                 </a>
+                <div class="header-contacts">
+                    <a href="tel:+79601786738" class="phone">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>+7 (960) 178-67-38</span>
+                    </a>
+                    <a href="mailto:a20072005@yandex.ru" class="email">
+                        <i class="fas fa-envelope"></i>
+                        <span>a20072005@yandex.ru</span>
+                    </a>
+                </div>
+                <div class="header-actions">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <a href="#" class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-menu">
+            <div class="container">
+                <nav class="nav">
+                    <ul class="menu">
+                        <li class="menu-item active"><a href="index.html">Главная</a></li>
+                        <li class="menu-item has-submenu">
+                            <a href="#">Каталог <i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu">
+                                <li><a href="catalog.html#furniture">Мебель</a></li>
+                                <li><a href="catalog.html#equipment">Торговое оборудование</a></li>
+                                <li><a href="catalog.html#hardware">Мебельная фурнитура</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item"><a href="about.html">О компании</a></li>
+                        <li class="menu-item"><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                    <div class="menu-actions">
+                        <a href="tel:+79601786738" class="btn btn-primary">Заказать расчет</a>
+                        <button class="menu-toggle">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </nav>
             </div>
         </div>
     </header>
 
-    <!-- Модальное окно корзины -->
+    <!-- Banner Slider -->
+    <section class="banner-slider">
+        <div class="banner-item active" style="background-image: url('images/banner/main-banner-1.jpg');">
+            <div class="container">
+                <div class="banner-content">
+                    <h1 class="banner-title">Торговое оборудование <br>для вашего бизнеса</h1>
+                    <p class="banner-subtitle">Производим и устанавливаем качественные решения под ваши задачи</p>
+                    <div class="banner-buttons">
+                        <a href="catalog.html" class="btn btn-large">Каталог товаров</a>
+                        <a href="about.html" class="btn btn-large btn-outline">О компании</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bestsellers Section -->
+    <section class="section bestsellers">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Популярные товары</h2>
+                <a href="catalog.html" class="section-link">Весь каталог <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="images/products/tv-stand.jpg" alt="Тумба ТВ 1600×860×420 мм">
+                        <div class="product-badge">-30%</div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Тумба ТВ 1600×860×420 мм</h3>
+                        <div class="product-price">
+                            <span class="current-price">14 500 ₽</span>
+                            <span class="old-price">21 000 ₽</span>
+                        </div>
+                        <p class="product-description">Современная тумба для ТВ с качественной фурнитурой и надежной конструкцией</p>
+                        <div class="product-actions">
+                            <button class="btn btn-primary add-to-cart" data-id="tv-stand-1" data-name="Тумба ТВ 1600×860×420 мм" data-price="14500">
+                                <i class="fas fa-shopping-cart"></i> В корзину
+                            </button>
+                            <a href="tel:+79601786738" class="btn btn-outline">Позвонить</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="images/products/small-cabinet.jpg" alt="Тумба 530×450×250 мм">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Тумба 530×450×250 мм</h3>
+                        <div class="product-price">
+                            <span class="current-price">6 400 ₽</span>
+                        </div>
+                        <p class="product-description">Компактная тумба для хранения документов и аксессуаров</p>
+                        <div class="product-actions">
+                            <button class="btn btn-primary add-to-cart" data-id="small-cabinet-1" data-name="Тумба 530×450×250 мм" data-price="6400">
+                                <i class="fas fa-shopping-cart"></i> В корзину
+                            </button>
+                            <a href="tel:+79601786738" class="btn btn-outline">Позвонить</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="images/products/sink.jpg" alt="Мойка с сифоном">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Мойка с сифоном</h3>
+                        <div class="product-price">
+                            <span class="current-price">1 200 ₽</span>
+                        </div>
+                        <p class="product-description">Надежная мойка для кухонь и санузлов с комплектом сифона</p>
+                        <div class="product-actions">
+                            <button class="btn btn-primary add-to-cart" data-id="sink-1" data-name="Мойка с сифоном" data-price="1200">
+                                <i class="fas fa-shopping-cart"></i> В корзину
+                            </button>
+                            <a href="tel:+79601786738" class="btn btn-outline">Позвонить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="section categories">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Категории товаров</h2>
+            </div>
+            <div class="categories-grid">
+                <a href="catalog.html#furniture" class="category-card">
+                    <div class="category-image">
+                        <img src="images/products/office-desk.jpg" alt="Мебель">
+                    </div>
+                    <div class="category-content">
+                        <h3 class="category-title">Мебель</h3>
+                        <p class="category-description">Офисная и кухонная мебель под заказ</p>
+                        <span class="category-count">32 товара</span>
+                    </div>
+                </a>
+                
+                <a href="catalog.html#equipment" class="category-card">
+                    <div class="category-image">
+                        <img src="images/products/shelf.jpg" alt="Торговое оборудование">
+                    </div>
+                    <div class="category-content">
+                        <h3 class="category-title">Торговое оборудование</h3>
+                        <p class="category-description">Стеллажи, прилавки, витрины</p>
+                        <span class="category-count">18 товаров</span>
+                    </div>
+                </a>
+                
+                <a href="catalog.html#hardware" class="category-card">
+                    <div class="category-image">
+                        <img src="images/products/handles.jpg" alt="Мебельная фурнитура">
+                    </div>
+                    <div class="category-content">
+                        <h3 class="category-title">Мебельная фурнитура</h3>
+                        <p class="category-description">Ручки, петли, направляющие</p>
+                        <span class="category-count">15 товаров</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Company Section -->
+    <section class="section about-company">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">О нашей компании</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3 class="about-title">Фабрика торгового оборудования</h3>
+                    <p class="about-description">Мы проектируем, производим и устанавливаем торговое и офисное оборудование в Нижнем Новгороде с 2010 года.</p>
+                    <p class="about-description">За это время мы реализовали более 1000 проектов для различных организаций, включая магазины, рестораны, офисы и производственные предприятия.</p>
+                    <div class="about-features">
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Индивидуальный подход к каждому клиенту</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Гарантия качества на всю продукцию</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>Собственное производство в Нижнем Новгороде</span>
+                        </div>
+                    </div>
+                    <a href="about.html" class="btn btn-primary">Подробнее о компании</a>
+                </div>
+                <div class="about-image">
+                    <img src="images/gallery/workshop1.jpg" alt="Наше производство">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Готовы сделать заказ?</h2>
+                <p class="cta-subtitle">Свяжитесь с нами для консультации и расчета стоимости</p>
+                <div class="cta-buttons">
+                    <a href="tel:+79601786738" class="btn btn-large btn-primary">
+                        <i class="fas fa-phone-alt"></i> Позвонить
+                    </a>
+                    <a href="https://t.me/FTO_NN" class="btn btn-large btn-outline">
+                        <i class="fab fa-telegram"></i> Написать в Telegram
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <span>Фабрика</span>Торгового<span>Оборудования</span>
+                    </a>
+                    <p class="footer-text">
+                        Производим и устанавливаем торговое и офисное оборудование для вашего бизнеса
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://t.me/FTO_NN" class="social-link">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://vk.com/ooofto" class="social-link" target="_blank">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Каталог товаров</h4>
+                    <ul class="footer-links">
+                        <li><a href="catalog.html#furniture">Мебель</a></li>
+                        <li><a href="catalog.html#equipment">Торговое оборудование</a></li>
+                        <li><a href="catalog.html#hardware">Мебельная фурнитура</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Информация</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">О компании</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Гарантия</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Контакты</h4>
+                    <ul class="footer-contacts">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>ул. Тургенева, 9, Нижний Новгород</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <a href="tel:+79601786738">+7 (960) 178-67-38</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:a20072005@yandex.ru">a20072005@yandex.ru</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>Пн-Пт: 9:00-18:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2025 Фабрика торгового оборудования. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -39,148 +329,13 @@
                     <input type="text" id="name" name="name" placeholder="Ваше имя*" required autocomplete="name">
                     <input type="tel" id="phone" name="phone" placeholder="Ваш телефон*" required autocomplete="tel">
                     <textarea id="comment" name="comment" placeholder="Комментарий к заказу" autocomplete="off"></textarea>
-                    <button type="submit" id="checkout-btn" class="btn" disabled>Оформить заказ</button>
+                    <button type="submit" id="checkout-btn" class="btn btn-primary" disabled>Оформить заказ</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Hero Section with Parallax -->
-    <section class="parallax parallax-hero" style="background-image: url('images/hero/hero-image.jpg');">
-        <div class="hero-content">
-            <h1>Проектируем и производим<br>торговое оборудование</h1>
-            <p style="font-size: 1.3rem; margin: 25px 0; opacity: 0.9;">Качественная мебель для вашего бизнеса с гарантией и индивидуальным подходом</p>
-            <div style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
-                <a href="tel:+79601786738" class="btn btn-secondary">Позвонить: +7 (960) 178-67-38</a>
-                <a href="https://t.me/FTO_NN" class="btn btn-secondary">Написать в Telegram</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Products Section -->
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">Популярные товары</h2>
-            <div class="products-grid stagger-animation">
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="images/products/tv-stand.jpg" alt="Тумба ТВ" loading="lazy">
-                        <div class="product-badge">-30%</div>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Тумба ТВ 1600×860×420 мм</h3>
-                        <div class="product-price">14 500 ₽ <span class="old-price">21 000 ₽</span></div>
-                        <p class="product-description">Современная тумба для ТВ с качественной фурнитурой и надежной конструкцией</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="tv-stand-1"
-                                data-name="Тумба ТВ 1600×860×420 мм"
-                                data-price="14500">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="images/products/small-cabinet.jpg" alt="Тумба" loading="lazy">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Тумба 530×450×250 мм</h3>
-                        <div class="product-price">6 400 ₽</div>
-                        <p class="product-description">Компактная тумба для хранения документов и аксессуаров</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="small-cabinet-1"
-                                data-name="Тумба 530×450×250 мм"
-                                data-price="6400">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="images/products/sink.jpg" alt="Мойка" loading="lazy">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Мойка с сифоном</h3>
-                        <div class="product-price">1 200 ₽</div>
-                        <p class="product-description">Надежная мойка для кухонь и санузлов с комплектом сифона</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="sink-1"
-                                data-name="Мойка с сифоном"
-                                data-price="1200">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">Наши работы</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="images/gallery/workshop1.jpg" alt="Производство" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/gallery/workshop2.jpg" alt="Мастерская" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/gallery/project1.jpg" alt="Проект" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/gallery/project2.jpg" alt="Реализация" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/gallery/project3.jpg" alt="Клиент" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/gallery/project4.jpg" alt="Объект" loading="lazy">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="section about-section">
-        <div class="container">
-            <div class="about-content">
-                <h2>О нашей компании</h2>
-                <p>Фабрика торгового оборудования - это компания которая проектирует, производит и устанавливает торговое и офисное оборудование в Нижнем Новгороде.</p>
-                <p>Мы предлагаем качественные решения для вашего бизнеса по выгодным ценам с гарантией качества.</p>
-                <a href="about.html" class="btn" style="margin-top: 20px;">Подробнее о компании</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <p style="font-size: 1.1rem; margin-bottom: 20px;">© 2025 Фабрика торгового оборудования. Все права защищены.</p>
-                <p style="opacity: 0.8; margin-bottom: 20px;">Проектируем, производим и устанавливаем торговое и офисное оборудование</p>
-                <div class="social-links">
-                    <a href="https://t.me/FTO_NN" class="social-link"><i class="fab fa-telegram"></i></a>
-                    <a href="https://vk.com/ooofto" class="social-link" target="_blank"><i class="fab fa-vk"></i></a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
     <div id="toast-container"></div>
-
     <script src="js/main.js"></script>
 </body>
 </html>
