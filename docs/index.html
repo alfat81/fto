@@ -135,46 +135,73 @@
     
     <!-- Скрипт для отображения популярных товаров на главной -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        function renderPopularProducts() {
             const container = document.getElementById('popular-products');
-            // Проверяем, что контейнер есть и данные загружены
-            if (container && typeof CATALOG_DATA !== 'undefined') {
-                // Берём первые 3 товара как "популярные"
-                const popular = CATALOG_DATA.slice(0, 3);
+            if (!container) return;
+            
+            // Проверяем, что CATALOG_DATA доступен
+            if (typeof CATALOG_DATA === 'undefined' || !Array.isArray(CATALOG_DATA)) {
+                console.warn('CATALOG_DATA не загружен');
+                container.innerHTML = '<p style="text-align:center; padding:40px; color:red;">Ошибка загрузки товаров</p>';
+                return;
+            }
+            
+            // Берём первые 3 товара как "популярные"
+            const popular = CATALOG_DATA.slice(0, 3);
+            
+            if (popular.length === 0) {
+                container.innerHTML = '<p style="text-align:center; padding:40px;">Товаров пока нет</p>';
+                return;
+            }
+            
+            container.innerHTML = popular.map(product => {
+                // Формируем путь к изображению
+                const imgUrl = `images/${product.id}.jpg`;
                 
-                container.innerHTML = popular.map(product => {
-                    const imgUrl = Utils.getProductImage(product.id);
-                    return `
-                        <div class="product-card" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
-                            <div class="product-image-wrap">
-                                <img src="${imgUrl}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Нет+фото'">
-                            </div>
-                            <div class="product-info">
-                                <h3 class="product-title">${product.name}</h3>
-                                <p class="product-description">${product.description}</p>
-                                <div class="product-price-row">
-                                    <span class="price">${Utils.formatPrice(product.price)}</span>
-                                    <button class="btn-add" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">В корзину</button>
-                                </div>
+                return `
+                    <div class="product-card" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
+                        <div class="product-image-wrap">
+                            <img src="${imgUrl}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200/e2e8f0/64748b?text=Нет+фото'">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <p class="product-description">${product.description || ''}</p>
+                            <div class="product-price-row">
+                                <span class="price">${Utils.formatPrice(product.price)}</span>
+                                <button class="btn-add" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">В корзину</button>
                             </div>
                         </div>
-                    `;
-                }).join('');
-                
-                // Навешиваем обработчики на кнопки "В корзину"
-                container.querySelectorAll('.btn-add').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const id = e.target.dataset.id;
-                        const name = e.target.dataset.name;
-                        const price = parseFloat(e.target.dataset.price);
-                        if (typeof CartModule !== 'undefined') {
-                            CartModule.add({ id, name, price });
-                            if (typeof ToastModule !== 'undefined') ToastModule.show('Товар добавлен', 'success');
+                    </div>
+                `;
+            }).join('');
+            
+            // Навешиваем обработчики на кнопки "В корзину"
+            container.querySelectorAll('.btn-add').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = e.target.dataset.id;
+                    const name = e.target.dataset.name;
+                    const price = parseFloat(e.target.dataset.price);
+                    
+                    if (typeof CartModule !== 'undefined') {
+                        CartModule.add({ id, name, price });
+                        if (typeof ToastModule !== 'undefined') {
+                            ToastModule.show('Товар добавлен в корзину', 'success');
                         }
-                    });
+                    }
                 });
-            }
-        });
+            });
+            
+            console.log(`✅ Загружено ${popular.length} популярных товаров`);
+        }
+        
+        // Запускаем после загрузки всех скриптов
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', renderPopularProducts);
+        } else {
+            // Если DOM уже готов
+            setTimeout(renderPopularProducts, 100);
+        }
     </script>
 </body>
 </html>
