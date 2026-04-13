@@ -1,23 +1,24 @@
 /**
- * style.css - Исправленная версия
- * ftoshop.ru
+ * style.css - Современный корпоративный стиль
+ * По мотивам express-office.ru
  */
 
-/* =========================================
-   1. ПЕРЕМЕННЫЕ
-   ========================================= */
 :root {
-    --primary-color: #1976d2;
-    --primary-dark: #0d47a1;
-    --accent-color: #ff9800;
-    --text-main: #212121;
-    --text-light: #757575;
-    --bg-light: #f5f5f5;
-    --white: #ffffff;
-    --dark-bg: #263238;
-    --border-radius: 8px;
-    --shadow: 0 2px 10px rgba(0,0,0,0.1);
-    --transition: all 0.3s ease;
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #3b82f6;
+    --secondary: #64748b;
+    --accent: #f59e0b;
+    --text: #1e293b;
+    --text-light: #64748b;
+    --bg: #ffffff;
+    --bg-secondary: #f8fafc;
+    --border: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --radius: 8px;
+    --radius-lg: 12px;
 }
 
 * {
@@ -27,96 +28,110 @@
 }
 
 body {
-    font-family: 'Roboto', 'Segoe UI', sans-serif;
-    color: var(--text-main);
-    background: var(--bg-light);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg-secondary);
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 24px;
 }
 
-/* =========================================
-   2. ШАПКА
-   ========================================= */
+/* ========== HEADER ========== */
 header {
-    background: var(--dark-bg);
-    color: var(--white);
-    padding: 15px 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow-sm);
 }
 
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 16px 0;
 }
 
 .logo {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
-    color: var(--white);
+    color: var(--primary);
     text-decoration: none;
-}
-
-.logo span {
-    color: var(--primary-color);
-}
-
-.nav-buttons {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-.nav-btn {
-    color: var(--white);
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    transition: var(--transition);
-    font-weight: 500;
-}
-
-.nav-btn:hover,
-.nav-btn.active {
-    background: var(--primary-color);
-}
-
-#cart-btn {
-    background: var(--accent-color);
-    color: var(--white);
-    padding: 8px 16px;
-    border-radius: 4px;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-#cart-count {
-    background: var(--white);
-    color: var(--accent-color);
-    padding: 2px 8px;
-    border-radius: 50%;
-    font-weight: bold;
-    font-size: 12px;
+.logo span {
+    color: var(--text);
+    font-weight: 400;
+    font-size: 14px;
 }
 
-/* =========================================
-   3. HERO СЕКЦИЯ
-   ========================================= */
+.nav-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.nav-btn {
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: var(--radius);
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.nav-btn:hover {
+    color: var(--primary);
+    background: var(--bg-secondary);
+}
+
+.nav-btn.active {
+    color: var(--primary);
+    background: #eff6ff;
+}
+
+#cart-btn {
+    background: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+#cart-btn:hover {
+    background: var(--primary-dark);
+}
+
+#cart-count {
+    background: white;
+    color: var(--primary);
+    padding: 2px 8px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ========== HERO ========== */
 .parallax-hero {
-    background: linear-gradient(135deg, #1976d2 0%, #0d47a1 100%);
-    color: var(--white);
-    padding: 100px 0;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 80px 0;
     text-align: center;
     position: relative;
+    overflow: hidden;
 }
 
 .parallax-hero::before {
@@ -126,7 +141,8 @@ header {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.3);
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
 }
 
 .parallax-hero .container {
@@ -136,77 +152,78 @@ header {
 
 .parallax-hero h2 {
     font-size: 48px;
-    margin-bottom: 20px;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
 }
 
 .parallax-hero p {
     font-size: 20px;
-    margin-bottom: 30px;
-    opacity: 0.95;
+    opacity: 0.9;
+    margin-bottom: 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .btn {
     display: inline-block;
-    background: var(--accent-color);
-    color: var(--white);
+    background: white;
+    color: var(--primary);
     padding: 14px 32px;
-    border-radius: 4px;
+    border-radius: var(--radius);
     text-decoration: none;
     font-weight: 600;
-    transition: var(--transition);
+    font-size: 16px;
+    transition: all 0.2s;
+    box-shadow: var(--shadow);
     border: none;
     cursor: pointer;
-    font-size: 16px;
 }
 
 .btn:hover {
-    background: #f57c00;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255,152,0,0.4);
+    box-shadow: var(--shadow-lg);
 }
 
-/* =========================================
-   4. СЕКЦИИ
-   ========================================= */
+/* ========== SECTIONS ========== */
 .section {
-    padding: 60px 0;
+    padding: 64px 0;
 }
 
 .section-title {
-    text-align: center;
-    font-size: 36px;
-    margin-bottom: 40px;
-    color: var(--text-main);
+    font-size: 32px;
     font-weight: 700;
+    text-align: center;
+    margin-bottom: 48px;
+    color: var(--text);
+    letter-spacing: -0.02em;
 }
 
-/* =========================================
-   5. КАРТОЧКИ ТОВАРОВ
-   ========================================= */
+/* ========== CATALOG GRID ========== */
 .catalog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
 }
 
 .product-card {
-    background: var(--white);
-    border-radius: var(--border-radius);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: var(--transition);
+    transition: all 0.3s;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
 }
 
 .product-image-wrap {
-    height: 220px;
-    background: #e0e0e0;
+    height: 240px;
+    background: var(--bg-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -217,58 +234,62 @@ header {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.product-card:hover .product-image-wrap img {
+    transform: scale(1.05);
 }
 
 .product-info {
-    padding: 20px;
+    padding: 24px;
 }
 
 .product-title {
     font-size: 18px;
     font-weight: 600;
-    margin-bottom: 10px;
-    color: var(--text-main);
+    margin-bottom: 8px;
+    color: var(--text);
 }
 
 .product-description {
     color: var(--text-light);
     font-size: 14px;
-    margin-bottom: 15px;
-    line-height: 1.5;
+    line-height: 1.6;
+    margin-bottom: 16px;
 }
 
 .product-price-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 15px;
-    border-top: 1px solid #e0e0e0;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
 }
 
 .price {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
-    color: var(--primary-color);
+    color: var(--primary);
 }
 
 .btn-add {
-    background: var(--primary-color);
-    color: var(--white);
+    background: var(--primary);
+    color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 4px;
+    border-radius: var(--radius);
     cursor: pointer;
     font-weight: 600;
-    transition: var(--transition);
+    font-size: 14px;
+    transition: all 0.2s;
 }
 
 .btn-add:hover {
     background: var(--primary-dark);
 }
 
-/* =========================================
-   6. МОДАЛЬНЫЕ ОКНА
-   ========================================= */
+/* ========== MODALS ========== */
 .modal {
     display: none;
     position: fixed;
@@ -277,18 +298,21 @@ header {
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s;
 }
 
 .modal-content {
-    background: var(--white);
+    background: var(--bg);
     margin: 5% auto;
-    padding: 30px;
-    border-radius: var(--border-radius);
+    padding: 32px;
+    border-radius: var(--radius-lg);
     width: 90%;
     max-width: 500px;
     position: relative;
+    box-shadow: var(--shadow-lg);
+    animation: slideUp 0.3s;
     max-height: 90vh;
     overflow-y: auto;
 }
@@ -296,131 +320,174 @@ header {
 .close {
     position: absolute;
     right: 20px;
-    top: 15px;
-    font-size: 28px;
+    top: 20px;
+    font-size: 24px;
     cursor: pointer;
     color: var(--text-light);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius);
+    transition: all 0.2s;
 }
 
 .close:hover {
-    color: var(--text-main);
+    background: var(--bg-secondary);
+    color: var(--text);
 }
 
-/* =========================================
-   7. КОРЗИНА
-   ========================================= */
+/* ========== CART ========== */
 .cart-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #e0e0e0;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
 }
 
 .cart-total {
-    margin: 20px 0;
-    padding: 15px;
-    background: var(--bg-light);
-    border-radius: var(--border-radius);
+    margin: 24px 0;
+    padding: 20px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
     font-size: 18px;
     font-weight: 600;
+    display: flex;
+    justify-content: space-between;
 }
 
 .cart-form input,
 .cart-form textarea {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     font-size: 14px;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+.cart-form input:focus,
+.cart-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 #checkout-btn {
     width: 100%;
     padding: 14px;
-    background: var(--accent-color);
-    color: var(--white);
+    background: var(--primary);
+    color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--radius);
     font-weight: 600;
+    font-size: 16px;
     cursor: pointer;
+    transition: all 0.2s;
+}
+
+#checkout-btn:hover:not(:disabled) {
+    background: var(--primary-dark);
 }
 
 #checkout-btn:disabled {
-    background: #ccc;
+    background: var(--secondary);
     cursor: not-allowed;
+    opacity: 0.6;
 }
 
-/* =========================================
-   8. FOOTER
-   ========================================= */
+/* ========== FOOTER ========== */
 footer {
-    background: var(--dark-bg);
-    color: var(--white);
-    padding: 40px 0;
-    text-align: center;
+    background: var(--text);
+    color: white;
+    padding: 48px 0 32px;
     margin-top: auto;
 }
 
+.footer-content {
+    text-align: center;
+}
+
 .footer-content p {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     opacity: 0.9;
 }
 
 .social-links {
-    margin-top: 20px;
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
 }
 
 .social-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     width: 40px;
     height: 40px;
-    background: var(--primary-color);
-    color: var(--white);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
     border-radius: 50%;
-    margin: 0 8px;
-    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
 }
 
 .social-link:hover {
-    background: var(--accent-color);
-    transform: translateY(-3px);
+    background: var(--primary);
+    transform: translateY(-2px);
 }
 
-/* =========================================
-   9. TOAST УВЕДОМЛЕНИЯ
-   ========================================= */
+/* ========== TOAST ========== */
 #toast-container {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 24px;
+    right: 24px;
     z-index: 3000;
 }
 
 .toast {
-    background: var(--dark-bg);
-    color: var(--white);
-    padding: 12px 24px;
-    border-radius: 4px;
-    margin-top: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    animation: slideIn 0.3s ease;
+    background: var(--text);
+    color: white;
+    padding: 14px 24px;
+    border-radius: var(--radius);
+    margin-top: 12px;
+    box-shadow: var(--shadow-lg);
+    animation: slideInRight 0.3s;
+    font-weight: 500;
 }
 
 .toast.success {
-    background: #4caf50;
+    background: #10b981;
 }
 
 .toast.error {
-    background: #f44336;
+    background: #ef4444;
 }
 
-@keyframes slideIn {
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
     from {
-        transform: translateX(400px);
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
         opacity: 0;
     }
     to {
@@ -429,13 +496,11 @@ footer {
     }
 }
 
-/* =========================================
-   10. АДАПТИВНОСТЬ
-   ========================================= */
+/* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
     .header-container {
         flex-direction: column;
-        gap: 15px;
+        gap: 16px;
     }
     
     .nav-buttons {
@@ -444,7 +509,7 @@ footer {
     }
     
     .parallax-hero {
-        padding: 60px 0;
+        padding: 48px 0;
     }
     
     .parallax-hero h2 {
@@ -459,8 +524,11 @@ footer {
         grid-template-columns: 1fr;
     }
     
-    .modal-content {
-        margin: 10% auto;
-        padding: 20px;
+    .section {
+        padding: 40px 0;
+    }
+    
+    .section-title {
+        font-size: 24px;
     }
 }
