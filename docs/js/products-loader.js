@@ -2,23 +2,19 @@
  * products-loader.js - Загрузка товаров из data/products/
  */
 const ProductsLoader = (function() {
-    
     async function loadCatalog() {
-        // ИСПРАВЛЕНО: ищем контейнер по ID, который есть в catalog.html
-        const container = document.getElementById('full-catalog');
+        const container = document.getElementById('catalog-grid');
         if (!container) return;
 
         try {
-            container.innerHTML = '<p style="text-align:center; padding:40px;">Загрузка каталога...</p>';
-            
-            // Загружаем список файлов
+            // 1. Загружаем список файлов
             const indexResp = await fetch('data/products/index.json');
             if (!indexResp.ok) throw new Error('Не найден index.json');
             const files = await indexResp.json();
             
-            container.innerHTML = ''; // Очищаем индикатор загрузки
-
-            // Загружаем каждый товар
+            container.innerHTML = ''; // Очистка
+            
+            // 2. Загружаем каждый товар
             for (const file of files) {
                 try {
                     const resp = await fetch(`data/products/${file}`);
@@ -45,13 +41,14 @@ const ProductsLoader = (function() {
         card.dataset.id = product.id;
         card.dataset.name = product.name;
         card.dataset.price = product.price;
-        card.dataset.category = product.category || 1; // Для фильтров
 
+        // Формируем путь к изображению
         const imgSrc = product.image ? product.image : `images/${product.id}.jpg`;
         
+        // Формируем HTML спецификаций
         let specsHtml = '';
         if (product.specs) {
-            specsHtml = '<ul style="font-size:0.85em; color:#555; padding-left:20px; margin:10px 0; list-style-type:disc;">';
+            specsHtml = '<ul style="font-size:0.85em; color:var(--text-light); padding-left:20px; margin:10px 0;">';
             for (const [key, val] of Object.entries(product.specs)) {
                 specsHtml += `<li><b>${key}:</b> ${val}</li>`;
             }
