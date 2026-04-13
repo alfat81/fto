@@ -5,144 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог | ФТО - Торговое оборудование</title>
     <meta name="description" content="Полный каталог торгового оборудования: стеллажи, витрины, кассы.">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        /* Базовые стили для каталога */
-        body { font-family: sans-serif; margin: 0; line-height: 1.6; color: #333; }
-        header { background: #333; color: #fff; padding: 1rem 0; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        nav ul { list-style: none; padding: 0; display: flex; gap: 20px; }
-        nav a { color: #fff; text-decoration: none; font-weight: 500; }
-        
-        .page-header { padding: 40px 0; text-align: center; background: #f8f9fa; margin-bottom: 30px; }
-        
-        /* Сетка товаров */
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        /* Стили карточки (дублируем основные, чтобы работало без внешнего css) */
-        .product-card {
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 20px;
-            background: #fff;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-        }
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        /* Корзина в шапке */
-        .cart-icon-wrap { position: relative; cursor: pointer; margin-left: auto; }
-        .cart-count { 
-            position: absolute; top: -8px; right: -8px; 
-            background: #dc3545; color: white; 
-            border-radius: 50%; padding: 2px 6px; 
-            font-size: 12px; font-weight: bold; 
-            display: none; 
-        }
-
-        /* Модальное окно */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
-        .modal-content { background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 90%; max-width: 500px; border-radius: 8px; position: relative; max-height: 80vh; overflow-y: auto; }
-        .close-modal { position: absolute; right: 15px; top: 10px; font-size: 28px; font-weight: bold; cursor: pointer; color: #aaa; }
-        .close-modal:hover { color: #000; }
-        
-        /* Элементы формы */
-        input, textarea { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        button.btn { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
-        button.btn:disabled { background: #ccc; cursor: not-allowed; }
-        button.btn:hover:not(:disabled) { background: #0056b3; }
-    </style>
 </head>
 <body>
-
-<header>
-    <div class="container" style="display: flex; align-items: center;">
-        <div class="logo">
-            <h2 style="margin:0;">ФТО</h2>
+    <!-- Шапка подключается через header.js (единая для всех страниц) -->
+    
+    <!-- Заголовок страницы -->
+    <section class="section" style="padding-top: 40px; padding-bottom: 20px;">
+        <div class="container">
+            <h1 class="section-title" style="margin-bottom: 16px;">Каталог оборудования</h1>
+            <p style="text-align: center; color: var(--text-light); max-width: 600px; margin: 0 auto;">
+                Выберите подходящее решение для вашего бизнеса
+            </p>
         </div>
-        <nav style="margin-left: 40px;">
-            <ul>
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="catalog.html" style="color: #ffc107;">Каталог</a></li>
-                <li><a href="about.html">О нас</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
-            </ul>
-        </nav>
-        <div class="cart-icon-wrap" data-toggle="cart-modal" href="#cart-modal">
-            🛒 <span style="font-size: 14px;">Корзина</span>
-            <span class="cart-count">0</span>
+    </section>
+
+    <!-- Фильтры (визуальные) -->
+    <section class="section" style="padding-top: 0; padding-bottom: 20px;">
+        <div class="container">
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+                <button class="btn" style="background: var(--primary); color: white;">Все товары</button>
+                <button class="btn" style="background: var(--bg-secondary); color: var(--text);">Стеллажи</button>
+                <button class="btn" style="background: var(--bg-secondary); color: var(--text);">Витрины</button>
+                <button class="btn" style="background: var(--bg-secondary); color: var(--text);">Кассы</button>
+                <button class="btn" style="background: var(--bg-secondary); color: var(--text);">Мебель</button>
+            </div>
         </div>
-    </div>
-</header>
+    </section>
 
-<section class="page-header">
-    <div class="container">
-        <h1>Каталог оборудования</h1>
-        <p>Выберите подходящее решение для вашего бизнеса</p>
-    </div>
-</section>
-
-<main class="container">
-    <!-- Сюда будут загружаться товары из JSON -->
-    <div id="catalog-grid" class="catalog-grid">
-        <p style="grid-column: 1/-1; text-align: center; color: #666;">Загрузка товаров...</p>
-    </div>
-</main>
-
-<!-- Модальное окно корзины (единое для всего сайта) -->
-<div id="cart-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <h2>Ваша корзина</h2>
-        <div id="cart-items-body" style="margin: 20px 0; max-height: 300px; overflow-y: auto;">
-            <!-- Товары корзины -->
+    <!-- Каталог (загружается через ProductsLoader) -->
+    <main class="container" style="padding-bottom: 60px;">
+        <div id="catalog-grid" class="catalog-grid">
+            <p style="grid-column: 1/-1; text-align: center; color: var(--text-light);">
+                Загрузка товаров...
+            </p>
         </div>
-        <div style="text-align: right; font-size: 1.2em; font-weight: bold; margin-bottom: 20px;">
-            Итого: <span id="cart-total-sum">0 ₽</span>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p><strong>Фабрика Торгового Оборудования</strong></p>
+            <p>г. Нижний Новгород, ул. Тургенева, 9</p>
+            <p>📞 +7 (960) 178-67-38 &nbsp;|&nbsp; ✉️ a20072005@yandex.ru</p>
+            <div class="social-links">
+                <a href="https://t.me/FTO_NN" class="social-link" target="_blank"><i class="fab fa-telegram"></i></a>
+                <a href="https://vk.com/ooofto" class="social-link" target="_blank"><i class="fab fa-vk"></i></a>
+            </div>
+            <p style="margin-top: 24px; opacity: 0.7; font-size: 14px;">© 2026 ftoshop.ru. Все права защищены.</p>
         </div>
-        
-        <form id="order-form">
-            <h3>Оформление заказа</h3>
-            <input type="text" name="name" placeholder="Ваше имя" required>
-            <input type="tel" name="phone" placeholder="Телефон" required>
-            <textarea name="address" placeholder="Адрес доставки (необязательно)" rows="2"></textarea>
-            <button type="submit" class="btn" id="checkout-btn" disabled>Подтвердить заказ</button>
-        </form>
-    </div>
-</div>
+    </footer>
 
-<footer style="background: #333; color: #fff; padding: 30px 0; margin-top: auto;">
-    <div class="container" style="text-align: center;">
-        <p>© 2023 Фабрика Торгового Оборудования</p>
-        <p>г. Нижний Новгород, ул. Тургенева, 9 | Тел: +7 (960) 178-67-38</p>
-    </div>
-</footer>
+    <!-- Toast container -->
+    <div id="toast-container"></div>
 
-<!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ -->
-<!-- Порядок важен: конфиг -> утилиты -> тосты -> корзина -> загрузчик товаров -> приложение -->
-<script src="js/config.js"></script>
-<script src="js/utils.js"></script>
-<script src="js/toast-module.js"></script>
-<script src="js/cart-module.js"></script>
-<script src="js/products-loader.js"></script>
-<script src="js/app.js"></script>
-
-<!-- Скрипт инициализации каталога -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Запускаем загрузку товаров сразу после готовности DOM
-        ProductsLoader.loadProducts('#catalog-grid');
-    });
-</script>
-
+    <!-- Подключение скриптов (порядок важен!) -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/toast-module.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/cart-module.js"></script>
+    <script src="js/products-loader.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- Инициализация каталога -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof ProductsLoader !== 'undefined') {
+                ProductsLoader.loadProducts('#catalog-grid');
+            }
+        });
+    </script>
 </body>
 </html>
