@@ -280,3 +280,42 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
         margin-top: 0;
     }
 }
+/* =========================================
+ФИЛЬТРЫ КАТАЛОГА
+========================================= */
+.catalog-filters {
+    margin-bottom: 40px;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    background: white;
+    color: var(--text-main);
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.filter-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    .catalog-filters {
+        margin-bottom: 20px;
+    }
+    
+    .filter-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}

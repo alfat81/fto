@@ -4,58 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог | ФТО - Фабрика Торгового Оборудования</title>
-    <meta name="description" content="Каталог торгового оборудования: стеллажи, витрины, кассы.">
+    <meta name="description" content="Каталог торгового оборудования: стеллажи, витрины, кассы, кресла.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Шапка вставляется через header.js -->
+    <!-- Шапка вставляется через js/header.js -->
+
+    <!-- Синий баннер -->
+    <section class="parallax-hero">
+        <div class="container">
+            <h2>Каталог продукции</h2>
+            <p>Торговое оборудование, мебель и кресла для вашего бизнеса</p>
+        </div>
+    </section>
 
     <main class="page-content">
         <div class="container">
-            <h1 class="page-title">Каталог продукции</h1>
+            <!-- Фильтры по категориям -->
+            <div id="catalog-filters" class="catalog-filters" style="margin-bottom: 40px;">
+                <p style="text-align: center; color: var(--text-light);">Загрузка категорий...</p>
+            </div>
             
-            <div id="catalog-filters" class="catalog-filters"></div>
-            
+            <!-- Сетка товаров -->
             <div class="products-grid" id="catalog-grid">
-                <p style="text-align:center; padding:40px; color:var(--text-light);">Загрузка каталога...</p>
+                <p style="text-align: center; padding: 40px; color: var(--text-light);">Загрузка товаров...</p>
             </div>
         </div>
     </main>
 
-   <!-- Подвал (Единый для всех страниц) -->
-<footer class="site-footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h3>ФТО</h3>
-                <p>Фабрика Торгового Оборудования</p>
-                <p>г. Нижний Новгород, ул. Тургенева, 9</p>
+    <!-- Подвал -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>ФТО</h3>
+                    <p>Фабрика Торгового Оборудования</p>
+                    <p>г. Нижний Новгород, ул. Тургенева, 9</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Контакты</h3>
+                    <p><i class="fas fa-phone"></i> +7 (960) 178-67-38</p>
+                    <p><i class="fas fa-envelope"></i> a20072005@yandex.ru</p>
+                    <p><i class="fas fa-clock"></i> Пн-Пт: 9:00 - 18:00</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Меню</h3>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-col">
-                <h3>Контакты</h3>
-                <p><i class="fas fa-phone"></i> +7 (960) 178-67-38</p>
-                <p><i class="fas fa-envelope"></i> a20072005@yandex.ru</p>
-                <p><i class="fas fa-clock"></i> Пн-Пт: 9:00 - 18:00</p>
-            </div>
-            <div class="footer-col">
-                <h3>Меню</h3>
-                <ul>
-                    <li><a href="index.html">Главная</a></li>
-                    <li><a href="catalog.html">Каталог</a></li>
-                    <li><a href="about.html">О нас</a></li>
-                    <li><a href="contacts.html">Контакты</a></li>
-                </ul>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ФТО. Все права защищены.</p>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 ФТО. Все права защищены.</p>
-        </div>
-    </div>
-</footer>
+    </footer>
 
-    <!-- МОДАЛЬНОЕ ОКНО КОРЗИНЫ -->
+    <!-- Модальное окно корзины -->
     <div id="cart-modal" class="modal">
         <div class="modal-content modal-cart">
             <span class="close-modal">&times;</span>
@@ -89,12 +99,11 @@
     <script src="data/catalog-data.js"></script>
     <script src="js/toast-module.js"></script>
     <script src="js/cart-module.js"></script>
-    <script src="js/header.js"></script>
     <script src="js/products-loader.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/header.js"></script>
     
     <script>
-        // Запуск загрузки каталога
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof ProductsLoader !== 'undefined') {
                 ProductsLoader.loadCatalog();
