@@ -3,72 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Контакты | ФТО</title>
+    <title>ФТО | Контакты</title>
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        body { font-family: 'Roboto', sans-serif; margin: 0; background: #f5f5f5; }
-        header { background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .header-inner { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .logo h1 { margin: 0; color: #d32f2f; }
-        nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 20px; }
-        nav a { text-decoration: none; color: #333; font-weight: 500; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        @media(max-width: 768px) { .container { grid-template-columns: 1fr; } }
-        .info-block, .form-block { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        input, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        button { background: #d32f2f; color: #fff; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
-        button:disabled { background: #ccc; }
-        footer { background: #333; color: #fff; padding: 30px 0; text-align: center; }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-<header>
-    <div class="header-inner">
-        <div class="logo"><h1>ФТО</h1></div>
-        <nav>
+<!-- ЕДИНАЯ ШАПКА -->
+<header class="site-header">
+    <div class="container header-content">
+        <div class="logo">
+            <a href="index.html"><h1>ФТО</h1><span>Фабрика Торгового Оборудования</span></a>
+        </div>
+        <nav class="main-nav">
             <ul>
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="catalog.html">Каталог</a></li>
-                <li><a href="about.html">О нас</a></li>
-                <li><a href="contacts.html" style="color:#d32f2f;">Контакты</a></li>
+                <li><a href="about.html">О компании</a></li>
+                <li><a href="contacts.html" class="active">Контакты</a></li>
             </ul>
         </nav>
-        <div class="cart-btn-wrap" data-action="open-cart">
-            🛒 <span class="cart-count">0</span>
+        <div class="header-actions">
+            <div class="cart-btn-wrapper" id="cart-trigger">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-text">Корзина</span>
+                <span class="cart-badge" id="cart-count">0</span>
+            </div>
+            <div class="mobile-menu-toggle"><i class="fas fa-bars"></i></div>
         </div>
     </div>
 </header>
 
-<div class="container">
-    <div class="info-block">
-        <h2 style="color:#d32f2f; margin-top:0;">Наши контакты</h2>
-        <p><strong>Адрес:</strong><br>г. Нижний Новгород, ул. Тургенева, 9</p>
-        <p><strong>Телефон:</strong><br>+7 (960) 178-67-38</p>
-        <p><strong>Email:</strong><br>a20072005@yandex.ru</p>
-        <p><strong>Режим работы:</strong><br>Пн-Пт: 9:00 - 18:00</p>
-    </div>
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<main>
+    <section class="page-header">
+        <div class="container">
+            <h1>Контакты</h1>
+        </div>
+    </section>
 
-    <div class="form-block">
-        <h2 style="margin-top:0;">Написать нам</h2>
-        <form id="contact-form">
-            <input type="text" name="name" placeholder="Ваше имя" required>
-            <input type="tel" name="phone" placeholder="Телефон" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <textarea name="message" rows="5" placeholder="Сообщение" required></textarea>
-            <button type="submit">Отправить</button>
-        </form>
+    <section class="section">
+        <div class="container">
+            <div class="contact-wrapper" style="display: flex; flex-wrap: wrap; gap: 40px;">
+                
+                <!-- Информация -->
+                <div style="flex: 1; min-width: 300px;">
+                    <h2>Как нас найти</h2>
+                    <p><strong>Адрес:</strong> г. Нижний Новгород, ул. Тургенева, 9</p>
+                    <p><strong>Телефон:</strong> <a href="tel:+79601786738">+7 (960) 178-67-38</a></p>
+                    <p><strong>Email:</strong> <a href="mailto:a20072005@yandex.ru">a20072005@yandex.ru</a></p>
+                    <p><strong>Время работы:</strong> Пн-Пт: 9:00 - 18:00</p>
+                    
+                    <div style="margin-top: 30px; background: #eee; height: 300px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                        <!-- Сюда можно вставить iframe Яндекс.Карт -->
+                        <span style="color: #666;">Карта проезда (Яндекс.Карты)</span>
+                    </div>
+                </div>
+
+                <!-- Форма обратной связи -->
+                <div style="flex: 1; min-width: 300px; background: #f8f9fa; padding: 30px; border-radius: 8px;">
+                    <h2>Написать нам</h2>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label>Ваше имя</label>
+                            <input type="text" name="name" required placeholder="Иван Иванов">
+                        </div>
+                        <div class="form-group">
+                            <label>Телефон</label>
+                            <input type="tel" name="phone" required placeholder="+7 (___) ___-__-__">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" required placeholder="example@mail.ru">
+                        </div>
+                        <div class="form-group">
+                            <label>Сообщение</label>
+                            <textarea name="message" rows="5" required placeholder="Ваш вопрос..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Отправить сообщение</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- ЕДИНЫЙ ПОДВАЛ -->
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>ФТО</h3>
+                <p>г. Нижний Новгород, ул. Тургенева, 9</p>
+            </div>
+            <div class="footer-col">
+                <h3>Контакты</h3>
+                <p>+7 (960) 178-67-38</p>
+                <p>a20072005@yandex.ru</p>
+            </div>
+            <div class="footer-col">
+                <h3>Режим работы</h3>
+                <p>Пн-Пт: 9:00 - 18:00</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 ФТО. Все права защищены.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- МОДАЛЬНОЕ ОКНО КОРЗИНЫ -->
+<div id="cart-modal" class="modal">
+    <div class="modal-content modal-cart">
+        <span class="close-modal">&times;</span>
+        <h2><i class="fas fa-shopping-basket"></i> Корзина</h2>
+        <div class="cart-body" id="cart-items-container"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Итого: <span id="cart-total-price">0 ₽</span></div>
+            <form id="order-form" class="order-form">
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <input type="tel" name="phone" placeholder="Телефон *" required>
+                <textarea name="address" placeholder="Адрес доставки"></textarea>
+                <button type="submit" class="btn btn-primary btn-block" id="checkout-btn" disabled>Оформить заказ</button>
+            </form>
+        </div>
     </div>
 </div>
 
-<footer>
-    <p>© 2023 ФТО</p>
-</footer>
-
+<!-- СКРИПТЫ -->
 <script src="js/config.js"></script>
 <script src="js/utils.js"></script>
+<script src="data/catalog-data.js"></script>
+<script src="js/toast-module.js"></script>
 <script src="js/cart-module.js"></script>
+<script src="js/products-loader.js"></script>
 <script src="js/app.js"></script>
-
 </body>
 </html>

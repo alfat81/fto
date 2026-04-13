@@ -3,147 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Фабрика торгового оборудования | ftoshop.ru</title>
-    <meta name="description" content="Производство и продажа торгового оборудования в Нижнем Новгороде. Тумбы, мойки, мебель под заказ.">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <title>ФТО | Главная - Торговое оборудование</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Шапка подключается через header.js -->
-    
-    <!-- Hero Section -->
-    <section class="parallax-hero">
+
+<!-- ЕДИНАЯ ШАПКА -->
+<header class="site-header">
+    <div class="container header-content">
+        <div class="logo">
+            <a href="index.html"><h1>ФТО</h1><span>Фабрика Торгового Оборудования</span></a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="active">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="about.html">О компании</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <div class="cart-btn-wrapper" id="cart-trigger">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-text">Корзина</span>
+                <span class="cart-badge" id="cart-count">0</span>
+            </div>
+            <div class="mobile-menu-toggle"><i class="fas fa-bars"></i></div>
+        </div>
+    </div>
+</header>
+
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<main>
+    <!-- Герой-блок -->
+    <section class="hero-section">
         <div class="container">
-            <h2>Торговое оборудование от производителя</h2>
-            <p>Проектируем, производим и устанавливаем мебель для магазинов, офисов и складов по индивидуальным размерам</p>
-            <a href="catalog.html" class="btn">Перейти в каталог</a>
+            <h2>Торговое оборудование под ключ</h2>
+            <p>Проектирование, производство и монтаж в Нижнем Новгороде</p>
+            <a href="catalog.html" class="btn btn-primary">Перейти в каталог</a>
+        </div>
+    </section>
+
+    <!-- Секция товаров -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Популярные модели</h2>
+            <div class="products-grid" id="featured-products">
+                <!-- Товары загружаются через JS -->
+                <div class="loading">Загрузка...</div>
+            </div>
+            <div class="text-center" style="margin-top: 40px;">
+                <a href="catalog.html" class="btn btn-outline">Весь каталог</a>
+            </div>
         </div>
     </section>
 
     <!-- Преимущества -->
-    <section class="section">
+    <section class="section bg-light">
         <div class="container">
-            <h3 class="section-title">Почему выбирают нас</h3>
-            <div class="catalog-grid">
-                <div class="product-card">
-                    <div class="product-info">
-                        <div class="product-title">🏭 Собственное производство</div>
-                        <p class="product-description">Полный цикл: от чертежа до монтажа. Контроль качества на каждом этапе.</p>
-                    </div>
+            <h2 class="section-title">Наши преимущества</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-industry"></i>
+                    <h3>Свое производство</h3>
+                    <p>Полный цикл изготовления оборудования.</p>
                 </div>
-                <div class="product-card">
-                    <div class="product-info">
-                        <div class="product-title">📐 Индивидуальный подход</div>
-                        <p class="product-description">Изготовим оборудование по вашим размерам и техническим требованиям.</p>
-                    </div>
+                <div class="feature-card">
+                    <i class="fas fa-ruler-combined"></i>
+                    <h3>Любые размеры</h3>
+                    <p>Изготовим под ваши индивидуальные задачи.</p>
                 </div>
-                <div class="product-card">
-                    <div class="product-info">
-                        <div class="product-title">🚚 Доставка и монтаж</div>
-                        <p class="product-description">Доставка по РФ, профессиональная сборка и установка на объекте.</p>
-                    </div>
+                <div class="feature-card">
+                    <i class="fas fa-truck-loading"></i>
+                    <h3>Монтаж под ключ</h3>
+                    <p>Доставка, сборка и установка в срок.</p>
                 </div>
             </div>
         </div>
     </section>
+</main>
 
-    <!-- Популярные товары -->
-    <section class="section" style="background: var(--bg);">
-        <div class="container">
-            <h3 class="section-title">Популярные товары</h3>
-            <div class="catalog-grid">
-                <div class="product-card" data-id="tv-stand-1" data-name="Тумба под ТВ" data-price="4500">
-                    <div class="product-image-wrap">
-                        <img src="https://via.placeholder.com/300x240/e2e8f0/64748b?text=Тумба+ТВ" alt="Тумба под ТВ">
-                    </div>
-                    <div class="product-info">
-                        <div class="product-title">Тумба под ТВ</div>
-                        <p class="product-description">Современная тумба с качественной фурнитурой и надёжной конструкцией</p>
-                        <div class="product-price-row">
-                            <span class="price">от 4 500 ₽</span>
-                            <button class="btn-add" data-id="tv-stand-1" data-name="Тумба под ТВ" data-price="4500">В корзину</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card" data-id="sink-1" data-name="Мойка кухонная" data-price="2800">
-                    <div class="product-image-wrap">
-                        <img src="https://via.placeholder.com/300x240/e2e8f0/64748b?text=Мойка+кухонная" alt="Мойка">
-                    </div>
-                    <div class="product-info">
-                        <div class="product-title">Мойка кухонная</div>
-                        <p class="product-description">Нержавеющая сталь, комплект сифона, гарантия 2 года</p>
-                        <div class="product-price-row">
-                            <span class="price">от 2 800 ₽</span>
-                            <button class="btn-add" data-id="sink-1" data-name="Мойка кухонная" data-price="2800">В корзину</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card" data-id="shelf-1" data-name="Стеллаж складской" data-price="8900">
-                    <div class="product-image-wrap">
-                        <img src="https://via.placeholder.com/300x240/e2e8f0/64748b?text=Стеллаж" alt="Стеллаж">
-                    </div>
-                    <div class="product-info">
-                        <div class="product-title">Стеллаж складской</div>
-                        <p class="product-description">Металлический каркас, регулировка полок, нагрузка до 150 кг</p>
-                        <div class="product-price-row">
-                            <span class="price">от 8 900 ₽</span>
-                            <button class="btn-add" data-id="shelf-1" data-name="Стеллаж складской" data-price="8900">В корзину</button>
-                        </div>
-                    </div>
-                </div>
+<!-- ЕДИНЫЙ ПОДВАЛ -->
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>ФТО</h3>
+                <p>г. Нижний Новгород, ул. Тургенева, 9</p>
             </div>
-            <div style="text-align: center; margin-top: 32px;">
-                <a href="catalog.html" class="btn" style="background: var(--bg-secondary); color: var(--primary);">Весь каталог</a>
+            <div class="footer-col">
+                <h3>Контакты</h3>
+                <p>+7 (960) 178-67-38</p>
+                <p>a20072005@yandex.ru</p>
+            </div>
+            <div class="footer-col">
+                <h3>Режим работы</h3>
+                <p>Пн-Пт: 9:00 - 18:00</p>
+                <p>Сб-Вс: Выходной</p>
             </div>
         </div>
-    </section>
+        <div class="footer-bottom">
+            <p>&copy; 2023 ФТО. Все права защищены.</p>
+        </div>
+    </div>
+</footer>
 
-    <!-- =========================================
-         МОДАЛЬНОЕ ОКНО КОРЗИНЫ (ЕДИНОЕ ДЛЯ ВСЕХ СТРАНИЦ)
-         Важно: ID должен быть строго "cart-modal"
-         ========================================= -->
-    <div id="cart-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Ваша корзина</h2>
-            <div id="cart-items"></div>
-            <div class="cart-total">
-                <span>Итого:</span>
-                <span id="cart-total">0 ₽</span>
-            </div>
-            <form id="order-form" class="cart-form">
-                <input type="text" id="name" name="name" placeholder="Ваше имя*" required autocomplete="name">
-                <input type="tel" id="phone" name="phone" placeholder="Ваш телефон*" required autocomplete="tel">
-                <textarea id="comment" name="address" placeholder="Адрес доставки (необязательно)" autocomplete="off"></textarea>
-                <button type="submit" id="checkout-btn" disabled>Оформить заказ</button>
-                <button type="button" class="btn secondary" onclick="document.getElementById('cart-modal').style.display='none'" style="margin-top: 10px; width: 100%;">Продолжить покупки</button>
+<!-- МОДАЛЬНОЕ ОКНО КОРЗИНЫ (Единое для всех страниц) -->
+<div id="cart-modal" class="modal">
+    <div class="modal-content modal-cart">
+        <span class="close-modal">&times;</span>
+        <h2><i class="fas fa-shopping-basket"></i> Корзина</h2>
+        <div class="cart-body" id="cart-items-container"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Итого: <span id="cart-total-price">0 ₽</span></div>
+            <form id="order-form" class="order-form">
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <input type="tel" name="phone" placeholder="Телефон *" required>
+                <textarea name="address" placeholder="Адрес доставки"></textarea>
+                <button type="submit" class="btn btn-primary btn-block" id="checkout-btn" disabled>Оформить заказ</button>
             </form>
         </div>
     </div>
+</div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <p><strong>Фабрика Торгового Оборудования</strong></p>
-            <p>г. Нижний Новгород, ул. Тургенева, 9</p>
-            <p>📞 +7 (960) 178-67-38 &nbsp;|&nbsp; ✉️ a20072005@yandex.ru</p>
-            <div class="social-links">
-                <a href="https://t.me/FTO_NN" class="social-link" target="_blank"><i class="fab fa-telegram"></i></a>
-                <a href="https://vk.com/ooofto" class="social-link" target="_blank"><i class="fab fa-vk"></i></a>
-            </div>
-            <p style="margin-top: 24px; opacity: 0.7; font-size: 14px;">© 2026 ftoshop.ru. Все права защищены.</p>
-        </div>
-    </footer>
-
-    <!-- Toast container -->
-    <div id="toast-container"></div>
-
-    <!-- Подключение скриптов (порядок важен!) -->
-    <script src="js/config.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/toast-module.js"></script>
-    <script src="js/header.js"></script>
-    <script src="js/cart-module.js"></script>
-    <script src="js/app.js"></script>
+<!-- СКРИПТЫ -->
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="data/catalog-data.js"></script>
+<script src="js/toast-module.js"></script>
+<script src="js/cart-module.js"></script>
+<script src="js/products-loader.js"></script>
+<script src="js/app.js"></script>
+<script>
+    // Логика главной страницы
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('featured-products');
+        if (container && window.CATALOG_DATA) {
+            ProductsLoader.renderProducts(window.CATALOG_DATA.slice(0, 4), container);
+        }
+    });
+</script>
 </body>
 </html>

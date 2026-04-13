@@ -3,64 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>О компании | ФТО</title>
+    <title>ФТО | О компании</title>
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        /* Единые стили (как в catalog.html) */
-        body { font-family: 'Roboto', sans-serif; margin: 0; background: #f5f5f5; }
-        header { background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .header-inner { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .logo h1 { margin: 0; color: #d32f2f; font-size: 24px; }
-        nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 20px; }
-        nav a { text-decoration: none; color: #333; font-weight: 500; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; background: #fff; min-height: 60vh; }
-        footer { background: #333; color: #fff; padding: 30px 0; text-align: center; }
-        .about-text { line-height: 1.6; color: #444; font-size: 18px; }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-<header>
-    <div class="header-inner">
-        <div class="logo"><h1>ФТО</h1></div>
-        <nav>
+<!-- ЕДИНАЯ ШАПКА -->
+<header class="site-header">
+    <div class="container header-content">
+        <div class="logo">
+            <a href="index.html"><h1>ФТО</h1><span>Фабрика Торгового Оборудования</span></a>
+        </div>
+        <nav class="main-nav">
             <ul>
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="catalog.html">Каталог</a></li>
-                <li><a href="about.html" style="color:#d32f2f;">О нас</a></li>
+                <li><a href="about.html" class="active">О компании</a></li>
                 <li><a href="contacts.html">Контакты</a></li>
             </ul>
         </nav>
-        <div class="cart-btn-wrap" data-action="open-cart">
-            🛒 <span class="cart-count">0</span>
+        <div class="header-actions">
+            <div class="cart-btn-wrapper" id="cart-trigger">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-text">Корзина</span>
+                <span class="cart-badge" id="cart-count">0</span>
+            </div>
+            <div class="mobile-menu-toggle"><i class="fas fa-bars"></i></div>
         </div>
     </div>
 </header>
 
-<div class="container">
-    <h1 style="color:#d32f2f;">О компании ФТО</h1>
-    <div class="about-text">
-        <p><strong>Фабрика Торгового Оборудования</strong> — ваш надежный партнер в организации торгового пространства.</p>
-        <p>Мы работаем на рынке Нижнего Новгорода более 10 лет, предлагая современные решения для магазинов, складов и выставочных залов.</p>
-        <h3>Наши преимущества:</h3>
-        <ul>
-            <li>Собственное производство</li>
-            <li>Индивидуальный проект под ключ</li>
-            <li>Гарантия качества на всю продукцию</li>
-            <li>Быстрая доставка и монтаж</li>
-        </ul>
-        <p>Наш адрес: г. Нижний Новгород, ул. Тургенева, 9.</p>
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<main>
+    <section class="page-header">
+        <div class="container">
+            <h1>О компании</h1>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container content-block">
+            <h2>Фабрика Торгового Оборудования</h2>
+            <p>Мы занимаемся производством и продажей торгового оборудования с 2010 года. Наша миссия — предоставлять бизнесу надежные и функциональные решения для организации торговых пространств.</p>
+            
+            <div class="features-grid" style="margin-top: 40px;">
+                <div class="feature-card">
+                    <i class="fas fa-certificate"></i>
+                    <h3>Качество</h3>
+                    <p>Используем только сертифицированные материалы и комплектующие.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Команда</h3>
+                    <p>Штат опытных инженеров, дизайнеров и монтажников.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Гарантия</h3>
+                    <p>Предоставляем гарантию на всю продукцию до 3 лет.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px; background: #f8f9fa; padding: 30px; border-radius: 8px;">
+                <h3>Наши реквизиты</h3>
+                <p><strong>Юридический адрес:</strong> г. Нижний Новгород, ул. Тургенева, 9</p>
+                <p><strong>ИНН:</strong> 5200000000 (пример)</p>
+                <p><strong>Телефон:</strong> +7 (960) 178-67-38</p>
+                <p><strong>Email:</strong> a20072005@yandex.ru</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- ЕДИНЫЙ ПОДВАЛ -->
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>ФТО</h3>
+                <p>г. Нижний Новгород, ул. Тургенева, 9</p>
+            </div>
+            <div class="footer-col">
+                <h3>Контакты</h3>
+                <p>+7 (960) 178-67-38</p>
+                <p>a20072005@yandex.ru</p>
+            </div>
+            <div class="footer-col">
+                <h3>Режим работы</h3>
+                <p>Пн-Пт: 9:00 - 18:00</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 ФТО. Все права защищены.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- МОДАЛЬНОЕ ОКНО КОРЗИНЫ -->
+<div id="cart-modal" class="modal">
+    <div class="modal-content modal-cart">
+        <span class="close-modal">&times;</span>
+        <h2><i class="fas fa-shopping-basket"></i> Корзина</h2>
+        <div class="cart-body" id="cart-items-container"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Итого: <span id="cart-total-price">0 ₽</span></div>
+            <form id="order-form" class="order-form">
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <input type="tel" name="phone" placeholder="Телефон *" required>
+                <textarea name="address" placeholder="Адрес доставки"></textarea>
+                <button type="submit" class="btn btn-primary btn-block" id="checkout-btn" disabled>Оформить заказ</button>
+            </form>
+        </div>
     </div>
 </div>
 
-<footer>
-    <p>© 2023 ФТО. Тел: +7 (960) 178-67-38</p>
-</footer>
-
+<!-- СКРИПТЫ -->
 <script src="js/config.js"></script>
 <script src="js/utils.js"></script>
+<script src="data/catalog-data.js"></script>
+<script src="js/toast-module.js"></script>
 <script src="js/cart-module.js"></script>
+<script src="js/products-loader.js"></script>
 <script src="js/app.js"></script>
-
 </body>
 </html>
