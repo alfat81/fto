@@ -4,71 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог | ФТО - Фабрика Торгового Оборудования</title>
-    <meta name="description" content="Каталог торгового оборудования: стеллажи, витрины, кассовое оборудование.">
+    <meta name="description" content="Каталог торгового оборудования: стеллажи, витрины, кассы.">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Шапка вставляется автоматически через js/header.js -->
 
-    <!-- =========================================
-         ШАПКА (ЕДИНАЯ)
-         ========================================= -->
-    <header class="site-header">
-        <div class="container header-content">
-            <div class="logo">
-                <a href="index.html">
-                    <h1>ФТО</h1>
-                    <span>Фабрика Торгового Оборудования</span>
-                </a>
-            </div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html">Главная</a></li>
-                    <li><a href="catalog.html" class="active">Каталог</a></li>
-                    <li><a href="about.html">О компании</a></li>
-                    <li><a href="contacts.html">Контакты</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <!-- Кнопка корзины (id="cart-trigger" нужен для JS) -->
-                <div class="cart-btn-wrapper" id="cart-trigger">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-text">Корзина</span>
-                    <span class="cart-badge" id="cart-count">0</span>
-                </div>
-                <div class="mobile-menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </div>
+    <main class="page-content">
+        <div class="container">
+            <h1 class="page-title">Каталог продукции</h1>
+            
+            <!-- Фильтры по категориям (генерируются JS) -->
+            <div id="catalog-filters" class="catalog-filters"></div>
+            
+            <!-- Сетка товаров -->
+            <div class="products-grid" id="catalog-grid">
+                <p style="text-align:center; padding:40px; color:var(--text-light);">Загрузка товаров...</p>
             </div>
         </div>
-    </header>
-
-    <!-- =========================================
-         ОСНОВНОЙ КОНТЕНТ
-         ========================================= -->
-    <main class="page-main">
-        <section class="content-section">
-            <div class="container">
-                <h1 class="page-title">Каталог продукции</h1>
-                
-                <!-- Фильтры по категориям -->
-                <div id="catalog-filters" class="catalog-filters">
-                    <!-- JS заполнит это кнопками -->
-                </div>
-
-                <!-- Сетка товаров -->
-                <div class="products-grid" id="full-catalog">
-                    <div class="loading" style="text-align:center; padding:40px; color:#666;">
-                        Загрузка каталога...
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <!-- =========================================
-         ПОДВАЛ (ЕДИНЫЙ)
-         ========================================= -->
+    <!-- ЕДИНЫЙ ПОДВАЛ -->
     <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
@@ -81,10 +39,12 @@
                     <h3>Контакты</h3>
                     <p><i class="fas fa-phone"></i> +7 (960) 178-67-38</p>
                     <p><i class="fas fa-envelope"></i> a20072005@yandex.ru</p>
+                    <p><i class="fas fa-clock"></i> Пн-Пт: 9:00 - 18:00</p>
                 </div>
                 <div class="footer-col">
                     <h3>Меню</h3>
                     <ul>
+                        <li><a href="index.html">Главная</a></li>
                         <li><a href="catalog.html">Каталог</a></li>
                         <li><a href="about.html">О нас</a></li>
                         <li><a href="contacts.html">Контакты</a></li>
@@ -97,16 +57,12 @@
         </div>
     </footer>
 
-    <!-- =========================================
-         МОДАЛЬНОЕ ОКНО (КОРЗИНА)
-         ========================================= -->
+    <!-- МОДАЛЬНОЕ ОКНО КОРЗИНЫ -->
     <div id="cart-modal" class="modal">
         <div class="modal-content modal-cart">
             <span class="close-modal">&times;</span>
             <h2><i class="fas fa-shopping-basket"></i> Ваша корзина</h2>
-            <div class="cart-body" id="cart-items-container">
-                <!-- Товары корзины -->
-            </div>
+            <div class="cart-body" id="cart-items-container"></div>
             <div class="cart-footer">
                 <div class="cart-total">
                     <span>Итого:</span>
@@ -129,23 +85,18 @@
         </div>
     </div>
 
-    <!-- =========================================
-         СКРИПТЫ (ПОРЯДОК ВАЖЕН)
-         ========================================= -->
+    <!-- СКРИПТЫ -->
     <script src="js/config.js"></script>
     <script src="js/utils.js"></script>
-    <script src="data/catalog-data.js"></script>
     <script src="js/toast-module.js"></script>
     <script src="js/cart-module.js"></script>
+    <script src="js/header.js"></script>
     <script src="js/products-loader.js"></script>
     <script src="js/app.js"></script>
-    
-    <!-- Инициализация каталога (страховка) -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            if (typeof window.CATALOG_DATA !== 'undefined' && typeof ProductsLoader !== 'undefined') {
-                ProductsLoader.renderProducts(window.CATALOG_DATA, document.getElementById('full-catalog'));
-                ProductsLoader.renderFilters(window.CATALOG_DATA, document.getElementById('catalog-filters'));
+            if (typeof ProductsLoader !== 'undefined') {
+                ProductsLoader.loadCatalog();
             }
         });
     </script>

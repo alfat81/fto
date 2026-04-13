@@ -1,128 +1,61 @@
-/* Стили для шапки */
-header {
-    position: fixed;
+/**
+ * header.css - Стили шапки. Использует переменные из style.css
+ */
+.site-header {
+    background: var(--bg-white);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
     top: 0;
-    left: 0;
-    width: 100%;
     z-index: 1000;
-    padding: 20px 0;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 15px 0;
+    transition: padding 0.3s;
 }
-
-header.scrolled {
-    background: rgba(44, 62, 80, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 10px 0;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-}
-
-.header-container {
+.header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
 }
+.logo { display: flex; flex-direction: column; line-height: 1; }
+.logo h1 { font-size: 26px; font-weight: 800; color: var(--primary); margin: 0; }
+.logo span { font-size: 11px; color: var(--text-light); text-transform: uppercase; margin-top: 2px; }
 
-.logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: white;
-    text-decoration: none;
-    letter-spacing: 1px;
-}
-
-.logo span {
-    color: #3498db;
-}
-
-.nav-buttons {
-    display: flex;
-    gap: 25px;
-}
-
-.nav-btn {
-    color: white;
-    text-decoration: none;
+.main-nav ul { display: flex; gap: 10px; align-items: center; }
+.main-nav a {
+    color: var(--text-main);
     font-weight: 500;
-    font-size: 1.1rem;
-    position: relative;
-    padding: 5px 0;
-    transition: all 0.3s ease;
+    padding: 8px 14px;
+    border-radius: var(--radius);
+    transition: all 0.2s;
 }
+.main-nav a:hover, .main-nav a.active { color: var(--primary); background: var(--primary-light); }
 
-.nav-btn::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #3498db;
-    transition: width 0.3s ease;
-}
-
-.nav-btn:hover::after,
-.nav-btn.active::after {
-    width: 100%;
-}
-
-.nav-btn:hover {
-    color: #3498db;
-}
-
-#cart-btn {
-    position: relative;
+.cart-btn-wrapper {
+    background: var(--primary);
+    color: white;
+    padding: 10px 18px;
+    border-radius: var(--radius);
     display: flex;
     align-items: center;
-    gap: 5px;
-    background: #e74c3c;
-    color: white !important;
-    padding: 8px 15px !important;
-    border-radius: 20px !important;
-    transition: all 0.3s ease !important;
+    gap: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
 }
-
-#cart-btn:hover {
-    background: #c0392b !important;
-    transform: translateY(-2px) !important;
-}
-
-#cart-count {
+.cart-btn-wrapper:hover { background: var(--primary-dark); transform: translateY(-2px); }
+.cart-badge {
     background: white;
-    color: #e74c3c;
-    font-weight: bold;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 0.9rem;
-    min-width: 22px;
+    color: var(--primary);
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: 700;
+    min-width: 20px;
     text-align: center;
 }
+.mobile-menu-toggle { display: none; cursor: pointer; font-size: 24px; color: var(--text-main); }
 
-/* Адаптивный дизайн для шапки */
 @media (max-width: 768px) {
-    .nav-buttons {
-        gap: 15px;
-    }
-    
-    .logo {
-        font-size: 1.5rem;
-    }
-    
-    .nav-btn {
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .nav-buttons {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    
-    .nav-btn {
-        padding: 3px 0;
-        font-size: 0.9rem;
-    }
+    .main-nav ul { gap: 5px; }
+    .main-nav a { padding: 6px 10px; font-size: 14px; }
+    .cart-btn-wrapper span.cart-text { display: none; }
 }

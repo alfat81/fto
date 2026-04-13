@@ -4,153 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ФТО | Фабрика Торгового Оборудования</title>
+    <meta name="description" content="Производство торгового оборудования в Нижнем Новгороде.">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Header вставляется через js/header.js -->
 
-    <!-- ШАПКА -->
-    <header class="site-header">
-        <div class="container header-content">
-            <div class="logo">
-                <a href="index.html">
-                    <h1>ФТО</h1>
-                    <span>Фабрика Торгового Оборудования</span>
-                </a>
-            </div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html" class="active">Главная</a></li>
-                    <li><a href="catalog.html">Каталог</a></li>
-                    <li><a href="about.html">О компании</a></li>
-                    <li><a href="contacts.html">Контакты</a></li>
-                </ul>
-            </nav>
-            <div class="header-actions">
-                <div class="cart-btn-wrapper" id="cart-trigger">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Корзина</span>
-                    <span class="cart-badge" id="cart-count">0</span>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- СИНЙЙ БАННЕР (HERO) -->
-    <section class="hero-section">
-        <div class="container">
-            <h2>Торговое оборудование от производителя</h2>
-            <p>Проектируем, производим и устанавливаем мебель для магазинов, офисов и складов</p>
-            <a href="catalog.html" class="btn-hero">Перейти в каталог</a>
-        </div>
-    </section>
-
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
-    <main class="container">
-        <!-- Популярные товары -->
-        <section class="section">
-            <h2 class="section-title">Популярные товары</h2>
-            <div class="products-grid">
-                <!-- Товар 1 -->
-                <div class="product-card" data-id="1.1" data-name="Стеллаж односторонний" data-price="4500">
-                    <div class="product-image-wrap">
-                        <img src="images/1.1.jpg" alt="Стеллаж" onerror="this.src='https://via.placeholder.com/300x200?text=Нет+фото'">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Стеллаж односторонний</h3>
-                        <p class="product-description">Надежный металлический стеллаж, высота 1.8м.</p>
-                        <div class="product-price-row">
-                            <span class="price">4 500 ₽</span>
-                            <button class="btn-add" data-id="1.1" data-name="Стеллаж односторонний" data-price="4500">В корзину</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Товар 2 -->
-                <div class="product-card" data-id="2.1" data-name="Витрина холодильная" data-price="24000">
-                    <div class="product-image-wrap">
-                        <img src="images/2.1.jpg" alt="Витрина" onerror="this.src='https://via.placeholder.com/300x200?text=Нет+фото'">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Витрина холодильная</h3>
-                        <p class="product-description">Кондитерская витрина с подсветкой.</p>
-                        <div class="product-price-row">
-                            <span class="price">24 000 ₽</span>
-                            <button class="btn-add" data-id="2.1" data-name="Витрина холодильная" data-price="24000">В корзину</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Товар 3 -->
-                <div class="product-card" data-id="3.1" data-name="Касса для магазина" data-price="12000">
-                    <div class="product-image-wrap">
-                        <img src="images/3.1.jpg" alt="Касса" onerror="this.src='https://via.placeholder.com/300x200?text=Нет+фото'">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Касса для магазина</h3>
-                        <p class="product-description">Компактная касса с местом под сканер.</p>
-                        <div class="product-price-row">
-                            <span class="price">12 000 ₽</span>
-                            <button class="btn-add" data-id="3.1" data-name="Касса для магазина" data-price="12000">В корзину</button>
-                        </div>
-                    </div>
-                </div>
+    <main class="page-content">
+        <section class="hero-section" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color:white; padding:80px 0; text-align:center; margin-bottom:40px;">
+            <div class="container">
+                <h2 style="font-size:42px; font-weight:800; margin-bottom:15px;">Торговое оборудование от производителя</h2>
+                <p style="font-size:18px; opacity:0.9; margin-bottom:30px; max-width:700px; margin-inline:auto;">Проектируем, производим и устанавливаем мебель для магазинов и складов</p>
+                <a href="catalog.html" class="btn" style="background:white; color:var(--primary); font-weight:700; padding:14px 30px;">Перейти в каталог</a>
             </div>
         </section>
+
+        <div class="container">
+            <h2 class="section-title" style="text-align:center; border:none; margin-bottom:40px;">Почему выбирают нас</h2>
+            <div class="features-grid">
+                <div class="feature-card"><i class="fas fa-industry"></i><h3>Собственное производство</h3><p>Полный цикл без посредников.</p></div>
+                <div class="feature-card"><i class="fas fa-drafting-compass"></i><h3>Проектирование</h3><p>3D-расстановка бесплатно.</p></div>
+                <div class="feature-card"><i class="fas fa-truck-loading"></i><h3>Монтаж под ключ</h3><p>Доставка и сборка.</p></div>
+            </div>
+
+            <h2 class="section-title" style="text-align:center; border:none; margin:60px 0 30px;">Популярные товары</h2>
+            <div class="products-grid" id="full-catalog"></div>
+        </div>
     </main>
 
-    <!-- ПОДВАЛ (ИСПРАВЛЕНО МЕНЮ) -->
     <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>ФТО</h3>
-                    <p>Фабрика Торгового Оборудования</p>
-                    <p>г. Нижний Новгород, ул. Тургенева, 9</p>
-                </div>
-                <div class="footer-col">
-                    <h3>Контакты</h3>
-                    <p><i class="fas fa-phone"></i> +7 (960) 178-67-38</p>
-                    <p><i class="fas fa-envelope"></i> a20072005@yandex.ru</p>
-                </div>
-                <div class="footer-col">
-                    <h3>Меню</h3>
-                    <ul>
-                        <li><a href="index.html">Главная</a></li>
-                        <li><a href="catalog.html">Каталог</a></li>
-                        <li><a href="about.html">О компании</a></li>
-                        <li><a href="contacts.html">Контакты</a></li>
-                    </ul>
-                </div>
+                <div class="footer-col"><h3>ФТО</h3><p>г. Нижний Новгород, ул. Тургенева, 9</p></div>
+                <div class="footer-col"><h3>Контакты</h3><p>+7 (960) 178-67-38</p><p>a20072005@yandex.ru</p></div>
+                <div class="footer-col"><h3>Меню</h3><a href="index.html">Главная</a><a href="catalog.html">Каталог</a><a href="about.html">О нас</a><a href="contacts.html">Контакты</a></div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 ФТО. Все права защищены.</p>
-            </div>
+            <div class="footer-bottom">&copy; 2026 ФТО. Все права защищены.</div>
         </div>
     </footer>
 
-    <!-- МОДАЛКА -->
     <div id="cart-modal" class="modal">
-        <div class="modal-content modal-cart">
+        <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2><i class="fas fa-shopping-basket"></i> Ваша корзина</h2>
-            <div class="cart-body" id="cart-items-container"></div>
-            <div class="cart-footer">
-                <div class="cart-total">Итого: <span id="cart-total-price">0 ₽</span></div>
-                <form id="order-form">
-                    <div class="form-group"><input type="text" name="name" placeholder="Имя" required></div>
-                    <div class="form-group"><input type="tel" name="phone" placeholder="Телефон" required></div>
-                    <div class="form-group"><textarea name="address" placeholder="Адрес"></textarea></div>
-                    <button type="submit" class="btn btn-primary btn-block" id="checkout-btn" disabled>Оформить заказ</button>
-                </form>
-            </div>
+            <div id="cart-items-container"></div>
+            <div class="cart-total">Итого: <span id="cart-total-price">0 ₽</span></div>
+            <form id="order-form">
+                <div class="form-group"><input type="text" name="name" placeholder="Имя" required></div>
+                <div class="form-group"><input type="tel" name="phone" placeholder="Телефон" required></div>
+                <div class="form-group"><textarea name="address" placeholder="Адрес"></textarea></div>
+                <button type="submit" class="btn btn-primary btn-block" id="checkout-btn" disabled>Оформить заказ</button>
+            </form>
         </div>
     </div>
 
-    <!-- СКРИПТЫ -->
     <script src="js/config.js"></script>
     <script src="js/utils.js"></script>
-    <script src="data/catalog-data.js"></script>
     <script src="js/toast-module.js"></script>
     <script src="js/cart-module.js"></script>
+    <script src="js/header.js"></script>
     <script src="js/products-loader.js"></script>
     <script src="js/app.js"></script>
 </body>

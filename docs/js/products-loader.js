@@ -1,103 +1,54 @@
 ﻿/**
- * docs/js/products-loader.js
- * Отвечает за отрисовку каталога из CATALOG_DATA
+ * products-loader.js - Загрузка товаров из data/products/
  */
-
 const ProductsLoader = {
-    /**
-     * Отрисовка товаров в сетке
-     * @param {Array} products - Массив товаров из catalog-data.js
-     * @param {HTMLElement} container - DOM элемент куда вставлять (напр. #full-catalog)
-     */
-    renderProducts: function(products, container) {
-        if (!container || !products || products.length === 0) {
-            if(container) container.innerHTML = '<p>Товары не найдены.</p>';
-            return;
-        }
-
-        container.innerHTML = products.map(product => {
-            // Путь к картинке (напр. images/1.1.jpg)
-            const imgUrl = `images/${product.id}.jpg`; 
-            
-            return `
-                <div class="product-card" 
-                     data-id="${product.id}" 
-                     data-name="${product.name}" 
-                     data-price="${product.price}">
-                    
-                    <div class="product-image-wrap">
-                        <img src="${imgUrl}" 
-                             alt="${product.name}"
-                             onerror="this.src='https://via.placeholder.com/400x300/e2e8f0/64748b?text=Нет+фото'">
-                    </div>
-                    
-                    <div class="product-info">
-                        <div class="product-title">${product.name}</div>
-                        <p class="product-description">${product.description || ''}</p>
-                        
-                        ${product.specs ? `
-                            <ul class="product-specs">
-                                ${product.specs.map(s => `<li>• ${s}</li>`).join('')}
-                            </ul>
-                        ` : ''}
-                        
-                        <div class="product-price-row">
-                            <span class="price">${Utils.formatPrice(product.price)}</span>
-                            <button class="btn-add" 
-                                    data-id="${product.id}" 
-                                    data-name="${product.name}" 
-                                    data-price="${product.price}">
-                                В корзину
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }).join('');
+    async loadCatalog() {
+        const container = document.getElementById('full-catalog');
+        if (!container) return;
         
-        console.log(`✅ Загружено ${products.length} товаров`);
+        container.innerHTML = '<p style="text-align:center; padding:40px;">Загрузка каталога...</p>';
+        try {
+            const resp = await fetch('data/products/index.json');
+            if (!resp.ok) throw new Error('index.json не найден');
+            const files = await resp.json();
+            
+            container.innerHTML = '';
+            for (const file of files) {
+                try {
+                    const pResp = await fetch(`data/products/${file}`);
+                    if (!pResp.ok) continue;
+                    const product = await pResp.json();
+                    this.renderCard(container, product);
+                } catch (e) { console.error(`Ошибка ${file}:`, e); }
+            }
+            if (container.children.length === 0) container.innerHTML = '<p style="text-align:center;">Товары не найдены.</p>';
+        } catch (e) {
+            console.error('Ошибка загрузки:', e);
+            container.innerHTML = '<p style="text-align:center; color:red;">Ошибка загрузки каталога.</p>';
+        }
     },
 
-    /**
-     * Создание кнопок фильтров по категориям
-     */
-    renderFilters: function(products, container) {
-        if (!container) return;
+    renderCard(container, product) {
+        const imgPath = `images/${product.id}.jpg`;
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.dataset.id = product.id;
+        card.dataset.name = product.name;
+        card.dataset.price = product.price;
 
-        // Собираем уникальные категории
-        const categories = {};
-        products.forEach(p => {
-            const cat = p.category;
-            if (!categories[cat]) categories[cat] = 0;
-            categories[cat]++;
-        });
-
-        // Рисуем кнопку "Все"
-        let html = `<button class="btn active" data-category="all">Все товары</button>`;
-
-        // Рисуем кнопки категорий
-        Object.keys(categories).forEach(catId => {
-            const catName = window.CATEGORY_NAMES?.[catId] || `Категория ${catId}`;
-            html += `<button class="btn" data-category="${catId}">${catName}</button>`;
-        });
-
-        container.innerHTML = html;
-
-        // Вешаем события клика
-        container.querySelectorAll('.btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                // Убираем active у всех
-                container.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-
-                const catVal = e.target.dataset.category;
-                const filtered = catVal === 'all' 
-                    ? products 
-                    : products.filter(p => p.category == catVal);
-                
-                // Перерисовываем
-                this.renderProducts(filtered, document.getElementById('full-catalog'));
-            });
-        });
+        card.innerHTML = `
+            <div class="product-image-wrap">
+                <img src="${imgPath}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Нет+фото'">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">${product.name}</h3>
+                <p class="product-description">${product.description || ''}</p>
+                ${product.specs ? `<ul class="product-specs" style="font-size:13px; color:var(--text-light); margin-bottom:10px;">${product.specs.map(s=>`<li>${s}</li>`).join('')}</ul>` : ''}
+                <div class="product-price-row">
+                    <span class="price">${Utils.formatPrice(product.price)}</span>
+                    <button class="btn-add" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">В корзину</button>
+                </div>
+            </div>`;
+        container.appendChild(card);
     }
 };
