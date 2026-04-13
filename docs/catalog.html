@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ФТО | Каталог продукции</title>
+    <title>Каталог | ФТО</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -13,7 +13,10 @@
 <header class="site-header">
     <div class="container header-content">
         <div class="logo">
-            <a href="index.html"><h1>ФТО</h1><span>Фабрика Торгового Оборудования</span></a>
+            <a href="index.html">
+                <h1>ФТО</h1>
+                <span>Фабрика Торгового Оборудования</span>
+            </a>
         </div>
         <nav class="main-nav">
             <ul>
@@ -34,74 +37,50 @@
     </div>
 </header>
 
-<!-- ОСНОВНОЙ КОНТЕНТ -->
-<main>
-    <section class="page-header">
+<main class="page-main">
+    <section class="content-section">
         <div class="container">
-            <h1>Каталог оборудования</h1>
-            <p>Выберите необходимую категорию или товар</p>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="container">
-            <!-- Фильтры (опционально, можно добавить позже) -->
-            <div class="catalog-filters" style="margin-bottom: 30px;">
-                <button class="btn btn-sm btn-outline active" onclick="ProductsLoader.renderProducts(window.CATALOG_DATA, document.getElementById('catalog-grid'))">Все товары</button>
-                <!-- Здесь можно добавить кнопки по категориям -->
+            <h2 class="section-title">Каталог продукции</h2>
+            <div id="catalog-filters" class="catalog-filters">
+                <!-- Фильтры будут добавлены JS автоматически -->
             </div>
-
-            <!-- Сетка товаров -->
-            <div class="products-grid" id="catalog-grid">
+            <div class="products-grid" id="full-catalog">
                 <div class="loading">Загрузка каталога...</div>
             </div>
         </div>
     </section>
 </main>
 
-<!-- ЕДИНЫЙ ПОДВАЛ -->
+<!-- ЕДИНЫЙ ПОДВАЛ (Такой же как на главной) -->
 <footer class="site-footer">
     <div class="container">
         <div class="footer-grid">
-            <div class="footer-col">
-                <h3>ФТО</h3>
-                <p>г. Нижний Новгород, ул. Тургенева, 9</p>
-            </div>
-            <div class="footer-col">
-                <h3>Контакты</h3>
-                <p>+7 (960) 178-67-38</p>
-                <p>a20072005@yandex.ru</p>
-            </div>
-            <div class="footer-col">
-                <h3>Режим работы</h3>
-                <p>Пн-Пт: 9:00 - 18:00</p>
-            </div>
+            <div class="footer-col"><h3>ФТО</h3><p>г. Нижний Новгород, ул. Тургенева, 9</p></div>
+            <div class="footer-col"><h3>Контакты</h3><p>+7 (960) 178-67-38</p></div>
+            <div class="footer-col"><h3>Меню</h3><ul><li><a href="catalog.html">Каталог</a></li></ul></div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2023 ФТО. Все права защищены.</p>
-        </div>
+        <div class="footer-bottom"><p>&copy; 2023 ФТО.</p></div>
     </div>
 </footer>
 
-<!-- МОДАЛЬНОЕ ОКНО КОРЗИНЫ -->
+<!-- Модальное окно корзины -->
 <div id="cart-modal" class="modal">
     <div class="modal-content modal-cart">
         <span class="close-modal">&times;</span>
-        <h2><i class="fas fa-shopping-basket"></i> Корзина</h2>
+        <h2>Ваша корзина</h2>
         <div class="cart-body" id="cart-items-container"></div>
         <div class="cart-footer">
             <div class="cart-total">Итого: <span id="cart-total-price">0 ₽</span></div>
-            <form id="order-form" class="order-form">
-                <input type="text" name="name" placeholder="Ваше имя" required>
-                <input type="tel" name="phone" placeholder="Телефон *" required>
-                <textarea name="address" placeholder="Адрес доставки"></textarea>
+            <form id="order-form">
+                <input type="text" name="name" placeholder="Имя" required>
+                <input type="tel" name="phone" placeholder="Телефон" required>
+                <textarea name="address" placeholder="Адрес"></textarea>
                 <button type="submit" class="btn btn-primary btn-block" id="checkout-btn" disabled>Оформить заказ</button>
             </form>
         </div>
     </div>
 </div>
 
-<!-- СКРИПТЫ -->
 <script src="js/config.js"></script>
 <script src="js/utils.js"></script>
 <script src="data/catalog-data.js"></script>
@@ -109,14 +88,15 @@
 <script src="js/cart-module.js"></script>
 <script src="js/products-loader.js"></script>
 <script src="js/app.js"></script>
+
 <script>
-    // Логика каталога
+    // Логика каталога: загрузка всех товаров
     document.addEventListener('DOMContentLoaded', () => {
-        const container = document.getElementById('catalog-grid');
-        if (container && window.CATALOG_DATA) {
-            ProductsLoader.renderProducts(window.CATALOG_DATA, container);
+        if (window.CATALOG_DATA) {
+            ProductsLoader.renderProducts(window.CATALOG_DATA, document.getElementById('full-catalog'));
+            ProductsLoader.renderFilters(window.CATALOG_DATA, document.getElementById('catalog-filters'));
         }
     });
 </script>
+
 </body>
-</html>
