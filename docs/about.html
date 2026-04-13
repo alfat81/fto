@@ -5,182 +5,167 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>О компании | ФТО - Фабрика Торгового Оборудования</title>
     <meta name="description" content="Информация о компании ФТО: производство, доставка, монтаж торгового оборудования в Нижнем Новгороде.">
-    
-    <!-- Подключение общих стилей -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-<!-- Шапка (Единая для всех страниц) -->
-<header class="site-header">
-    <div class="container header-content">
-        <div class="logo">
-            <a href="index.html">
-                <h1>ФТО</h1>
-                <span>Фабрика Торгового Оборудования</span>
-            </a>
-        </div>
-        
-        <nav class="main-nav">
-            <ul>
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="catalog.html">Каталог</a></li>
-                <li><a href="about.html" class="active">О компании</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
-            </ul>
-        </nav>
-
-        <div class="header-actions">
-            <div class="cart-btn-wrapper" id="cart-trigger">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-text">Корзина</span>
-                <span class="cart-badge" id="cart-count">0</span>
+    <!-- =========================================
+         ШАПКА (ЕДИНАЯ)
+         ========================================= -->
+    <header class="site-header">
+        <div class="container header-content">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>ФТО</h1>
+                    <span>Фабрика Торгового Оборудования</span>
+                </a>
             </div>
-            <div class="mobile-menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>
-    </div>
-</header>
-
-<!-- Основной контент страницы -->
-<main class="page-content">
-    <div class="container">
-        <h1 class="page-title">О компании</h1>
-        
-        <section class="content-block">
-            <h2>Кто мы</h2>
-            <p>
-                <strong>«ФТО» (Фабрика Торгового Оборудования)</strong> — это производственная компания, расположенная в городе Нижний Новгород. 
-                Мы специализируемся на разработке, изготовлении и монтаже торгового оборудования для магазинов, супермаркетов, складов и выставочных залов.
-            </p>
-            <p>
-                Наш опыт позволяет реализовывать проекты любой сложности: от небольших островков в торговых центрах до полного оснащения крупных сетей.
-                Мы ценим каждого клиента и гарантируем индивидуальный подход к решению ваших задач.
-            </p>
-        </section>
-
-        <section class="content-block">
-            <h2>Наши преимущества</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <i class="fas fa-industry"></i>
-                    <h3>Собственное производство</h3>
-                    <p>Полный цикл изготовления: от раскроя металла до порошковой покраски. Никаких посредников.</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-drafting-compass"></i>
-                    <h3>Проектирование</h3>
-                    <p>Разработаем 3D-проект расстановки оборудования с учетом эргономики вашего помещения.</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Гарантия качества</h3>
-                    <p>Используем только качественные материалы и комплектующие. Даем гарантию на всю продукцию.</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-truck-loading"></i>
-                    <h3>Монтаж под ключ</h3>
-                    <p>Доставляем, поднимаем на этаж и собираем оборудование своими силами.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-block">
-            <h2>Как мы работаем</h2>
-            <ol class="steps-list">
-                <li>
-                    <strong>Заявка</strong>
-                    <span>Вы оставляете заявку на сайте или звоните нам.</span>
-                </li>
-                <li>
-                    <strong>Расчет</strong>
-                    <span>Мы делаем расчет стоимости и готовим коммерческое предложение.</span>
-                </li>
-                <li>
-                    <strong>Договор</strong>
-                    <span>Согласовываем детали, подписываем договор и вносим предоплату.</span>
-                </li>
-                <li>
-                    <strong>Производство</strong>
-                    <span>Изготавливаем оборудование в оговоренные сроки.</span>
-                </li>
-                <li>
-                    <strong>Монтаж</strong>
-                    <span>Доставляем и устанавливаем оборудование у вас в магазине.</span>
-                </li>
-            </ol>
-        </section>
-    </div>
-</main>
-
-<!-- Подвал (Единый для всех страниц) -->
-<footer class="site-footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h3>ФТО</h3>
-                <p>Фабрика Торгового Оборудования</p>
-                <p>г. Нижний Новгород, ул. Тургенева, 9</p>
-            </div>
-            <div class="footer-col">
-                <h3>Контакты</h3>
-                <p><i class="fas fa-phone"></i> +7 (960) 178-67-38</p>
-                <p><i class="fas fa-envelope"></i> a20072005@yandex.ru</p>
-                <p><i class="fas fa-clock"></i> Пн-Пт: 9:00 - 18:00</p>
-            </div>
-            <div class="footer-col">
-                <h3>Меню</h3>
+            <nav class="main-nav">
                 <ul>
+                    <li><a href="index.html">Главная</a></li>
                     <li><a href="catalog.html">Каталог</a></li>
-                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="about.html" class="active">О компании</a></li>
                     <li><a href="contacts.html">Контакты</a></li>
                 </ul>
+            </nav>
+            <div class="header-actions">
+                <!-- Кнопка корзины (id="cart-trigger" нужен для JS) -->
+                <div class="cart-btn-wrapper" id="cart-trigger">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-text">Корзина</span>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </div>
+                <div class="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2023 ФТО. Все права защищены.</p>
-        </div>
-    </div>
-</footer>
+    </header>
 
-<!-- Модальное окно корзины (Общее для всех страниц) -->
-<div id="cart-modal" class="modal">
-    <div class="modal-content modal-cart">
-        <span class="close-modal">&times;</span>
-        <h2><i class="fas fa-shopping-basket"></i> Ваша корзина</h2>
-        <div class="cart-body" id="cart-items-container"></div>
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>Итого:</span>
-                <span id="cart-total-price">0 ₽</span>
+    <!-- =========================================
+         ОСНОВНОЙ КОНТЕНТ
+         ========================================= -->
+    <main class="page-main">
+        <section class="content-section">
+            <div class="container">
+                <h1 class="page-title">О компании</h1>
+                
+                <div class="about-text" style="margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto; text-align: center;">
+                    <p style="font-size: 1.1em; line-height: 1.8; color: #4b5563;">
+                        <strong>«ФТО» (Фабрика Торгового Оборудования)</strong> — это производственная компания, расположенная в городе Нижний Новгород.
+                        Мы специализируемся на разработке, изготовлении и монтаже торгового оборудования для магазинов, супермаркетов, складов и выставочных залов.
+                        Наш опыт позволяет реализовывать проекты любой сложности: от небольших островков в торговых центрах до полного оснащения крупных сетей.
+                    </p>
+                </div>
+
+                <h2 class="section-title">Наши преимущества</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-industry"></i>
+                        <h3>Собственное производство</h3>
+                        <p>Полный цикл изготовления: от раскроя металла до порошковой покраски. Никаких посредников.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-drafting-compass"></i>
+                        <h3>Проектирование</h3>
+                        <p>Разработаем 3D-проект расстановки оборудования с учетом эргономики вашего помещения.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Гарантия качества</h3>
+                        <p>Используем только качественные материалы и комплектующие. Даем гарантию на всю продукцию.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-truck-loading"></i>
+                        <h3>Монтаж под ключ</h3>
+                        <p>Доставляем, поднимаем на этаж и собираем оборудование своими силами.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 50px;">
+                    <h2 class="section-title">Как мы работаем</h2>
+                    <ol style="max-width: 600px; margin: 0 auto; padding-left: 20px; color: #4b5563;">
+                        <li style="margin-bottom: 10px;"><strong>Заявка</strong> — Вы оставляете заявку на сайте или звоните нам.</li>
+                        <li style="margin-bottom: 10px;"><strong>Расчет</strong> — Мы делаем расчет стоимости и готовим коммерческое предложение.</li>
+                        <li style="margin-bottom: 10px;"><strong>Договор</strong> — Согласовываем детали, подписываем договор и вносим предоплату.</li>
+                        <li style="margin-bottom: 10px;"><strong>Производство</strong> — Изготавливаем оборудование в оговоренные сроки.</li>
+                        <li style="margin-bottom: 10px;"><strong>Монтаж</strong> — Доставляем и устанавливаем оборудование у вас в магазине.</li>
+                    </ol>
+                </div>
             </div>
-            <form id="order-form" class="order-form">
-                <h3>Оформление заказа</h3>
-                <div class="form-group">
-                    <input type="text" name="name" placeholder="Ваше имя" required>
+        </section>
+    </main>
+
+    <!-- =========================================
+         ПОДВАЛ (ЕДИНЫЙ)
+         ========================================= -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>ФТО</h3>
+                    <p>Фабрика Торгового Оборудования</p>
+                    <p>г. Нижний Новгород, ул. Тургенева, 9</p>
                 </div>
-                <div class="form-group">
-                    <input type="tel" name="phone" placeholder="Телефон *" required>
+                <div class="footer-col">
+                    <h3>Контакты</h3>
+                    <p><i class="fas fa-phone"></i> +7 (960) 178-67-38</p>
+                    <p><i class="fas fa-envelope"></i> a20072005@yandex.ru</p>
+                    <p><i class="fas fa-clock"></i> Пн-Пт: 9:00 - 18:00</p>
                 </div>
-                <div class="form-group">
-                    <textarea name="address" placeholder="Адрес доставки"></textarea>
+                <div class="footer-col">
+                    <h3>Меню</h3>
+                    <ul>
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block" id="checkout-btn" disabled>Оформить заказ</button>
-            </form>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ФТО. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =========================================
+         МОДАЛЬНОЕ ОКНО (КОРЗИНА)
+         ========================================= -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content modal-cart">
+            <span class="close-modal">&times;</span>
+            <h2><i class="fas fa-shopping-basket"></i> Ваша корзина</h2>
+            <div class="cart-body" id="cart-items-container"></div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Итого:</span>
+                    <span id="cart-total-price">0 ₽</span>
+                </div>
+                <form id="order-form" class="order-form">
+                    <h3>Оформление заказа</h3>
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Ваше имя" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="phone" placeholder="Телефон *" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="address" placeholder="Адрес доставки"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" id="checkout-btn" disabled>Оформить заказ</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- СКРИПТЫ (Порядок важен!) -->
-<script src="js/config.js"></script>
-<script src="js/utils.js"></script>
-<script src="data/catalog-data.js"></script>
-<script src="js/toast-module.js"></script>
-<script src="js/cart-module.js"></script>
-<script src="js/products-loader.js"></script>
-<script src="js/app.js"></script>
-
+    <!-- СКРИПТЫ -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="data/catalog-data.js"></script>
+    <script src="js/toast-module.js"></script>
+    <script src="js/cart-module.js"></script>
+    <script src="js/products-loader.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

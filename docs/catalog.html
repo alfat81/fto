@@ -3,100 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Каталог | ФТО</title>
+    <title>Каталог | ФТО - Фабрика Торгового Оборудования</title>
+    <meta name="description" content="Каталог торгового оборудования: стеллажи, витрины, кассовое оборудование.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-<!-- ЕДИНАЯ ШАПКА -->
-<header class="site-header">
-    <div class="container header-content">
-        <div class="logo">
-            <a href="index.html">
-                <h1>ФТО</h1>
-                <span>Фабрика Торгового Оборудования</span>
-            </a>
-        </div>
-        <nav class="main-nav">
-            <ul>
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="catalog.html" class="active">Каталог</a></li>
-                <li><a href="about.html">О компании</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
-            </ul>
-        </nav>
-        <div class="header-actions">
-            <div class="cart-btn-wrapper" id="cart-trigger">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-text">Корзина</span>
-                <span class="cart-badge" id="cart-count">0</span>
+    <!-- =========================================
+         ШАПКА (ЕДИНАЯ)
+         ========================================= -->
+    <header class="site-header">
+        <div class="container header-content">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>ФТО</h1>
+                    <span>Фабрика Торгового Оборудования</span>
+                </a>
             </div>
-            <div class="mobile-menu-toggle"><i class="fas fa-bars"></i></div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="catalog.html" class="active">Каталог</a></li>
+                    <li><a href="about.html">О компании</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <!-- Кнопка корзины (id="cart-trigger" нужен для JS) -->
+                <div class="cart-btn-wrapper" id="cart-trigger">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-text">Корзина</span>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </div>
+                <div class="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
-<main class="page-main">
-    <section class="content-section">
+    <!-- =========================================
+         ОСНОВНОЙ КОНТЕНТ
+         ========================================= -->
+    <main class="page-main">
+        <section class="content-section">
+            <div class="container">
+                <h1 class="page-title">Каталог продукции</h1>
+                
+                <!-- Фильтры по категориям -->
+                <div id="catalog-filters" class="catalog-filters">
+                    <!-- JS заполнит это кнопками -->
+                </div>
+
+                <!-- Сетка товаров -->
+                <div class="products-grid" id="full-catalog">
+                    <div class="loading" style="text-align:center; padding:40px; color:#666;">
+                        Загрузка каталога...
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- =========================================
+         ПОДВАЛ (ЕДИНЫЙ)
+         ========================================= -->
+    <footer class="site-footer">
         <div class="container">
-            <h2 class="section-title">Каталог продукции</h2>
-            <div id="catalog-filters" class="catalog-filters">
-                <!-- Фильтры будут добавлены JS автоматически -->
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>ФТО</h3>
+                    <p>Фабрика Торгового Оборудования</p>
+                    <p>г. Нижний Новгород, ул. Тургенева, 9</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Контакты</h3>
+                    <p><i class="fas fa-phone"></i> +7 (960) 178-67-38</p>
+                    <p><i class="fas fa-envelope"></i> a20072005@yandex.ru</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Меню</h3>
+                    <ul>
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="products-grid" id="full-catalog">
-                <div class="loading">Загрузка каталога...</div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ФТО. Все права защищены.</p>
             </div>
         </div>
-    </section>
-</main>
+    </footer>
 
-<!-- ЕДИНЫЙ ПОДВАЛ (Такой же как на главной) -->
-<footer class="site-footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-col"><h3>ФТО</h3><p>г. Нижний Новгород, ул. Тургенева, 9</p></div>
-            <div class="footer-col"><h3>Контакты</h3><p>+7 (960) 178-67-38</p></div>
-            <div class="footer-col"><h3>Меню</h3><ul><li><a href="catalog.html">Каталог</a></li></ul></div>
+    <!-- =========================================
+         МОДАЛЬНОЕ ОКНО (КОРЗИНА)
+         ========================================= -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content modal-cart">
+            <span class="close-modal">&times;</span>
+            <h2><i class="fas fa-shopping-basket"></i> Ваша корзина</h2>
+            <div class="cart-body" id="cart-items-container">
+                <!-- Товары корзины -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Итого:</span>
+                    <span id="cart-total-price">0 ₽</span>
+                </div>
+                <form id="order-form" class="order-form">
+                    <h3>Оформление заказа</h3>
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Ваше имя" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="phone" placeholder="Телефон *" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="address" placeholder="Адрес доставки"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" id="checkout-btn" disabled>Оформить заказ</button>
+                </form>
+            </div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2023 ФТО.</p></div>
     </div>
-</footer>
 
-<!-- Модальное окно корзины -->
-<div id="cart-modal" class="modal">
-    <div class="modal-content modal-cart">
-        <span class="close-modal">&times;</span>
-        <h2>Ваша корзина</h2>
-        <div class="cart-body" id="cart-items-container"></div>
-        <div class="cart-footer">
-            <div class="cart-total">Итого: <span id="cart-total-price">0 ₽</span></div>
-            <form id="order-form">
-                <input type="text" name="name" placeholder="Имя" required>
-                <input type="tel" name="phone" placeholder="Телефон" required>
-                <textarea name="address" placeholder="Адрес"></textarea>
-                <button type="submit" class="btn btn-primary btn-block" id="checkout-btn" disabled>Оформить заказ</button>
-            </form>
-        </div>
-    </div>
-</div>
-
-<script src="js/config.js"></script>
-<script src="js/utils.js"></script>
-<script src="data/catalog-data.js"></script>
-<script src="js/toast-module.js"></script>
-<script src="js/cart-module.js"></script>
-<script src="js/products-loader.js"></script>
-<script src="js/app.js"></script>
-
-<script>
-    // Логика каталога: загрузка всех товаров
-    document.addEventListener('DOMContentLoaded', () => {
-        if (window.CATALOG_DATA) {
-            ProductsLoader.renderProducts(window.CATALOG_DATA, document.getElementById('full-catalog'));
-            ProductsLoader.renderFilters(window.CATALOG_DATA, document.getElementById('catalog-filters'));
-        }
-    });
-</script>
-
+    <!-- =========================================
+         СКРИПТЫ (ПОРЯДОК ВАЖЕН)
+         ========================================= -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="data/catalog-data.js"></script>
+    <script src="js/toast-module.js"></script>
+    <script src="js/cart-module.js"></script>
+    <script src="js/products-loader.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- Инициализация каталога (страховка) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof window.CATALOG_DATA !== 'undefined' && typeof ProductsLoader !== 'undefined') {
+                ProductsLoader.renderProducts(window.CATALOG_DATA, document.getElementById('full-catalog'));
+                ProductsLoader.renderFilters(window.CATALOG_DATA, document.getElementById('catalog-filters'));
+            }
+        });
+    </script>
 </body>
+</html>
