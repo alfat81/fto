@@ -1,0 +1,14 @@
+﻿{
+  "id": "prod_001",
+  "name": "Стеллаж металлический СТ-100",
+  "price": 5500,
+  "category": "stalls",
+  "image": "images/stallazh.jpg",
+  "description": "Надежный сборно-разборный стеллаж. Нагрузка на полку до 150 кг.",
+  "specs": {
+    "height": "2000 мм",
+    "width": "1000 мм",
+    "depth": "500 мм",
+    "material": "Сталь"
+  }
+}

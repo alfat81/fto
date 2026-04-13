@@ -3,270 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Каталог товаров | ftoshop.ru</title>
-    <meta name="description" content="Полный каталог товаров фабрики торгового оборудования: мебель, торговое оборудование, фурнитура">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Каталог | ФТО - Торговое оборудование</title>
+    <meta name="description" content="Полный каталог торгового оборудования: стеллажи, витрины, кассы.">
     <link rel="stylesheet" href="css/style.css">
-    <meta property="og:url" content="https://ftoshop.ru/catalog.html">
+    <style>
+        /* Базовые стили для каталога */
+        body { font-family: sans-serif; margin: 0; line-height: 1.6; color: #333; }
+        header { background: #333; color: #fff; padding: 1rem 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        nav ul { list-style: none; padding: 0; display: flex; gap: 20px; }
+        nav a { color: #fff; text-decoration: none; font-weight: 500; }
+        
+        .page-header { padding: 40px 0; text-align: center; background: #f8f9fa; margin-bottom: 30px; }
+        
+        /* Сетка товаров */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        /* Стили карточки (дублируем основные, чтобы работало без внешнего css) */
+        .product-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            background: #fff;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Корзина в шапке */
+        .cart-icon-wrap { position: relative; cursor: pointer; margin-left: auto; }
+        .cart-count { 
+            position: absolute; top: -8px; right: -8px; 
+            background: #dc3545; color: white; 
+            border-radius: 50%; padding: 2px 6px; 
+            font-size: 12px; font-weight: bold; 
+            display: none; 
+        }
+
+        /* Модальное окно */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
+        .modal-content { background-color: #fefefe; margin: 10% auto; padding: 25px; border: 1px solid #888; width: 90%; max-width: 500px; border-radius: 8px; position: relative; max-height: 80vh; overflow-y: auto; }
+        .close-modal { position: absolute; right: 15px; top: 10px; font-size: 28px; font-weight: bold; cursor: pointer; color: #aaa; }
+        .close-modal:hover { color: #000; }
+        
+        /* Элементы формы */
+        input, textarea { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button.btn { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
+        button.btn:disabled { background: #ccc; cursor: not-allowed; }
+        button.btn:hover:not(:disabled) { background: #0056b3; }
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container header-container">
-            <a href="index.html" class="logo">Фабрика<span>Торгового</span>Оборудования</a>
-            <div class="nav-buttons">
-                <a href="catalog.html" class="nav-btn active">Каталог</a>
-                <a href="about.html" class="nav-btn">О компании</a>
-                <a href="contacts.html" class="nav-btn">Контакты</a>
-                <a href="#" class="nav-btn" id="cart-btn">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="cart-count">0</span>
-                </a>
-            </div>
-        </div>
-    </header>
 
-    <!-- Cart Modal -->
-    <div id="cart-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Ваша корзина</h2>
-            <div id="cart-items"></div>
-            <div class="cart-total">
-                <strong>Итого:</strong> <span id="cart-total">0 ₽</span>
-            </div>
-            <form id="checkout-form">
-                <div class="cart-form">
-                    <input type="text" id="name" name="name" placeholder="Ваше имя*" required autocomplete="name">
-                    <input type="tel" id="phone" name="phone" placeholder="Ваш телефон*" required autocomplete="tel">
-                    <textarea id="comment" name="comment" placeholder="Комментарий к заказу" autocomplete="off"></textarea>
-                    <button type="submit" id="checkout-btn" class="btn" disabled>Оформить заказ</button>
-                </div>
-            </form>
+<header>
+    <div class="container" style="display: flex; align-items: center;">
+        <div class="logo">
+            <h2 style="margin:0;">ФТО</h2>
+        </div>
+        <nav style="margin-left: 40px;">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html" style="color: #ffc107;">Каталог</a></li>
+                <li><a href="about.html">О нас</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </nav>
+        <div class="cart-icon-wrap" data-toggle="cart-modal" href="#cart-modal">
+            🛒 <span style="font-size: 14px;">Корзина</span>
+            <span class="cart-count">0</span>
         </div>
     </div>
+</header>
 
-    <!-- Hero Section -->
-    <section class="parallax parallax-hero" style="background-image: url('images/hero/catalog-hero.jpg');">
-        <div class="hero-content">
-            <h1>Полный каталог<br>нашей продукции</h1>
-            <p style="font-size: 1.3rem; margin: 25px 0; opacity: 0.9;">Широкий ассортимент товаров для вашего бизнеса и дома</p>
-            <div style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
-                <a href="tel:+79601786738" class="btn btn-secondary">Заказать расчет</a>
-                <a href="https://t.me/FTO_NN" class="btn btn-secondary">Консультация в Telegram</a>
-            </div>
+<section class="page-header">
+    <div class="container">
+        <h1>Каталог оборудования</h1>
+        <p>Выберите подходящее решение для вашего бизнеса</p>
+    </div>
+</section>
+
+<main class="container">
+    <!-- Сюда будут загружаться товары из JSON -->
+    <div id="catalog-grid" class="catalog-grid">
+        <p style="grid-column: 1/-1; text-align: center; color: #666;">Загрузка товаров...</p>
+    </div>
+</main>
+
+<!-- Модальное окно корзины (единое для всего сайта) -->
+<div id="cart-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Ваша корзина</h2>
+        <div id="cart-items-body" style="margin: 20px 0; max-height: 300px; overflow-y: auto;">
+            <!-- Товары корзины -->
         </div>
-    </section>
-
-    <!-- Categories Section -->
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">Категории товаров</h2>
-            <div class="categories-grid">
-                <a href="#furniture" class="category-card">
-                    <div class="category-image">
-                        <img src="images/products/office-desk.jpg" alt="Мебель" loading="lazy">
-                    </div>
-                    <div class="category-content">
-                        <h3 class="category-title">Мебель</h3>
-                        <p>Офисная и кухонная мебель под заказ</p>
-                        <span class="category-count">32 товара</span>
-                    </div>
-                </a>
-                
-                <a href="#equipment" class="category-card">
-                    <div class="category-image">
-                        <img src="images/products/shelf.jpg" alt="Торговое оборудование" loading="lazy">
-                    </div>
-                    <div class="category-content">
-                        <h3 class="category-title">Торговое оборудование</h3>
-                        <p>Стеллажи, прилавки, витрины</p>
-                        <span class="category-count">18 товаров</span>
-                    </div>
-                </a>
-                
-                <a href="#hardware" class="category-card">
-                    <div class="category-image">
-                        <img src="images/products/handles.jpg" alt="Мебельная фурнитура" loading="lazy">
-                    </div>
-                    <div class="category-content">
-                        <h3 class="category-title">Мебельная фурнитура</h3>
-                        <p>Ручки, петли, направляющие</p>
-                        <span class="category-count">15 товаров</span>
-                    </div>
-                </a>
-            </div>
+        <div style="text-align: right; font-size: 1.2em; font-weight: bold; margin-bottom: 20px;">
+            Итого: <span id="cart-total-sum">0 ₽</span>
         </div>
-    </section>
+        
+        <form id="order-form">
+            <h3>Оформление заказа</h3>
+            <input type="text" name="name" placeholder="Ваше имя" required>
+            <input type="tel" name="phone" placeholder="Телефон" required>
+            <textarea name="address" placeholder="Адрес доставки (необязательно)" rows="2"></textarea>
+            <button type="submit" class="btn" id="checkout-btn" disabled>Подтвердить заказ</button>
+        </form>
+    </div>
+</div>
 
-    <!-- Furniture Section -->
-    <section id="furniture" class="section">
-        <div class="container">
-            <h2 class="section-title">Мебель</h2>
-            <div class="products-grid stagger-animation">
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="images/products/tv-stand.jpg" alt="Тумба ТВ" loading="lazy">
-                        <div class="product-badge">-30%</div>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Тумба ТВ 1600×860×420 мм</h3>
-                        <div class="product-price">14 500 ₽ <span class="old-price">21 000 ₽</span></div>
-                        <p class="product-description">Современная тумба для ТВ с качественной фурнитурой и надежной конструкцией</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="tv-stand-1"
-                                data-name="Тумба ТВ 1600×860×420 мм"
-                                data-price="14500"
-                                data-image="images/products/tv-stand.jpg">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
+<footer style="background: #333; color: #fff; padding: 30px 0; margin-top: auto;">
+    <div class="container" style="text-align: center;">
+        <p>© 2023 Фабрика Торгового Оборудования</p>
+        <p>г. Нижний Новгород, ул. Тургенева, 9 | Тел: +7 (960) 178-67-38</p>
+    </div>
+</footer>
 
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="images/products/small-cabinet.jpg" alt="Тумба" loading="lazy">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Тумба 530×450×250 мм</h3>
-                        <div class="product-price">6 400 ₽</div>
-                        <p class="product-description">Компактная тумба для хранения документов и аксессуаров</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="small-cabinet-1"
-                                data-name="Тумба 530×450×250 мм"
-                                data-price="6400"
-                                data-image="images/products/small-cabinet.jpg">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
+<!-- ПОДКЛЮЧЕНИЕ СКРИПТОВ -->
+<!-- Порядок важен: конфиг -> утилиты -> тосты -> корзина -> загрузчик товаров -> приложение -->
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/toast-module.js"></script>
+<script src="js/cart-module.js"></script>
+<script src="js/products-loader.js"></script>
+<script src="js/app.js"></script>
 
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="images/products/office-desk.jpg" alt="Офисный стол" loading="lazy">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Офисный стол 1600×800 мм</h3>
-                        <div class="product-price">18 900 ₽</div>
-                        <p class="product-description">Эргономичный офисный стол с выдвижными ящиками</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="office-desk-1"
-                                data-name="Офисный стол 1600×800 мм"
-                                data-price="18900"
-                                data-image="images/products/office-desk.jpg">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- Скрипт инициализации каталога -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Запускаем загрузку товаров сразу после готовности DOM
+        ProductsLoader.loadProducts('#catalog-grid');
+    });
+</script>
 
-    <!-- Equipment Section -->
-    <section id="equipment" class="section">
-        <div class="container">
-            <h2 class="section-title">Торговое оборудование</h2>
-            <div class="products-grid stagger-animation">
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="images/products/shelf.jpg" alt="Стеллаж" loading="lazy">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Стеллаж торговый 2000×1000 мм</h3>
-                        <div class="product-price">25 500 ₽</div>
-                        <p class="product-description">Металлический стеллаж для магазина с регулируемыми полками</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="shelf-1"
-                                data-name="Стеллаж торговый 2000×1000 мм"
-                                data-price="25500"
-                                data-image="images/products/shelf.jpg">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="images/products/sink.jpg" alt="Мойка" loading="lazy">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Мойка с сифоном</h3>
-                        <div class="product-price">1 200 ₽</div>
-                        <p class="product-description">Надежная мойка для кухонь и санузлов с комплектом сифона</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="sink-1"
-                                data-name="Мойка с сифоном"
-                                data-price="1200"
-                                data-image="images/products/sink.jpg">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Hardware Section -->
-    <section id="hardware" class="section">
-        <div class="container">
-            <h2 class="section-title">Мебельная фурнитура</h2>
-            <div class="products-grid stagger-animation">
-                <div class="product-card parallax-item">
-                    <div class="product-image">
-                        <img src="images/products/handles.jpg" alt="Ручки" loading="lazy">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-title">Ручки мебельные набор</h3>
-                        <div class="product-price">850 ₽</div>
-                        <p class="product-description">Стильные ручки для мебели из нержавеющей стали</p>
-                        <div class="product-actions">
-                            <button class="btn contact-btn add-to-cart"
-                                data-id="handles-1"
-                                data-name="Ручки мебельные набор"
-                                data-price="850"
-                                data-image="images/products/handles.jpg">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                            <a href="tel:+79601786738" class="btn contact-btn phone-btn">Позвонить</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <p style="font-size: 1.1rem; margin-bottom: 20px;">© 2025 Фабрика торгового оборудования. Все права защищены.</p>
-                <p style="opacity: 0.8; margin-bottom: 20px;">Проектируем, производим и устанавливаем торговое и офисное оборудование</p>
-                <div class="social-links">
-                    <a href="https://t.me/FTO_NN" class="social-link"><i class="fab fa-telegram"></i></a>
-                    <a href="https://vk.com/ooofto" class="social-link" target="_blank"><i class="fab fa-vk"></i></a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <div id="toast-container"></div>
-
-    <script src="js/main.js"></script>
 </body>
 </html>

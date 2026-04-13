@@ -1,0 +1,13 @@
+﻿{
+  "id": "prod_003",
+  "name": "Кассовый бокс КБ-Мини",
+  "price": 18000,
+  "category": "checkout",
+  "image": "images/kassa.jpg",
+  "description": "Компактное решение для небольших магазинов у дома.",
+  "specs": {
+    "length": "1500 мм",
+    "conveyor": "Есть",
+    "material": "Нержавеющая сталь"
+  }
+}
