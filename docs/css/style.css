@@ -1,42 +1,53 @@
 /**
-* style.css - Глобальные стили проекта
-*/
+ * style.css - Глобальные стили проекта
+ */
 :root {
---primary: #2563eb;
---primary-dark: #1d4ed8;
---primary-light: #eff6ff;
---text-main: #1e293b;
---text-light: #64748b;
---bg-white: #ffffff;
---bg-gray: #f8fafc;
---border: #e2e8f0;
---radius: 8px;
---radius-lg: 12px;
---shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
---shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
---shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
---font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+    --text-main: #1e293b;
+    --text-light: #64748b;
+    --bg-white: #ffffff;
+    --bg-gray: #f8fafc;
+    --border: #e2e8f0;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+/* =========================================
+   1. БАЗОВЫЕ НАСТРОЙКИ
+   ========================================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
-font-family: var(--font-main);
-color: var(--text-main);
-background-color: var(--bg-gray);
-line-height: 1.6;
--webkit-font-smoothing: antialiased;
-display: flex;
-flex-direction: column;
-min-height: 100vh;
+    font-family: var(--font-main);
+    color: var(--text-main);
+    background-color: var(--bg-gray);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
+
 a { text-decoration: none; color: inherit; transition: 0.2s; }
 ul { list-style: none; }
 img { max-width: 100%; display: block; }
-.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    width: 100%;
+}
 
 /* =========================================
-СЕКЦИИ И ТИПОГРАФИКА
-========================================= */
+   2. СЕКЦИИ И ТИПОГРАФИКА
+   ========================================= */
 .page-content, .page-main { flex: 1; padding: 40px 0; }
 .page-title { font-size: 32px; font-weight: 700; text-align: center; margin-bottom: 40px; }
 .section { padding: 60px 0; }
@@ -46,8 +57,8 @@ img { max-width: 100%; display: block; }
 .about-intro { max-width: 800px; margin: 0 auto 40px; text-align: center; font-size: 18px; color: var(--text-light); line-height: 1.8; }
 
 /* =========================================
-ГЕРОЙ (Синий баннер) - ДОБАВЛЕНО
-========================================= */
+   3. ГЕРОЙ (Синий баннер)
+   ========================================= */
 .parallax-hero {
     background: linear-gradient(135deg, var(--primary) 0%, #003366 100%);
     color: #ffffff;
@@ -56,30 +67,19 @@ img { max-width: 100%; display: block; }
     position: relative;
     overflow: hidden;
 }
-.parallax-hero h2 {
-    font-size: 42px;
-    font-weight: 800;
-    margin-bottom: 16px;
-}
-.parallax-hero p {
-    font-size: 18px;
-    opacity: 0.9;
-    max-width: 600px;
-    margin: 0 auto 30px;
-}
-.parallax-hero .btn {
-    background: #ffffff;
-    color: var(--primary);
-}
+.parallax-hero h2 { font-size: 42px; font-weight: 800; margin-bottom: 16px; }
+.parallax-hero p { font-size: 18px; opacity: 0.9; max-width: 600px; margin: 0 auto 30px; }
+.parallax-hero .btn { background: #ffffff; color: var(--primary); }
 
 /* =========================================
-СЕТКИ И КАРТОЧКИ
-========================================= */
+   4. СЕТКИ И КАРТОЧКИ
+   ========================================= */
 .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px; }
 .feature-card { background: var(--bg-white); padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow); text-align: center; transition: transform 0.3s; }
 .feature-card:hover { transform: translateY(-5px); }
 .feature-card i { font-size: 40px; color: var(--primary); margin-bottom: 20px; display: block; }
 .feature-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+
 .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
 .product-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
 .product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
@@ -95,230 +95,13 @@ img { max-width: 100%; display: block; }
 .btn-add:hover { background: var(--primary); color: white; }
 
 /* =========================================
-ФОРМЫ И КНОПКИ
-========================================= */
+   5. ФОРМЫ И КНОПКИ
+   ========================================= */
 .form-group { margin-bottom: 15px; }
 .form-group label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 14px; }
 input, textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; font-family: inherit; transition: 0.2s; }
 input:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
-.btn { display: inline-block; padding: 10px 20px; border-radius: var(--radius); font-weight: 600; cursor: pointer; border: none; transition: 0.2s; text-align: center; font-size: 15px; }
-.btn-primary { background: var(--primary); color: white; }
-.btn-primary:hover { background: var(--primary-dark); }
-.btn-block { width: 100%; margin-top: 10px; }
 
-/* =========================================
-МОДАЛЬНОЕ ОКНО (КОРЗИНА)
-========================================= */
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-.modal-content { background: var(--bg-white); width: 90%; max-width: 500px; max-height: 90vh; border-radius: var(--radius-lg); padding: 30px; position: relative; overflow-y: auto; box-shadow: var(--shadow-lg); animation: slideUp 0.3s ease; }
-.close-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-light); line-height: 1; }
-.close-modal:hover { color: var(--text-main); }
-.cart-total { font-size: 20px; font-weight: 700; text-align: right; margin: 20px 0; }
-.cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
-
-/* =========================================
-ПОДВАЛ
-========================================= */
-.site-footer { background: #0f172a; color: white; padding: 40px 0; margin-top: auto; }
-.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 30px; }
-.footer-col h3 { margin-bottom: 15px; font-size: 18px; color: white; }
-.footer-col p, .footer-col a { color: #94a3b8; font-size: 14px; margin-bottom: 8px; display: block; }
-.footer-col a:hover { color: white; }
-.footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); color: #64748b; font-size: 14px; }
-
-/* =========================================
-АНИМАЦИИ И АДАПТИВ
-========================================= */
-@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@media (max-width: 768px) {
-    .header-content { flex-direction: column; gap: 15px; padding: 15px 0; }
-    .main-nav ul { flex-wrap: wrap; justify-content: center; width: 100%; }
-    .products-grid { grid-template-columns: 1fr; }
-    .modal-content { padding: 20px; }
-    .parallax-hero h2 { font-size: 28px; }
-}
-
-/* =========================================
-СТИЛИ ДЛЯ ШАГОВ (Как мы работаем)
-========================================= */
-.steps-list {
-    list-style: none;
-    padding: 0;
-    counter-reset: steps-counter;
-    max-width: 700px;
-    margin: 0 auto;
-}
-.steps-list li {
-    position: relative;
-    padding-left: 70px;
-    margin-bottom: 30px;
-    counter-increment: steps-counter;
-}
-.steps-list li::before {
-    content: counter(steps-counter);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 50px;
-    height: 50px;
-    background: var(--primary);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 24px;
-}
-.steps-list li strong {
-    display: block;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 5px;
-    color: var(--text-main);
-}
-.steps-list li span {
-    color: var(--text-light);
-    font-size: 16px;
-    line-height: 1.5;
-}
-@media (max-width: 768px) {
-    .steps-list li {
-        padding-left: 0;
-        text-align: center;
-        padding-top: 60px;
-    }
-    .steps-list li::before {
-        left: 50%;
-        transform: translateX(-50%);
-        top: 0;
-    }
-}
-/* =========================================
-КОНТАКТЫ (Двухколоночная раскладка)
-========================================= */
-.contacts-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    margin: 40px 0;
-}
-
-.contacts-info h2,
-.contacts-form-block h2 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 25px;
-    color: var(--text-main);
-}
-
-.contact-list {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 30px;
-}
-
-.contact-list li {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 25px;
-    align-items: flex-start;
-}
-
-.contact-list i {
-    color: var(--primary);
-    font-size: 20px;
-    margin-top: 3px;
-    width: 20px;
-    text-align: center;
-}
-
-.contact-list a {
-    color: var(--primary);
-    text-decoration: none;
-}
-
-.contact-list a:hover {
-    text-decoration: underline;
-}
-
-.map-placeholder {
-    margin-top: 30px;
-    background: var(--bg-gray);
-    border-radius: var(--radius);
-    padding: 20px;
-    text-align: center;
-    color: var(--text-light);
-}
-
-.contacts-form-block p {
-    margin-bottom: 25px;
-    color: var(--text-light);
-    line-height: 1.6;
-}
-
-.standard-form {
-    background: var(--bg-white);
-    padding: 30px;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow);
-}
-
-/* Адаптивность для контактов */
-@media (max-width: 768px) {
-    .contacts-wrapper {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-    
-    .contact-list li {
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .contact-list i {
-        margin-top: 0;
-    }
-}
-/* =========================================
-ФИЛЬТРЫ КАТАЛОГА
-========================================= */
-.catalog-filters {
-    margin-bottom: 40px;
-}
-
-.filter-btn {
-    padding: 10px 20px;
-    border: 1px solid var(--border);
-    background: white;
-    color: var(--text-main);
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.2s;
-}
-
-.filter-btn:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-}
-
-.filter-btn.active {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
-
-@media (max-width: 768px) {
-    .catalog-filters {
-        margin-bottom: 20px;
-    }
-    
-    .filter-btn {
-        padding: 8px 16px;
-        font-size: 14px;
-    }
-}
 .btn {
     display: inline-block;
     padding: 10px 20px;
@@ -331,13 +114,8 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
     font-size: 15px;
     text-decoration: none;
 }
-.btn-primary {
-    background: var(--primary);
-    color: white;
-}
-.btn-primary:hover {
-    background: var(--primary-dark);
-}
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-dark); }
 .btn-secondary {
     background: var(--bg-gray);
     color: var(--text-light);
@@ -347,16 +125,92 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
     background: #e2e8f0;
     color: var(--text-main);
 }
-.btn-block {
-    width: 100%;
-    margin-top: 10px;
+.btn-block { width: 100%; margin-top: 10px; }
+
+/* =========================================
+   6. МОДАЛЬНОЕ ОКНО (КОРЗИНА)
+   ========================================= */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.modal-content { background: var(--bg-white); width: 90%; max-width: 500px; max-height: 90vh; border-radius: var(--radius-lg); padding: 30px; position: relative; overflow-y: auto; box-shadow: var(--shadow-lg); animation: slideUp 0.3s ease; }
+.close-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-light); line-height: 1; }
+.close-modal:hover { color: var(--text-main); }
+.cart-total { font-size: 20px; font-weight: 700; text-align: right; margin: 20px 0; }
+.cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+
+/* =========================================
+   7. ПОДВАЛ
+   ========================================= */
+.site-footer { background: #0f172a; color: white; padding: 40px 0; margin-top: auto; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 30px; }
+.footer-col h3 { margin-bottom: 15px; font-size: 18px; color: white; }
+.footer-col p, .footer-col a { color: #94a3b8; font-size: 14px; margin-bottom: 8px; display: block; }
+.footer-col a:hover { color: white; }
+.footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); color: #64748b; font-size: 14px; }
+
+/* =========================================
+   8. АНИМАЦИИ И АДАПТИВ
+   ========================================= */
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+@media (max-width: 768px) {
+    .header-content { flex-direction: column; gap: 15px; padding: 15px 0; }
+    .main-nav ul { flex-wrap: wrap; justify-content: center; width: 100%; }
+    .products-grid { grid-template-columns: 1fr; }
+    .modal-content { padding: 20px; }
+    .parallax-hero h2 { font-size: 28px; }
 }
-.btn-secondary {
-    background: var(--bg-gray);
-    color: var(--text-light);
-    border: 1px solid var(--border);
+
+/* =========================================
+   9. ШАГИ (Как мы работаем)
+   ========================================= */
+.steps-list { list-style: none; padding: 0; counter-reset: steps-counter; max-width: 700px; margin: 0 auto; }
+.steps-list li { position: relative; padding-left: 70px; margin-bottom: 30px; counter-increment: steps-counter; }
+.steps-list li::before {
+    content: counter(steps-counter);
+    position: absolute; left: 0; top: 0;
+    width: 50px; height: 50px;
+    background: var(--primary); color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 24px;
 }
-.btn-secondary:hover {
-    background: #e2e8f0;
-    color: var(--text-main);
+.steps-list li strong { display: block; font-size: 18px; font-weight: 700; margin-bottom: 5px; color: var(--text-main); }
+.steps-list li span { color: var(--text-light); font-size: 16px; line-height: 1.5; }
+
+@media (max-width: 768px) {
+    .steps-list li { padding-left: 0; text-align: center; padding-top: 60px; }
+    .steps-list li::before { left: 50%; transform: translateX(-50%); top: 0; }
+}
+
+/* =========================================
+   10. КОНТАКТЫ (Двухколоночная раскладка)
+   ========================================= */
+.contacts-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin: 40px 0; }
+.contacts-info h2, .contacts-form-block h2 { font-size: 24px; font-weight: 700; margin-bottom: 25px; color: var(--text-main); }
+.contact-list { list-style: none; padding: 0; margin-bottom: 30px; }
+.contact-list li { display: flex; gap: 15px; margin-bottom: 25px; align-items: flex-start; }
+.contact-list i { color: var(--primary); font-size: 20px; margin-top: 3px; width: 20px; text-align: center; }
+.contact-list a { color: var(--primary); text-decoration: none; }
+.contact-list a:hover { text-decoration: underline; }
+.map-placeholder { margin-top: 30px; background: var(--bg-gray); border-radius: var(--radius); padding: 20px; text-align: center; color: var(--text-light); }
+.contacts-form-block p { margin-bottom: 25px; color: var(--text-light); line-height: 1.6; }
+.standard-form { background: var(--bg-white); padding: 30px; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+
+@media (max-width: 768px) {
+    .contacts-wrapper { grid-template-columns: 1fr; gap: 40px; }
+    .contact-list li { flex-direction: column; gap: 5px; }
+    .contact-list i { margin-top: 0; }
+}
+
+/* =========================================
+   11. ФИЛЬТРЫ КАТАЛОГА
+   ========================================= */
+.catalog-filters { margin-bottom: 40px; }
+.filter-btn { padding: 10px 20px; border: 1px solid var(--border); background: white; color: var(--text-main); border-radius: 20px; cursor: pointer; font-weight: 500; transition: all 0.2s; }
+.filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+.filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+@media (max-width: 768px) {
+    .catalog-filters { margin-bottom: 20px; }
+    .filter-btn { padding: 8px 16px; font-size: 14px; }
 }
