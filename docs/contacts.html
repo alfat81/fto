@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Контакты | ФТО - Фабрика Торгового Оборудования</title>
-    <meta name="description" content="Контакты компании ФТО: адрес, телефон, email. Форма обратной связи.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- =========================================
-         ШАПКА (ЕДИНАЯ)
-         ========================================= -->
+    <!-- ШАПКА -->
     <header class="site-header">
         <div class="container header-content">
             <div class="logo">
@@ -30,102 +27,93 @@
                 </ul>
             </nav>
             <div class="header-actions">
-                <!-- Кнопка корзины (id="cart-trigger" нужен для JS) -->
                 <div class="cart-btn-wrapper" id="cart-trigger">
                     <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-text">Корзина</span>
+                    <span>Корзина</span>
                     <span class="cart-badge" id="cart-count">0</span>
-                </div>
-                <div class="mobile-menu-toggle">
-                    <i class="fas fa-bars"></i>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- =========================================
-         ОСНОВНОЙ КОНТЕНТ
-         ========================================= -->
-    <main class="page-main">
-        <section class="content-section">
-            <div class="container">
-                <h1 class="page-title">Контакты</h1>
-                
-                <div class="contacts-wrapper" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
-                    <!-- Левая колонка: Информация -->
-                    <div class="contacts-info">
-                        <h2 class="section-title" style="text-align: left;">Наши реквизиты</h2>
-                        <ul class="contact-list" style="list-style: none; padding: 0;">
-                            <li style="margin-bottom: 20px; display: flex; gap: 15px; align-items: flex-start;">
-                                <i class="fas fa-map-marker-alt" style="color: var(--primary); font-size: 1.2em; margin-top: 5px;"></i>
-                                <div>
-                                    <strong>Адрес производства и офиса:</strong><br>
-                                    г. Нижний Новгород, ул. Тургенева, 9
-                                </div>
-                            </li>
-                            <li style="margin-bottom: 20px; display: flex; gap: 15px; align-items: flex-start;">
-                                <i class="fas fa-phone-alt" style="color: var(--primary); font-size: 1.2em; margin-top: 5px;"></i>
-                                <div>
-                                    <strong>Телефон:</strong><br>
-                                    <a href="tel:+79601786738" style="color: var(--primary);">+7 (960) 178-67-38</a>
-                                </div>
-                            </li>
-                            <li style="margin-bottom: 20px; display: flex; gap: 15px; align-items: flex-start;">
-                                <i class="fas fa-envelope" style="color: var(--primary); font-size: 1.2em; margin-top: 5px;"></i>
-                                <div>
-                                    <strong>Email:</strong><br>
-                                    <a href="mailto:a20072005@yandex.ru" style="color: var(--primary);">a20072005@yandex.ru</a>
-                                </div>
-                            </li>
-                            <li style="margin-bottom: 20px; display: flex; gap: 15px; align-items: flex-start;">
-                                <i class="fas fa-clock" style="color: var(--primary); font-size: 1.2em; margin-top: 5px;"></i>
-                                <div>
-                                    <strong>Режим работы:</strong><br>
-                                    Пн-Пт: 9:00 - 18:00<br>
-                                    Сб-Вс: Выходной
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="map-placeholder" style="margin-top: 30px;">
-                            <div style="background: #e2e8f0; width: 100%; height: 250px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: #64748b;">
-                                <p>Интерактивная карта (Яндекс/Google)</p>
+    <!-- КОНТЕНТ -->
+    <main class="page-content">
+        <div class="container">
+            <h1 class="page-title">Контакты</h1>
+            
+            <div class="contacts-wrapper">
+                <!-- Левая колонка: Информация -->
+                <div class="contacts-info">
+                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Наши реквизиты</h2>
+                    <ul class="contact-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Адрес производства и офиса:</strong><br>
+                                г. Нижний Новгород, ул. Тургенева, 9
                             </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <strong>Телефон:</strong><br>
+                                <a href="tel:+79601786738">+7 (960) 178-67-38</a>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email:</strong><br>
+                                <a href="mailto:a20072005@yandex.ru">a20072005@yandex.ru</a>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Режим работы:</strong><br>
+                                Пн-Пт: 9:00 - 18:00<br>
+                                Сб-Вс: Выходной
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="map-placeholder" style="margin-top: 30px;">
+                        <div style="background: #e2e8f0; width: 100%; height: 250px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: #64748b;">
+                            <p>Интерактивная карта (Яндекс/Google)</p>
                         </div>
                     </div>
+                </div>
+                
+                <!-- Правая колонка: Форма -->
+                <div class="contacts-form-block">
+                    <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Напишите нам</h2>
+                    <p style="margin-bottom: 20px; color: #64748b;">Есть вопросы по оборудованию или нужен индивидуальный расчет? Заполните форму, и мы свяжемся с вами в ближайшее время.</p>
                     
-                    <!-- Правая колонка: Форма -->
-                    <div class="contacts-form-block">
-                        <h2 class="section-title" style="text-align: left;">Напишите нам</h2>
-                        <p style="margin-bottom: 20px; color: #64748b;">Есть вопросы по оборудованию или нужен индивидуальный расчет? Заполните форму, и мы свяжемся с вами в ближайшее время.</p>
-                        
-                        <form id="contact-form" style="background: white; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow);">
-                            <div class="form-group">
-                                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Ваше имя</label>
-                                <input type="text" id="cf-name" name="name" placeholder="Иван Иванов" required>
-                            </div>
-                            <div class="form-group">
-                                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Телефон</label>
-                                <input type="tel" id="cf-phone" name="phone" placeholder="+7 (___) ___-__-__" required>
-                            </div>
-                            <div class="form-group">
-                                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Email</label>
-                                <input type="email" id="cf-email" name="email" placeholder="example@mail.ru" required>
-                            </div>
-                            <div class="form-group">
-                                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Сообщение</label>
-                                <textarea id="cf-message" name="message" rows="5" placeholder="Опишите ваш вопрос..." required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block">Отправить сообщение</button>
-                        </form>
-                    </div>
+                    <!-- ИСПРАВЛЕНО: добавлен класс standard-form и правильная структура полей -->
+                    <form id="contact-form" class="standard-form">
+                        <div class="form-group">
+                            <label for="cf-name">Ваше имя</label>
+                            <input type="text" id="cf-name" name="name" placeholder="Иван Иванов" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cf-phone">Телефон</label>
+                            <input type="tel" id="cf-phone" name="phone" placeholder="+7 (___) ___-__-__" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cf-email">Email</label>
+                            <input type="email" id="cf-email" name="email" placeholder="example@mail.ru" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cf-message">Сообщение</label>
+                            <textarea id="cf-message" name="message" rows="5" placeholder="Опишите ваш вопрос..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Отправить сообщение</button>
+                    </form>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
 
-    <!-- =========================================
-         ПОДВАЛ (ЕДИНЫЙ)
-         ========================================= -->
+    <!-- ПОДВАЛ -->
     <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
@@ -138,11 +126,11 @@
                     <h3>Контакты</h3>
                     <p><i class="fas fa-phone"></i> +7 (960) 178-67-38</p>
                     <p><i class="fas fa-envelope"></i> a20072005@yandex.ru</p>
-                    <p><i class="fas fa-clock"></i> Пн-Пт: 9:00 - 18:00</p>
                 </div>
                 <div class="footer-col">
                     <h3>Меню</h3>
                     <ul>
+                        <li><a href="index.html">Главная</a></li>
                         <li><a href="catalog.html">Каталог</a></li>
                         <li><a href="about.html">О нас</a></li>
                         <li><a href="contacts.html">Контакты</a></li>
@@ -155,30 +143,18 @@
         </div>
     </footer>
 
-    <!-- =========================================
-         МОДАЛЬНОЕ ОКНО (КОРЗИНА)
-         ========================================= -->
+    <!-- МОДАЛКА -->
     <div id="cart-modal" class="modal">
         <div class="modal-content modal-cart">
             <span class="close-modal">&times;</span>
             <h2><i class="fas fa-shopping-basket"></i> Ваша корзина</h2>
             <div class="cart-body" id="cart-items-container"></div>
             <div class="cart-footer">
-                <div class="cart-total">
-                    <span>Итого:</span>
-                    <span id="cart-total-price">0 ₽</span>
-                </div>
-                <form id="order-form" class="order-form">
-                    <h3>Оформление заказа</h3>
-                    <div class="form-group">
-                        <input type="text" name="name" placeholder="Ваше имя" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" name="phone" placeholder="Телефон *" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea name="address" placeholder="Адрес доставки"></textarea>
-                    </div>
+                <div class="cart-total">Итого: <span id="cart-total-price">0 ₽</span></div>
+                <form id="order-form">
+                    <div class="form-group"><input type="text" name="name" placeholder="Имя" required></div>
+                    <div class="form-group"><input type="tel" name="phone" placeholder="Телефон" required></div>
+                    <div class="form-group"><textarea name="address" placeholder="Адрес"></textarea></div>
                     <button type="submit" class="btn btn-primary btn-block" id="checkout-btn" disabled>Оформить заказ</button>
                 </form>
             </div>
