@@ -1,199 +1,150 @@
 /**
- * style.css
- * Основные стили проекта ftoshop.ru
- * Восстановленная стилистика, анимации и адаптивность.
+ * style.css - Исправленная версия
+ * ftoshop.ru
  */
 
 /* =========================================
-   1. ПЕРЕМЕННЫЕ И СБРОС СТИЛЕЙ
+   1. ПЕРЕМЕННЫЕ
    ========================================= */
 :root {
-    --primary-color: #0066cc;       /* Основной синий */
-    --primary-dark: #004c99;        /* Темный синий для ховера */
-    --accent-color: #ff9900;        /* Акцентный оранжевый */
-    --text-main: #333333;           /* Основной текст */
-    --text-light: #666666;          /* Вторичный текст */
-    --bg-light: #f8f9fa;            /* Светлый фон */
+    --primary-color: #1976d2;
+    --primary-dark: #0d47a1;
+    --accent-color: #ff9800;
+    --text-main: #212121;
+    --text-light: #757575;
+    --bg-light: #f5f5f5;
     --white: #ffffff;
-    --border-radius: 12px;          /* Скругление углов */
-    --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
-    --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
-    --shadow-lg: 0 15px 40px rgba(0,0,0,0.15);
-    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --dark-bg: #263238;
+    --border-radius: 8px;
+    --shadow: 0 2px 10px rgba(0,0,0,0.1);
+    --transition: all 0.3s ease;
 }
 
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: var(--font-family);
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
     color: var(--text-main);
-    background-color: var(--bg-light);
+    background: var(--bg-light);
     line-height: 1.6;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
 }
-
-a { text-decoration: none; color: inherit; transition: var(--transition); }
-ul { list-style: none; }
-img { max-width: 100%; display: block; }
-button { font-family: inherit; }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-    width: 100%;
 }
 
 /* =========================================
-   2. ШАПКА (HEADER)
+   2. ШАПКА
    ========================================= */
 header {
-    background: var(--white);
-    box-shadow: var(--shadow-sm);
+    background: var(--dark-bg);
+    color: var(--white);
+    padding: 15px 0;
     position: sticky;
     top: 0;
-    z-index: 100;
-    padding: 15px 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.header-inner {
+.header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.logo h1 {
-    font-size: 24px;
-    font-weight: 800;
+.logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--white);
+    text-decoration: none;
+}
+
+.logo span {
     color: var(--primary-color);
-    letter-spacing: -0.5px;
-    margin-bottom: 2px;
 }
 
-.logo small {
-    font-size: 12px;
-    color: var(--text-light);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-nav ul {
+.nav-buttons {
     display: flex;
-    gap: 30px;
+    gap: 20px;
+    align-items: center;
 }
 
-nav a {
-    font-weight: 500;
-    font-size: 15px;
-    color: var(--text-main);
-    position: relative;
-}
-
-nav a:hover, nav a.active {
-    color: var(--primary-color);
-}
-
-nav a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--primary-color);
+.nav-btn {
+    color: var(--white);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
     transition: var(--transition);
+    font-weight: 500;
 }
 
-nav a:hover::after {
-    width: 100%;
+.nav-btn:hover,
+.nav-btn.active {
+    background: var(--primary-color);
 }
 
-/* Корзина в шапке */
-.cart-trigger {
+#cart-btn {
+    background: var(--accent-color);
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: 4px;
     display: flex;
     align-items: center;
     gap: 8px;
-    background: var(--bg-light);
-    padding: 8px 16px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: var(--transition);
-    font-weight: 600;
-    font-size: 14px;
 }
 
-.cart-trigger:hover {
-    background: #e9ecef;
-    transform: translateY(-2px);
-}
-
-.cart-count {
-    background: var(--accent-color);
-    color: var(--white);
-    font-size: 12px;
-    width: 20px;
-    height: 20px;
+#cart-count {
+    background: var(--white);
+    color: var(--accent-color);
+    padding: 2px 8px;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-weight: bold;
-    box-shadow: 0 2px 5px rgba(255, 153, 0, 0.4);
+    font-size: 12px;
 }
-
-.cart-count:empty { display: none; }
 
 /* =========================================
-   3. ГЕРОЙ-СЕКЦИЯ (HERO)
+   3. HERO СЕКЦИЯ
    ========================================= */
-.hero {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #003366 100%);
+.parallax-hero {
+    background: linear-gradient(135deg, #1976d2 0%, #0d47a1 100%);
     color: var(--white);
-    padding: 80px 0;
+    padding: 100px 0;
     text-align: center;
     position: relative;
-    overflow: hidden;
 }
 
-.hero::before {
+.parallax-hero::before {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-    animation: rotate 20s linear infinite;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3);
 }
 
-@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-.hero-content {
+.parallax-hero .container {
     position: relative;
-    z-index: 2;
-    max-width: 700px;
-    margin: 0 auto;
+    z-index: 1;
 }
 
-.hero h2 {
-    font-size: 42px;
+.parallax-hero h2 {
+    font-size: 48px;
     margin-bottom: 20px;
-    font-weight: 800;
-    line-height: 1.2;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
-.hero p {
-    font-size: 18px;
+.parallax-hero p {
+    font-size: 20px;
     margin-bottom: 30px;
-    opacity: 0.9;
+    opacity: 0.95;
 }
 
 .btn {
@@ -201,316 +152,315 @@ nav a:hover::after {
     background: var(--accent-color);
     color: var(--white);
     padding: 14px 32px;
-    border-radius: 50px;
+    border-radius: 4px;
+    text-decoration: none;
     font-weight: 600;
-    font-size: 16px;
-    box-shadow: 0 4px 15px rgba(255, 153, 0, 0.4);
     transition: var(--transition);
     border: none;
     cursor: pointer;
+    font-size: 16px;
 }
 
 .btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(255, 153, 0, 0.6);
-    background: #ffaa33;
+    background: #f57c00;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255,152,0,0.4);
 }
 
 /* =========================================
-   4. КАТАЛОГ И КАРТОЧКИ ТОВАРОВ
+   4. СЕКЦИИ
    ========================================= */
+.section {
+    padding: 60px 0;
+}
+
 .section-title {
     text-align: center;
-    font-size: 32px;
-    margin: 60px 0 40px;
+    font-size: 36px;
+    margin-bottom: 40px;
     color: var(--text-main);
-    position: relative;
-    display: inline-block;
-    left: 50%;
-    transform: translateX(-50%);
+    font-weight: 700;
 }
 
-.section-title::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 4px;
-    background: var(--primary-color);
-    margin: 10px auto 0;
-    border-radius: 2px;
-}
-
+/* =========================================
+   5. КАРТОЧКИ ТОВАРОВ
+   ========================================= */
 .catalog-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 30px;
-    padding-bottom: 60px;
 }
 
-/* Карточка товара */
 .product-card {
     background: var(--white);
     border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow);
     transition: var(--transition);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    opacity: 0; /* Для анимации появления */
-    transform: translateY(20px);
-}
-
-.product-card.loaded {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .product-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
 .product-image-wrap {
-    height: 200px;
-    background: #f0f0f0;
+    height: 220px;
+    background: #e0e0e0;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    position: relative;
 }
 
 .product-image-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.product-card:hover .product-image-wrap img {
-    transform: scale(1.05);
 }
 
 .product-info {
     padding: 20px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
 }
 
 .product-title {
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 10px;
     color: var(--text-main);
 }
 
-.product-desc {
-    font-size: 14px;
+.product-description {
     color: var(--text-light);
+    font-size: 14px;
     margin-bottom: 15px;
-    flex-grow: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    line-height: 1.5;
 }
 
 .product-price-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: auto;
     padding-top: 15px;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid #e0e0e0;
 }
 
 .price {
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 22px;
+    font-weight: 700;
     color: var(--primary-color);
 }
 
 .btn-add {
     background: var(--primary-color);
-    color: white;
+    color: var(--white);
     border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 4px;
     cursor: pointer;
+    font-weight: 600;
     transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 6px;
 }
 
 .btn-add:hover {
     background: var(--primary-dark);
-    transform: scale(1.05);
 }
 
 /* =========================================
-   5. МОДАЛЬНЫЕ ОКНА И КОРЗИНА
+   6. МОДАЛЬНЫЕ ОКНА
    ========================================= */
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 2000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    animation: fadeIn 0.3s ease;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
 }
 
 .modal-content {
-    background-color: var(--white);
+    background: var(--white);
     margin: 5% auto;
     padding: 30px;
     border-radius: var(--border-radius);
     width: 90%;
     max-width: 500px;
     position: relative;
-    box-shadow: var(--shadow-lg);
-    animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     max-height: 90vh;
     overflow-y: auto;
 }
 
-.close-modal {
+.close {
     position: absolute;
     right: 20px;
     top: 15px;
     font-size: 28px;
-    font-weight: bold;
-    color: #aaa;
     cursor: pointer;
-    transition: 0.2s;
-    line-height: 1;
+    color: var(--text-light);
 }
 
-.close-modal:hover { color: var(--text-main); }
+.close:hover {
+    color: var(--text-main);
+}
 
-/* Элементы внутри корзины */
-.cart-item-row {
+/* =========================================
+   7. КОРЗИНА
+   ========================================= */
+.cart-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid #eee;
-    animation: slideInLeft 0.3s ease;
+    padding: 15px 0;
+    border-bottom: 1px solid #e0e0e0;
 }
 
-.cart-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.cart-total {
+    margin: 20px 0;
+    padding: 15px;
+    background: var(--bg-light);
+    border-radius: var(--border-radius);
+    font-size: 18px;
+    font-weight: 600;
 }
 
-.qty-btn {
-    width: 28px;
-    height: 28px;
-    border: 1px solid #ddd;
-    background: #fff;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s;
-}
-
-.qty-btn:hover { background: #f0f0f0; border-color: #ccc; }
-
-.remove-btn {
-    color: #ff4444;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    margin-left: 10px;
-    padding: 0 5px;
-}
-
-.remove-btn:hover { color: #cc0000; transform: scale(1.2); }
-
-/* Формы в модалке */
-.form-group { margin-bottom: 15px; }
-.form-group label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 14px; }
-.form-group input, .form-group textarea {
+.cart-form input,
+.cart-form textarea {
     width: 100%;
     padding: 12px;
+    margin-bottom: 15px;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 4px;
     font-size: 14px;
-    transition: 0.3s;
-    font-family: inherit;
 }
 
-.form-group input:focus, .form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+#checkout-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent-color);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#checkout-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
 }
 
 /* =========================================
-   6. КОНТАКТЫ И ПОДВАЛ
+   8. FOOTER
    ========================================= */
-.contact-section {
-    padding: 60px 0;
-    background: var(--white);
-}
-
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-top: 40px;
-}
-
-.contact-info-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.contact-icon {
-    font-size: 24px;
-    color: var(--primary-color);
-}
-
 footer {
-    background: #222;
-    color: #aaa;
+    background: var(--dark-bg);
+    color: var(--white);
     padding: 40px 0;
-    margin-top: auto;
     text-align: center;
+    margin-top: auto;
 }
 
-footer p { margin-bottom: 10px; }
-footer strong { color: var(--white); }
+.footer-content p {
+    margin-bottom: 10px;
+    opacity: 0.9;
+}
+
+.social-links {
+    margin-top: 20px;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    margin: 0 8px;
+    transition: var(--transition);
+}
+
+.social-link:hover {
+    background: var(--accent-color);
+    transform: translateY(-3px);
+}
 
 /* =========================================
-   7. АНИМАЦИИ
+   9. TOAST УВЕДОМЛЕНИЯ
    ========================================= */
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes slideInLeft { from { transform: translateX(-20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 3000;
+}
+
+.toast {
+    background: var(--dark-bg);
+    color: var(--white);
+    padding: 12px 24px;
+    border-radius: 4px;
+    margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    animation: slideIn 0.3s ease;
+}
+
+.toast.success {
+    background: #4caf50;
+}
+
+.toast.error {
+    background: #f44336;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
 
 /* =========================================
-   8. АДАПТИВНОСТЬ
+   10. АДАПТИВНОСТЬ
    ========================================= */
 @media (max-width: 768px) {
-    .header-inner { flex-direction: column; gap: 15px; }
-    nav ul { gap: 15px; font-size: 14px; }
-    .hero h2 { font-size: 28px; }
-    .contact-grid { grid-template-columns: 1fr; }
-    .modal-content { margin: 10% auto; width: 95%; padding: 20px; }
-    .catalog-grid { grid-template-columns: 1fr; }
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .parallax-hero {
+        padding: 60px 0;
+    }
+    
+    .parallax-hero h2 {
+        font-size: 32px;
+    }
+    
+    .parallax-hero p {
+        font-size: 16px;
+    }
+    
+    .catalog-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        margin: 10% auto;
+        padding: 20px;
+    }
 }
