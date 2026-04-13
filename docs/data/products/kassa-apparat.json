@@ -1,0 +1,12 @@
+﻿{
+  "id": "prod-003",
+  "name": "Кассовый аппарат Атол 30Ф",
+  "price": 14900,
+  "image": "images/kassa.jpg",
+  "description": "Онлайн-касса для малого бизнеса, фискальный накопитель в комплекте.",
+  "specs": {
+    "print_speed": "75 мм/с",
+    "interface": "USB, Bluetooth",
+    "weight": "0.9 кг"
+  }
+}

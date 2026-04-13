@@ -1,119 +1,90 @@
-﻿/**
- * products-loader.js
- * Модуль для динамической загрузки товаров из JSON файлов.
- */
-
-const ProductsLoader = (function() {
+﻿const ProductsLoader = (function() {
     
-    /**
-     * Загружает список товаров и рендерит их в контейнер
-     * @param {string} containerSelector - CSS селектор контейнера (например, '#catalog-grid')
-     * @param {string} indexPath - Путь к index.json со списком файлов
-     */
-    async function loadProducts(containerSelector, indexPath = 'data/products/index.json') {
-        const container = document.querySelector(containerSelector);
-        if (!container) {
-            console.error('Контейнер для товаров не найден:', containerSelector);
-            return;
-        }
+    async function loadCatalog() {
+        const container = document.getElementById('catalog-grid');
+        if (!container) return;
 
         try {
-            // 1. Получаем список файлов
-            const response = await fetch(indexPath);
-            if (!response.ok) throw new Error('Не удалось загрузить индекс товаров');
-            const fileNames = await response.json();
+            // 1. Загружаем список файлов
+            const indexResp = await fetch('data/products/index.json');
+            if (!indexResp.ok) throw new Error('Не найден index.json');
+            const files = await indexResp.json();
 
-            // 2. Загружаем каждый файл параллельно
-            const promises = fileNames.map(name => 
-                fetch(`data/products/${name}`).then(res => res.json())
-            );
+            container.innerHTML = ''; // Очистка
 
-            const products = await Promise.all(promises);
-
-            // 3. Очищаем контейнер (убираем лоадер, если есть)
-            container.innerHTML = '';
-
-            // 4. Рендерим карточки
-            if (products.length === 0) {
-                container.innerHTML = '<p>Товары пока не добавлены.</p>';
-                return;
+            // 2. Загружаем каждый товар
+            for (const file of files) {
+                try {
+                    const resp = await fetch(`data/products/${file}`);
+                    if (!resp.ok) continue;
+                    const product = await resp.json();
+                    renderProductCard(container, product);
+                } catch (e) {
+                    console.error(`Ошибка загрузки ${file}:`, e);
+                }
             }
 
-            products.forEach(product => {
-                const card = createProductCard(product);
-                container.appendChild(card);
-            });
-
-            // 5. Сообщаем приложению, что товары загружены (для пересчета корзины, если нужно)
-            if (typeof CartModule !== 'undefined') {
-                CartModule.updateUI();
+            if (container.children.length === 0) {
+                container.innerHTML = '<p>Товары временно отсутствуют.</p>';
             }
 
-        } catch (error) {
-            console.error('Ошибка загрузки товаров:', error);
-            container.innerHTML = `
-                <div style="color: red; text-align: center; padding: 20px;">
-                    <h3>Ошибка загрузки каталога</h3>
-                    <p>Проверьте консоль браузера или наличие файла index.json</p>
-                </div>
-            `;
+        } catch (e) {
+            console.error('Ошибка загрузки каталога:', e);
+            container.innerHTML = '<p>Ошибка загрузки каталога. Проверьте консоль.</p>';
         }
     }
 
-    /**
-     * Создает HTML элемент карточки товара
-     */
-    function createProductCard(product) {
+    function renderProductCard(container, product) {
         const card = document.createElement('div');
-        card.className = 'product-card';
-        // Добавляем data-атрибуты для скрипта корзины
+        // Добавляем стандартные классы, ожидаемые в style.css (product-card, card и т.д.)
+        // Если в CSS есть класс .product-card, он применится.
+        card.className = 'product-card'; 
         card.dataset.id = product.id;
         card.dataset.name = product.name;
         card.dataset.price = product.price;
-        card.dataset.image = product.image || '';
-
-        // Форматируем цену
-        const formattedPrice = new Intl.NumberFormat('ru-RU').format(product.price);
-
-        // Если картинки нет, ставим заглушку
-        const imageSrc = product.image ? product.image : 'https://via.placeholder.com/300x200?text=Нет+фото';
+        
+        // Формируем HTML карточки
+        // Примечание: Если изображение не найдется, будет заглушка
+        const imgSrc = product.image ? product.image : 'via.placeholder.com/300x200?text=No+Image';
+        
+        let specsHtml = '';
+        if (product.specs) {
+            specsHtml = '<ul style="font-size:0.85em; color:#555; padding-left:20px; margin:10px 0;">';
+            for (const [key, val] of Object.entries(product.specs)) {
+                specsHtml += `<li><b>${key}:</b> ${val}</li>`;
+            }
+            specsHtml += '</ul>';
+        }
 
         card.innerHTML = `
-            <div class="product-image" style="height: 200px; background: #f9f9f9; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 15px;">
-                <img src="${imageSrc}" alt="${product.name}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            <div style="overflow:hidden; border-radius:4px 4px 0 0;">
+                <img src="${imgSrc}" alt="${product.name}" style="width:100%; height:auto; display:block;">
             </div>
-            <h3 class="product-title" style="font-size: 1.1em; margin: 10px 0;">${product.name}</h3>
-            <p class="product-desc" style="color: #666; font-size: 0.9em; margin-bottom: 10px; height: 40px; overflow: hidden;">${product.description}</p>
-            
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                <span style="font-size: 1.2em; font-weight: bold; color: #333;">${formattedPrice} ₽</span>
-                <button class="btn btn-add-to-cart" style="background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
-                    В корзину
-                </button>
+            <div style="padding:15px;">
+                <h3 class="product-title" style="margin:0 0 10px; font-size:1.1em;">${product.name}</h3>
+                <p style="font-size:0.9em; color:#666; margin-bottom:10px;">${product.description || ''}</p>
+                ${specsHtml}
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
+                    <span style="font-size:1.2em; font-weight:bold; color:#333;">${Utils.formatCurrency(product.price)}</span>
+                    <button class="btn-add-to-cart" style="cursor:pointer; padding:8px 15px; background:#007bff; color:#fff; border:none; border-radius:4px;">В корзину</button>
+                </div>
             </div>
-            
-            ${renderSpecs(product.specs)}
         `;
 
-        return card;
+        // Навешиваем событие клика на кнопку внутри карточки
+        const btn = card.querySelector('.btn-add-to-cart');
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Чтобы не срабатывали другие клики
+            CartModule.add({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: product.image
+            });
+        });
+
+        container.appendChild(card);
     }
 
-    /**
-     * Рендерит характеристики (опционально)
-     */
-    function renderSpecs(specs) {
-        if (!specs) return '';
-        let html = '<div style="margin-top: 10px; font-size: 0.85em; color: #555; border-top: 1px solid #eee; padding-top: 5px;">';
-        for (const [key, value] of Object.entries(specs)) {
-            // Превращаем key из snake_case в читаемый текст, если нужно
-            const label = key.replace(/_/g, ' '); 
-            html += `<div><b>${label}:</b> ${value}</div>`;
-        }
-        html += '</div>';
-        return html;
-    }
-
-    return {
-        loadProducts
-    };
+    return { loadCatalog };
 })();

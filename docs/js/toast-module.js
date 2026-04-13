@@ -1,127 +1,58 @@
-﻿/**
- * toast-module.js
- * Модуль для отображения всплывающих уведомлений.
- * Зависит от базовых стилей (должны быть в CSS).
- */
-
-const ToastModule = (function() {
+﻿const ToastModule = (function() {
     let container = null;
 
-    /**
-     * Инициализация контейнера для тостов
-     */
     function init() {
         if (!document.getElementById('toast-container')) {
             container = document.createElement('div');
             container.id = 'toast-container';
-            container.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 9999;
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            `;
+            // Базовые стили позиционирования, чтобы не лезть в style.css
+            Object.assign(container.style, {
+                position: 'fixed', top: '20px', right: '20px', zIndex: '9999',
+                display: 'flex', flexDirection: 'column', gap: '10px'
+            });
             document.body.appendChild(container);
         } else {
             container = document.getElementById('toast-container');
         }
     }
 
-    /**
-     * Создание и отображение уведомления
-     * @param {string} message - Текст сообщения
-     * @param {string} type - Тип: 'success', 'error', 'warning', 'info'
-     * @param {number} duration - Время показа в мс
-     */
-    function show(message, type = 'info', duration = 3000) {
+    function show(message, type = 'info') {
         if (!container) init();
-
         const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
         
-        // Базовые стили для тоста (можно вынести в CSS)
-        toast.style.cssText = `
-            min-width: 250px;
-            padding: 15px 20px;
-            background: #fff;
-            color: #333;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            animation: slideIn 0.3s ease-out forwards;
-            border-left: 5px solid ${getColor(type)};
-            font-family: sans-serif;
-            font-size: 14px;
-        `;
+        // Цвета в зависимости от типа
+        const colors = { success: '#28a745', error: '#dc3545', warning: '#ffc107', info: '#17a2b8' };
+        const color = colors[type] || colors.info;
 
-        const icon = getIcon(type);
-        
-        toast.innerHTML = `
-            <span style="display:flex; align-items:center; gap:10px;">
-                ${icon} <strong>${message}</strong>
-            </span>
-        `;
+        Object.assign(toast.style, {
+            minWidth: '250px', padding: '12px 20px', background: '#fff', color: '#333',
+            borderRadius: '4px', boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
+            borderLeft: `4px solid ${color}`, fontFamily: 'sans-serif', fontSize: '14px',
+            animation: 'slideIn 0.3s ease-out'
+        });
 
+        toast.innerHTML = `<strong>${message}</strong>`;
         container.appendChild(toast);
 
-        // Анимация удаления
         setTimeout(() => {
-            toast.style.animation = 'slideOut 0.3s ease-in forwards';
-            toast.addEventListener('animationend', () => {
-                toast.remove();
-                if (container.children.length === 0) {
-                    // Опционально: удалять контейнер, если пуст
-                    // container.remove(); 
-                }
-            });
-        }, duration);
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
     }
 
-    function getColor(type) {
-        switch(type) {
-            case 'success': return '#28a745';
-            case 'error': return '#dc3545';
-            case 'warning': return '#ffc107';
-            default: return '#17a2b8';
-        }
+    // Добавляем анимацию один раз
+    if (!document.getElementById('toast-anim')) {
+        const s = document.createElement('style');
+        s.id = 'toast-anim';
+        s.textContent = `@keyframes slideIn { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }`;
+        document.head.appendChild(s);
     }
 
-    function getIcon(type) {
-        switch(type) {
-            case 'success': return '✅';
-            case 'error': return '❌';
-            case 'warning': return '⚠️';
-            default: return 'ℹ️';
-        }
-    }
-
-    // Публичные методы
     return {
-        success: (msg, dur) => show(msg, 'success', dur),
-        error: (msg, dur) => show(msg, 'error', dur),
-        warning: (msg, dur) => show(msg, 'warning', dur),
-        info: (msg, dur) => show(msg, 'info', dur),
-        init: init
+        success: (msg) => show(msg, 'success'),
+        error: (msg) => show(msg, 'error'),
+        warning: (msg) => show(msg, 'warning'),
+        info: (msg) => show(msg, 'info')
     };
 })();
-
-// Добавляем ключевые кадры анимации в документ динамически
-if (!document.getElementById('toast-styles')) {
-    const style = document.createElement('style');
-    style.id = 'toast-styles';
-    style.textContent = `
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-    `;
-    document.head.appendChild(style);
-}
