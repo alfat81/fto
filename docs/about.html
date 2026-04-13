@@ -3,159 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>О компании | ФТО - Торговое оборудование</title>
-    <meta name="description" content="О фабрике торгового оборудования: производство, опыт, гарантии.">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <title>О компании | ФТО</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Единые стили (как в catalog.html) */
+        body { font-family: 'Roboto', sans-serif; margin: 0; background: #f5f5f5; }
+        header { background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .header-inner { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo h1 { margin: 0; color: #d32f2f; font-size: 24px; }
+        nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 20px; }
+        nav a { text-decoration: none; color: #333; font-weight: 500; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; background: #fff; min-height: 60vh; }
+        footer { background: #333; color: #fff; padding: 30px 0; text-align: center; }
+        .about-text { line-height: 1.6; color: #444; font-size: 18px; }
+    </style>
 </head>
 <body>
-    <!-- Шапка подключается через header.js -->
-    
-    <!-- Заголовок страницы -->
-    <section class="section" style="padding-top: 40px; padding-bottom: 20px;">
-        <div class="container">
-            <h1 class="section-title" style="margin-bottom: 16px;">О компании</h1>
-            <p style="text-align: center; color: var(--text-light); max-width: 700px; margin: 0 auto;">
-                Более 10 лет производим торговое оборудование для бизнеса по всей России
-            </p>
-        </div>
-    </section>
 
-    <!-- Основной контент -->
-    <section class="section" style="padding-top: 0;">
-        <div class="container">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 48px; align-items: start;">
-                
-                <!-- Левая колонка: текст -->
-                <div>
-                    <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 20px;">Наше производство</h3>
-                    <p style="margin-bottom: 16px; color: var(--text-light); line-height: 1.7;">
-                        Фабрика торгового оборудования работает с 2014 года. Мы специализируемся на изготовлении мебели и оборудования для розничной торговли, офисов и складских помещений.
-                    </p>
-                    <p style="margin-bottom: 16px; color: var(--text-light); line-height: 1.7;">
-                        Собственный цех площадью 800 м² в г. Нижний Новгород позволяет нам контролировать каждый этап производства — от раскроя материала до финишной сборки.
-                    </p>
-                    <p style="margin-bottom: 24px; color: var(--text-light); line-height: 1.7;">
-                        Работаем как по готовым проектам, так и разрабатываем индивидуальные решения под задачи заказчика.
-                    </p>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                        <div style="background: var(--bg-secondary); padding: 20px; border-radius: var(--radius); text-align: center;">
-                            <div style="font-size: 32px; font-weight: 800; color: var(--primary);">10+</div>
-                            <div style="font-size: 14px; color: var(--text-light);">лет на рынке</div>
-                        </div>
-                        <div style="background: var(--bg-secondary); padding: 20px; border-radius: var(--radius); text-align: center;">
-                            <div style="font-size: 32px; font-weight: 800; color: var(--primary);">500+</div>
-                            <div style="font-size: 14px; color: var(--text-light);">проектов</div>
-                        </div>
-                        <div style="background: var(--bg-secondary); padding: 20px; border-radius: var(--radius); text-align: center;">
-                            <div style="font-size: 32px; font-weight: 800; color: var(--primary);">2 года</div>
-                            <div style="font-size: 14px; color: var(--text-light);">гарантия</div>
-                        </div>
-                        <div style="background: var(--bg-secondary); padding: 20px; border-radius: var(--radius); text-align: center;">
-                            <div style="font-size: 32px; font-weight: 800; color: var(--primary);">РФ</div>
-                            <div style="font-size: 14px; color: var(--text-light);">доставка</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Правая колонка: преимущества -->
-                <div>
-                    <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 24px;">Почему выбирают нас</h3>
-                    
-                    <div style="display: flex; flex-direction: column; gap: 24px;">
-                        <div style="display: flex; gap: 16px; align-items: flex-start;">
-                            <div style="width: 48px; height: 48px; background: var(--primary-light); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 20px; flex-shrink: 0;">1</div>
-                            <div>
-                                <div style="font-weight: 600; margin-bottom: 4px; font-size: 16px;">Собственное производство</div>
-                                <div style="font-size: 14px; color: var(--text-light);">Полный контроль качества, без посредников и наценок</div>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; gap: 16px; align-items: flex-start;">
-                            <div style="width: 48px; height: 48px; background: var(--primary-light); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 20px; flex-shrink: 0;">2</div>
-                            <div>
-                                <div style="font-weight: 600; margin-bottom: 4px; font-size: 16px;">Индивидуальный подход</div>
-                                <div style="font-size: 14px; color: var(--text-light);">Изготовим по вашим чертежам или поможем с проектированием</div>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; gap: 16px; align-items: flex-start;">
-                            <div style="width: 48px; height: 48px; background: var(--primary-light); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 20px; flex-shrink: 0;">3</div>
-                            <div>
-                                <div style="font-weight: 600; margin-bottom: 4px; font-size: 16px;">Сроки и гарантия</div>
-                                <div style="font-size: 14px; color: var(--text-light);">Чёткое соблюдение договорённостей, гарантия 2 года</div>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; gap: 16px; align-items: flex-start;">
-                            <div style="width: 48px; height: 48px; background: var(--primary-light); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 20px; flex-shrink: 0;">4</div>
-                            <div>
-                                <div style="font-weight: 600; margin-bottom: 4px; font-size: 16px;">Доставка и монтаж</div>
-                                <div style="font-size: 14px; color: var(--text-light);">Организуем доставку по РФ и сборку на объекте</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 40px; padding: 24px; background: var(--bg-secondary); border-radius: var(--radius-lg); text-align: center;">
-                        <div style="font-weight: 700; margin-bottom: 12px; font-size: 18px;">📞 Обсудить проект</div>
-                        <div style="color: var(--text-light); margin-bottom: 20px; font-size: 14px;">
-                            Свяжитесь с нами для расчёта стоимости
-                        </div>
-                        <a href="contacts.html" class="btn" style="width: 100%; display: inline-block;">Связаться с нами</a>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </section>
-
-    <!-- =========================================
-         МОДАЛЬНОЕ ОКНО КОРЗИНЫ (ЕДИНОЕ ДЛЯ ВСЕХ СТРАНИЦ)
-         Важно: ID должен быть строго "cart-modal"
-         ========================================= -->
-    <div id="cart-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Ваша корзина</h2>
-            <div id="cart-items"></div>
-            <div class="cart-total">
-                <span>Итого:</span>
-                <span id="cart-total">0 ₽</span>
-            </div>
-            <form id="order-form" class="cart-form">
-                <input type="text" id="name" name="name" placeholder="Ваше имя*" required autocomplete="name">
-                <input type="tel" id="phone" name="phone" placeholder="Ваш телефон*" required autocomplete="tel">
-                <textarea id="comment" name="address" placeholder="Адрес доставки (необязательно)" autocomplete="off"></textarea>
-                <button type="submit" id="checkout-btn" disabled>Оформить заказ</button>
-                <button type="button" class="btn secondary" onclick="document.getElementById('cart-modal').style.display='none'" style="margin-top: 10px; width: 100%;">Продолжить покупки</button>
-            </form>
+<header>
+    <div class="header-inner">
+        <div class="logo"><h1>ФТО</h1></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="about.html" style="color:#d32f2f;">О нас</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </nav>
+        <div class="cart-btn-wrap" data-action="open-cart">
+            🛒 <span class="cart-count">0</span>
         </div>
     </div>
+</header>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <p><strong>Фабрика Торгового Оборудования</strong></p>
-            <p>г. Нижний Новгород, ул. Тургенева, 9</p>
-            <p>📞 +7 (960) 178-67-38 &nbsp;|&nbsp; ✉️ a20072005@yandex.ru</p>
-            <div class="social-links">
-                <a href="https://t.me/FTO_NN" class="social-link" target="_blank"><i class="fab fa-telegram"></i></a>
-                <a href="https://vk.com/ooofto" class="social-link" target="_blank"><i class="fab fa-vk"></i></a>
-            </div>
-            <p style="margin-top: 24px; opacity: 0.7; font-size: 14px;">© 2026 ftoshop.ru. Все права защищены.</p>
-        </div>
-    </footer>
+<div class="container">
+    <h1 style="color:#d32f2f;">О компании ФТО</h1>
+    <div class="about-text">
+        <p><strong>Фабрика Торгового Оборудования</strong> — ваш надежный партнер в организации торгового пространства.</p>
+        <p>Мы работаем на рынке Нижнего Новгорода более 10 лет, предлагая современные решения для магазинов, складов и выставочных залов.</p>
+        <h3>Наши преимущества:</h3>
+        <ul>
+            <li>Собственное производство</li>
+            <li>Индивидуальный проект под ключ</li>
+            <li>Гарантия качества на всю продукцию</li>
+            <li>Быстрая доставка и монтаж</li>
+        </ul>
+        <p>Наш адрес: г. Нижний Новгород, ул. Тургенева, 9.</p>
+    </div>
+</div>
 
-    <!-- Toast container -->
-    <div id="toast-container"></div>
+<footer>
+    <p>© 2023 ФТО. Тел: +7 (960) 178-67-38</p>
+</footer>
 
-    <!-- Подключение скриптов (порядок важен!) -->
-    <script src="js/config.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/toast-module.js"></script>
-    <script src="js/header.js"></script>
-    <script src="js/cart-module.js"></script>
-    <script src="js/app.js"></script>
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/cart-module.js"></script>
+<script src="js/app.js"></script>
+
 </body>
 </html>

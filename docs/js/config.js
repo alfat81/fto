@@ -1,17 +1,28 @@
 ﻿/**
- * Конфигурация проекта
+ * docs/js/config.js
+ * Глобальная конфигурация проекта
  */
+
 const APP_CONFIG = {
-    api: {
-        // Прямая отправка в Telegram API
-        telegramUrl: 'https://api.telegram.org/bot'
+    app: {
+        name: 'ФТО | Фабрика Торгового Оборудования',
+        version: '3.0',
+        currency: '₽'
     },
+    
+    contacts: {
+        phone: '+7 (960) 178-67-38',
+        email: 'a20072005@yandex.ru',
+        address: 'г. Нижний Новгород, ул. Тургенева, 9'
+    },
+
+    // НАСТРОЙКИ TELEGRAM (Заполнить обязательно!)
     telegram: {
-        // !!! ЗАПОЛНИТЬ ВАШИ ДАННЫЕ !!!
-        botToken: 'ВАШ_ТОКЕН_БОТА', 
-        chatId: 'ВАШ_CHAT_ID'
+        token: 'ВАШ_ТОКЕН_БОТА',       // Например: 601234567:AAH...
+        chatId: 'ВАШ_CHAT_ID'         // Например: 123456789
     },
-    storage: {
-        cartKey: 'fto_cart_v3'
+
+    paths: {
+        imagesBase: 'images/' // Базовый путь к картинкам
     }
 };
