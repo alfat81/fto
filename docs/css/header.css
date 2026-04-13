@@ -1,61 +1,93 @@
-/**
- * header.css - Стили шапки. Использует переменные из style.css
- */
-.site-header {
-    background: var(--bg-white);
-    box-shadow: var(--shadow-sm);
+/* Стили для шапки */
+header {
     position: sticky;
     top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1000;
-    padding: 15px 0;
-    transition: padding 0.3s;
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    min-height: 72px;
+    transition: all 0.3s ease;
 }
-.header-content {
+
+.header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 72px;
 }
-.logo { display: flex; flex-direction: column; line-height: 1; }
-.logo h1 { font-size: 26px; font-weight: 800; color: var(--primary); margin: 0; }
-.logo span { font-size: 11px; color: var(--text-light); text-transform: uppercase; margin-top: 2px; }
 
-.main-nav ul { display: flex; gap: 10px; align-items: center; }
-.main-nav a {
+.logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    text-decoration: none;
+}
+.logo strong {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary);
+}
+.logo span {
+    font-size: 11px;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.nav-btn {
     color: var(--text-main);
+    text-decoration: none;
     font-weight: 500;
-    padding: 8px 14px;
+    font-size: 15px;
+    padding: 8px 16px;
     border-radius: var(--radius);
     transition: all 0.2s;
 }
-.main-nav a:hover, .main-nav a.active { color: var(--primary); background: var(--primary-light); }
+.nav-btn:hover, .nav-btn.active {
+    color: var(--primary);
+    background: var(--primary-light);
+}
 
-.cart-btn-wrapper {
-    background: var(--primary);
-    color: white;
-    padding: 10px 18px;
-    border-radius: var(--radius);
+#cart-btn {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
+    background: var(--primary);
+    color: white !important;
+    padding: 8px 16px !important;
+    border-radius: var(--radius) !important;
+    transition: all 0.2s !important;
+    margin-left: 12px;
 }
-.cart-btn-wrapper:hover { background: var(--primary-dark); transform: translateY(-2px); }
-.cart-badge {
+#cart-btn:hover {
+    background: var(--primary-dark) !important;
+}
+#cart-count {
     background: white;
     color: var(--primary);
-    font-size: 12px;
+    font-weight: bold;
     padding: 2px 6px;
     border-radius: 50%;
-    font-weight: 700;
+    font-size: 12px;
     min-width: 20px;
     text-align: center;
 }
-.mobile-menu-toggle { display: none; cursor: pointer; font-size: 24px; color: var(--text-main); }
 
 @media (max-width: 768px) {
-    .main-nav ul { gap: 5px; }
-    .main-nav a { padding: 6px 10px; font-size: 14px; }
-    .cart-btn-wrapper span.cart-text { display: none; }
+    .header-container { flex-direction: column; height: auto; padding: 15px 24px; gap: 15px; }
+    .nav-buttons { flex-wrap: wrap; justify-content: center; width: 100%; }
+    #cart-btn { margin-left: 0; width: 100%; justify-content: center; }
 }
