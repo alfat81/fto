@@ -52,7 +52,7 @@
         <div class="container">
             <h3 class="section-title">Популярные товары</h3>
             <div class="catalog-grid">
-                <div class="product-card">
+                <div class="product-card" data-id="tv-stand-1" data-name="Тумба под ТВ" data-price="4500">
                     <div class="product-image-wrap">
                         <img src="https://via.placeholder.com/300x240/e2e8f0/64748b?text=Тумба+ТВ" alt="Тумба под ТВ">
                     </div>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-id="sink-1" data-name="Мойка кухонная" data-price="2800">
                     <div class="product-image-wrap">
                         <img src="https://via.placeholder.com/300x240/e2e8f0/64748b?text=Мойка+кухонная" alt="Мойка">
                     </div>
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" data-id="shelf-1" data-name="Стеллаж складской" data-price="8900">
                     <div class="product-image-wrap">
                         <img src="https://via.placeholder.com/300x240/e2e8f0/64748b?text=Стеллаж" alt="Стеллаж">
                     </div>
@@ -97,6 +97,29 @@
             </div>
         </div>
     </section>
+
+    <!-- =========================================
+         МОДАЛЬНОЕ ОКНО КОРЗИНЫ (ЕДИНОЕ ДЛЯ ВСЕХ СТРАНИЦ)
+         Важно: ID должен быть строго "cart-modal"
+         ========================================= -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ваша корзина</h2>
+            <div id="cart-items"></div>
+            <div class="cart-total">
+                <span>Итого:</span>
+                <span id="cart-total">0 ₽</span>
+            </div>
+            <form id="order-form" class="cart-form">
+                <input type="text" id="name" name="name" placeholder="Ваше имя*" required autocomplete="name">
+                <input type="tel" id="phone" name="phone" placeholder="Ваш телефон*" required autocomplete="tel">
+                <textarea id="comment" name="address" placeholder="Адрес доставки (необязательно)" autocomplete="off"></textarea>
+                <button type="submit" id="checkout-btn" disabled>Оформить заказ</button>
+                <button type="button" class="btn secondary" onclick="document.getElementById('cart-modal').style.display='none'" style="margin-top: 10px; width: 100%;">Продолжить покупки</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
