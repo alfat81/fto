@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ФТО | Фабрика Торгового Оборудования</title>
-    <meta name="description" content="Производство торгового оборудования: стеллажи, витрины, кассы. Нижний Новгород.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- =========================================
-         ШАПКА (ЕДИНАЯ)
-         ========================================= -->
+    <!-- ШАПКА -->
     <header class="site-header">
         <div class="container header-content">
             <div class="logo">
@@ -32,131 +29,110 @@
             <div class="header-actions">
                 <div class="cart-btn-wrapper" id="cart-trigger">
                     <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-text">Корзина</span>
+                    <span>Корзина</span>
                     <span class="cart-badge" id="cart-count">0</span>
-                </div>
-                <div class="mobile-menu-toggle">
-                    <i class="fas fa-bars"></i>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- =========================================
-         ОСНОВНОЙ КОНТЕНТ
-         ========================================= -->
-    <main>
-        <!-- Hero Section (Синий блок) -->
-        <section class="parallax-hero">
-            <div class="container">
-                <h2>Торговое оборудование от производителя</h2>
-                <p>Проектируем, производим и устанавливаем мебель для магазинов, офисов и складов</p>
-                <a href="catalog.html" class="btn btn-primary">Перейти в каталог</a>
+    <!-- HERO БАННЕР (Синий блок) -->
+    <section class="hero-section">
+        <div class="container">
+            <h2>Торговое оборудование от производителя</h2>
+            <p>Проектируем, производим и устанавливаем мебель для магазинов, офисов и складов</p>
+            <a href="catalog.html" class="btn-hero">Перейти в каталог</a>
+        </div>
+    </section>
+
+    <!-- ПРЕИМУЩЕСТВА -->
+    <main class="container">
+        <section class="section" style="margin-bottom: 60px;">
+            <h2 class="section-title">Почему выбирают нас</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-industry"></i>
+                    <h3>Собственное производство</h3>
+                    <p>Полный цикл изготовления без посредников.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-drafting-compass"></i>
+                    <h3>Проектирование</h3>
+                    <p>3D-проект расстановки оборудования бесплатно.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-truck-loading"></i>
+                    <h3>Монтаж под ключ</h3>
+                    <p>Доставка, сборка и установка в вашем магазине.</p>
+                </div>
             </div>
         </section>
 
-        <!-- Преимущества -->
+        <!-- ПОПУЛЯРНЫЕ ТОВАРЫ -->
         <section class="section">
-            <div class="container">
-                <h2 class="section-title" style="text-align: center;">Почему выбирают нас</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <i class="fas fa-industry"></i>
-                        <h3>Собственное производство</h3>
-                        <p>Полный цикл изготовления без посредников.</p>
+            <h2 class="section-title">Популярные товары</h2>
+            <div class="products-grid">
+                <!-- Товар 1 -->
+                <div class="product-card" data-id="1.1" data-name="Стеллаж односторонний" data-price="4500">
+                    <div class="product-image-wrap">
+                        <img src="images/1.1.jpg" alt="Стеллаж" onerror="this.src='https://via.placeholder.com/300x200?text=Нет+фото'">
                     </div>
-                    <div class="feature-card">
-                        <i class="fas fa-drafting-compass"></i>
-                        <h3>Проектирование</h3>
-                        <p>3D-проект расстановки оборудования бесплатно.</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-truck-loading"></i>
-                        <h3>Монтаж под ключ</h3>
-                        <p>Доставка, сборка и установка в вашем магазине.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Популярные товары (Статика) -->
-        <section class="section" style="background: var(--bg-white);">
-            <div class="container">
-                <h2 class="section-title">Популярные товары</h2>
-                <div class="products-grid">
-                    <!-- Товар 1 -->
-                    <div class="product-card" data-id="1.1" data-name="Стеллаж односторонний" data-price="4500">
-                        <div class="product-image-wrap">
-                            <img src="images/1.1.jpg" alt="Стеллаж" onerror="this.src='https://via.placeholder.com/300x200?text=Нет+фото'">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Стеллаж односторонний</h3>
-                            <p class="product-description">Надежный металлический стеллаж, высота 1.8м.</p>
-                            <div class="product-price-row">
-                                <span class="price">4 500 ₽</span>
-                                <button class="btn-add" data-id="1.1" data-name="Стеллаж односторонний" data-price="4500">В корзину</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Товар 2 -->
-                    <div class="product-card" data-id="2.1" data-name="Витрина холодильная" data-price="24000">
-                        <div class="product-image-wrap">
-                            <img src="images/2.1.jpg" alt="Витрина" onerror="this.src='https://via.placeholder.com/300x200?text=Нет+фото'">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Витрина холодильная</h3>
-                            <p class="product-description">Кондитерская витрина с подсветкой.</p>
-                            <div class="product-price-row">
-                                <span class="price">24 000 ₽</span>
-                                <button class="btn-add" data-id="2.1" data-name="Витрина холодильная" data-price="24000">В корзину</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Товар 3 -->
-                    <div class="product-card" data-id="3.1" data-name="Касса для магазина" data-price="12000">
-                        <div class="product-image-wrap">
-                            <img src="images/3.1.jpg" alt="Касса" onerror="this.src='https://via.placeholder.com/300x200?text=Нет+фото'">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">Касса для магазина</h3>
-                            <p class="product-description">Компактная касса с местом под сканер.</p>
-                            <div class="product-price-row">
-                                <span class="price">12 000 ₽</span>
-                                <button class="btn-add" data-id="3.1" data-name="Касса для магазина" data-price="12000">В корзину</button>
-                            </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Стеллаж односторонний</h3>
+                        <p class="product-description">Надежный металлический стеллаж, высота 1.8м.</p>
+                        <div class="product-price-row">
+                            <span class="price">4 500 ₽</span>
+                            <button class="btn-add" data-id="1.1" data-name="Стеллаж односторонний" data-price="4500">В корзину</button>
                         </div>
                     </div>
                 </div>
-                <div style="text-align: center; margin-top: 30px;">
-                    <a href="catalog.html" class="btn btn-secondary">Весь каталог</a>
+                <!-- Товар 2 -->
+                <div class="product-card" data-id="2.1" data-name="Витрина холодильная" data-price="24000">
+                    <div class="product-image-wrap">
+                        <img src="images/2.1.jpg" alt="Витрина" onerror="this.src='https://via.placeholder.com/300x200?text=Нет+фото'">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Витрина холодильная</h3>
+                        <p class="product-description">Кондитерская витрина с подсветкой.</p>
+                        <div class="product-price-row">
+                            <span class="price">24 000 ₽</span>
+                            <button class="btn-add" data-id="2.1" data-name="Витрина холодильная" data-price="24000">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Товар 3 -->
+                <div class="product-card" data-id="3.1" data-name="Касса для магазина" data-price="12000">
+                    <div class="product-image-wrap">
+                        <img src="images/3.1.jpg" alt="Касса" onerror="this.src='https://via.placeholder.com/300x200?text=Нет+фото'">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Касса для магазина</h3>
+                        <p class="product-description">Компактная касса с местом под сканер.</p>
+                        <div class="product-price-row">
+                            <span class="price">12 000 ₽</span>
+                            <button class="btn-add" data-id="3.1" data-name="Касса для магазина" data-price="12000">В корзину</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- =========================================
-         ПОДВАЛ (ЕДИНЫЙ)
-         ========================================= -->
+    <!-- ПОДВАЛ -->
     <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col">
+                <div>
                     <h3>ФТО</h3>
-                    <p>Фабрика Торгового Оборудования</p>
                     <p>г. Нижний Новгород, ул. Тургенева, 9</p>
                 </div>
-                <div class="footer-col">
+                <div>
                     <h3>Контакты</h3>
-                    <p><i class="fas fa-phone"></i> +7 (960) 178-67-38</p>
-                    <p><i class="fas fa-envelope"></i> a20072005@yandex.ru</p>
+                    <p>+7 (960) 178-67-38</p>
                 </div>
-                <div class="footer-col">
+                <div>
                     <h3>Меню</h3>
-                    <ul>
-                        <li><a href="catalog.html">Каталог</a></li>
-                        <li><a href="about.html">О нас</a></li>
-                        <li><a href="contacts.html">Контакты</a></li>
-                    </ul>
+                    <ul><li><a href="catalog.html">Каталог</a></li></ul>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -165,9 +141,7 @@
         </div>
     </footer>
 
-    <!-- =========================================
-         МОДАЛЬНОЕ ОКНО (ЕДИНОЕ)
-         ========================================= -->
+    <!-- МОДАЛКА -->
     <div id="cart-modal" class="modal">
         <div class="modal-content modal-cart">
             <span class="close-modal">&times;</span>
@@ -179,17 +153,10 @@
                     <span id="cart-total-price">0 ₽</span>
                 </div>
                 <form id="order-form" class="order-form">
-                    <h3>Оформление заказа</h3>
-                    <div class="form-group">
-                        <input type="text" name="name" placeholder="Ваше имя" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" name="phone" placeholder="Телефон *" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea name="address" placeholder="Адрес доставки"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block" id="checkout-btn" disabled>Оформить заказ</button>
+                    <div class="form-group"><input type="text" name="name" placeholder="Ваше имя" required></div>
+                    <div class="form-group"><input type="tel" name="phone" placeholder="Телефон *" required></div>
+                    <div class="form-group"><textarea name="address" placeholder="Адрес доставки"></textarea></div>
+                    <button type="submit" class="btn-primary" id="checkout-btn" disabled>Оформить заказ</button>
                 </form>
             </div>
         </div>

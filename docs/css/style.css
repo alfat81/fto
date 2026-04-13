@@ -1,10 +1,10 @@
 /**
  * style.css
- * Единый стиль для ftoshop.ru (Исправленный)
+ * Исправленная верстка: Ровная шапка, Hero-баннер, Карточки
  */
 
 :root {
-    --primary: #2563eb;       /* Синий */
+    --primary: #2563eb;       /* Яркий синий */
     --primary-dark: #1d4ed8;
     --primary-light: #eff6ff;
     --text-main: #1e293b;
@@ -17,8 +17,10 @@
     --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+/* =========================================
+   1. БАЗА
+   ========================================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 body {
     font-family: var(--font-main);
     color: var(--text-main);
@@ -28,11 +30,9 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
-
 a { text-decoration: none; color: inherit; transition: 0.2s; }
 ul { list-style: none; }
 img { max-width: 100%; display: block; }
-input, textarea { font-family: inherit; }
 
 .container {
     max-width: 1200px;
@@ -42,23 +42,24 @@ input, textarea { font-family: inherit; }
 }
 
 /* =========================================
-   1. ШАПКА (site-header)
+   2. ШАПКА (ИСПРАВЛЕННАЯ)
    ========================================= */
 .site-header {
     background: var(--bg-white);
     box-shadow: var(--shadow);
+    padding: 15px 0;
     position: sticky;
     top: 0;
     z-index: 1000;
-    padding: 15px 0;
 }
 
 .header-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Лого слева, Навигация центр, Корзина справа */
     align-items: center;
 }
 
+/* Лого */
 .logo h1 {
     font-size: 24px;
     font-weight: 800;
@@ -72,22 +73,23 @@ input, textarea { font-family: inherit; }
     margin-top: 2px;
 }
 
-/* Навигация */
+/* Навигация по центру */
 .main-nav ul {
     display: flex;
-    gap: 20px;
+    gap: 30px;
 }
 .main-nav a {
     font-weight: 500;
-    padding: 8px 12px;
+    font-size: 15px;
+    padding: 8px 16px;
     border-radius: var(--radius);
 }
 .main-nav a:hover, .main-nav a.active {
-    color: var(--primary);
     background: var(--primary-light);
+    color: var(--primary);
 }
 
-/* Кнопка корзины */
+/* Корзина справа */
 .cart-btn-wrapper {
     background: var(--primary);
     color: white;
@@ -98,7 +100,6 @@ input, textarea { font-family: inherit; }
     gap: 10px;
     font-weight: 600;
     cursor: pointer;
-    transition: 0.2s;
 }
 .cart-btn-wrapper:hover {
     background: var(--primary-dark);
@@ -113,76 +114,93 @@ input, textarea { font-family: inherit; }
 }
 
 /* =========================================
-   2. ОСНОВНОЙ КОНТЕНТ
+   3. HERO-БАННЕР (Синий блок)
    ========================================= */
-.page-content, .page-main {
-    flex: 1;
-    padding: 40px 0;
+.hero-section {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+    margin-bottom: 40px;
 }
 
-.page-title {
+.hero-section h2 {
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+.hero-section p {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-hero {
+    display: inline-block;
+    background: white;
+    color: var(--primary);
+    padding: 14px 30px;
+    border-radius: var(--radius);
+    font-weight: 700;
+    font-size: 16px;
+}
+.btn-hero:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* =========================================
+   4. ПРЕИМУЩЕСТВА (Белые карточки)
+   ========================================= */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+.feature-card {
+    background: white;
+    padding: 30px;
+    border-radius: var(--radius);
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+.feature-card i {
+    font-size: 40px;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   5. ТОВАРЫ (Карточки)
+   ========================================= */
+.section-title {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 30px;
     text-align: center;
 }
 
-.section-title {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    border-left: 4px solid var(--primary);
-    padding-left: 15px;
-}
-
-.content-block {
-    margin-bottom: 40px;
-}
-
-/* =========================================
-   3. КАТАЛОГ ТОВАРОВ
-   ========================================= */
-.catalog-filters {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-}
-
-.catalog-filters .btn {
-    background: var(--bg-white);
-    border: 1px solid var(--border);
-    color: var(--text-main);
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.catalog-filters .btn.active, .catalog-filters .btn:hover {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
-
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 24px;
+    margin-bottom: 60px;
 }
 
 .product-card {
-    background: var(--bg-white);
+    background: white;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s;
+    transition: transform 0.3s;
 }
-.product-card:hover {
-    transform: translateY(-5px);
-}
+.product-card:hover { transform: translateY(-5px); }
 
 .product-image-wrap {
     height: 200px;
@@ -190,7 +208,6 @@ input, textarea { font-family: inherit; }
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
 }
 .product-image-wrap img {
     width: 100%;
@@ -204,25 +221,8 @@ input, textarea { font-family: inherit; }
     display: flex;
     flex-direction: column;
 }
-
-.product-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 8px;
-}
-
-.product-description {
-    color: var(--text-light);
-    font-size: 14px;
-    margin-bottom: 15px;
-    flex-grow: 1;
-}
-
-.product-specs {
-    margin-bottom: 15px;
-    font-size: 13px;
-    color: var(--text-light);
-}
+.product-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+.product-description { color: var(--text-light); font-size: 14px; margin-bottom: 15px; flex-grow: 1; }
 
 .product-price-row {
     display: flex;
@@ -232,12 +232,7 @@ input, textarea { font-family: inherit; }
     padding-top: 15px;
     border-top: 1px solid var(--border);
 }
-
-.price {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--primary);
-}
+.price { font-size: 20px; font-weight: 800; color: var(--primary); }
 
 .btn-add {
     background: var(--primary-light);
@@ -247,138 +242,16 @@ input, textarea { font-family: inherit; }
     border-radius: var(--radius);
     font-weight: 600;
     cursor: pointer;
-    transition: 0.2s;
 }
-.btn-add:hover {
-    background: var(--primary);
-    color: white;
-}
+.btn-add:hover { background: var(--primary); color: white; }
 
 /* =========================================
-   4. ФОРМЫ И КНОПКИ
-   ========================================= */
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: var(--radius);
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-}
-.btn-primary {
-    background: var(--primary);
-    color: white;
-}
-.btn-primary:hover { background: var(--primary-dark); }
-.btn-block { width: 100%; text-align: center; margin-top: 10px; }
-
-.form-group { margin-bottom: 15px; }
-.form-group input, .form-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    font-size: 14px;
-}
-.form-group input:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--primary-light);
-}
-
-/* =========================================
-   5. О КОМПАНИИ (Сетка преимуществ)
-   ========================================= */
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-.feature-card {
-    background: var(--bg-white);
-    padding: 25px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    text-align: center;
-}
-.feature-card i {
-    font-size: 40px;
-    color: var(--primary);
-    margin-bottom: 15px;
-}
-
-/* =========================================
-   6. КОНТАКТЫ
-   ========================================= */
-.contacts-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-}
-.contact-list { list-style: none; }
-.contact-list li {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    align-items: flex-start;
-}
-.contact-list i {
-    color: var(--primary);
-    font-size: 20px;
-    margin-top: 3px;
-}
-
-/* =========================================
-   7. МОДАЛЬНОЕ ОКНО (КОРЗИНА)
-   ========================================= */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 2000;
-    align-items: center;
-    justify-content: center;
-}
-.modal-content {
-    background: var(--bg-white);
-    width: 90%;
-    max-width: 500px;
-    max-height: 90vh;
-    border-radius: var(--radius);
-    padding: 30px;
-    position: relative;
-    overflow-y: auto;
-    animation: slideUp 0.3s ease;
-}
-.close-modal {
-    position: absolute;
-    top: 15px; right: 20px;
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--text-light);
-}
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-}
-.cart-total {
-    font-size: 18px;
-    font-weight: 700;
-    text-align: right;
-    margin: 20px 0;
-}
-
-/* =========================================
-   8. ФУТЕР
+   6. ПОДВАЛ
    ========================================= */
 .site-footer {
     background: #0f172a;
     color: white;
-    padding: 40px 0 20px;
+    padding: 40px 0;
     margin-top: auto;
 }
 .footer-grid {
@@ -387,23 +260,21 @@ input, textarea { font-family: inherit; }
     gap: 30px;
     margin-bottom: 30px;
 }
-.footer-bottom {
-    text-align: center;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    font-size: 14px;
-    color: #94a3b8;
-}
+.footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; color: #94a3b8; }
 
-/* Адаптивность */
+/* =========================================
+   7. МОДАЛКА
+   ========================================= */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; }
+.modal-content { background: white; width: 90%; max-width: 500px; padding: 30px; border-radius: var(--radius); position: relative; }
+.close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; }
+.cart-total { font-size: 20px; font-weight: 700; text-align: right; margin: 20px 0; }
+.form-group input, .form-group textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid var(--border); border-radius: var(--radius); }
+.btn-primary { background: var(--primary); color: white; border: none; padding: 12px 24px; width: 100%; border-radius: var(--radius); font-weight: 600; cursor: pointer; }
+
+/* Адаптив */
 @media (max-width: 768px) {
     .header-content { flex-direction: column; gap: 15px; }
-    .main-nav ul { flex-wrap: wrap; justify-content: center; }
-    .contacts-wrapper { grid-template-columns: 1fr; }
-    .modal-content { padding: 20px; }
-}
-
-@keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    .main-nav ul { gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .hero-section h2 { font-size: 28px; }
 }
