@@ -110,3 +110,64 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
     .products-grid { grid-template-columns: 1fr; }
     .modal-content { padding: 20px; }
 }
+/* =========================================
+   СТИЛИ ДЛЯ ШАГОВ (Как мы работаем)
+   ========================================= */
+.steps-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: steps-counter;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.steps-list li {
+    position: relative;
+    padding-left: 70px;
+    margin-bottom: 30px;
+    counter-increment: steps-counter;
+}
+
+.steps-list li::before {
+    content: counter(steps-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 24px;
+}
+
+.steps-list li strong {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--text-main);
+}
+
+.steps-list li span {
+    color: var(--text-light);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .steps-list li {
+        padding-left: 0;
+        text-align: center;
+        padding-top: 60px;
+    }
+    .steps-list li::before {
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0;
+    }
+}
