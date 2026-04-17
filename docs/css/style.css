@@ -22,6 +22,7 @@
 /* =========================================
    1. БАЗОВЫЕ НАСТРОЙКИ
    ========================================= */
+/* ИСПРАВЛЕНО: Добавлен селектор * */
 * { 
     margin: 0; 
     padding: 0; 
@@ -51,7 +52,82 @@ img { max-width: 100%; display: block; }
 }
 
 /* =========================================
-   2. СЕКЦИИ И ТИПОГРАФИКА
+   2. ГЕРОЙ (Главный экран с фоном)
+   ========================================= */
+.parallax-hero {
+    /* Убедитесь, что картинка лежит в docs/images/hero-image.png */
+    background-image: url('../images/hero-image.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: #ffffff;
+    padding: 100px 0;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Затемнение для читаемости текста */
+.parallax-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный */
+    z-index: 1;
+}
+
+/* Контент должен быть выше затемнения */
+.parallax-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.parallax-hero h2 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.parallax-hero p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.parallax-hero .btn {
+    background: var(--primary);
+    color: white;
+    padding: 16px 32px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: var(--radius);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.parallax-hero .btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+@media (max-width: 768px) {
+    .parallax-hero h2 { font-size: 32px; }
+    .parallax-hero p { font-size: 16px; }
+    .parallax-hero .btn { padding: 12px 24px; font-size: 16px; }
+}
+
+/* =========================================
+   3. СЕКЦИИ И ТИПОГРАФИКА
    ========================================= */
 .page-content, .page-main { flex: 1; padding: 40px 0; }
 .page-title { font-size: 32px; font-weight: 700; text-align: center; margin-bottom: 40px; }
@@ -79,7 +155,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* =========================================
-   3. СЕТКИ И КАРТОЧКИ
+   4. СЕТКИ И КАРТОЧКИ
    ========================================= */
 .features-grid { 
     display: grid; 
@@ -156,7 +232,7 @@ img { max-width: 100%; display: block; }
 .btn-add:hover { background: var(--primary); color: white; }
 
 /* =========================================
-   4. ФОРМЫ И КНОПКИ
+   5. ФОРМЫ И КНОПКИ
    ========================================= */
 .form-group { margin-bottom: 15px; }
 .form-group label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 14px; }
@@ -205,7 +281,7 @@ input:focus, textarea:focus {
 .btn-block { width: 100%; margin-top: 10px; }
 
 /* =========================================
-   5. МОДАЛЬНОЕ ОКНО (КОРЗИНА)
+   6. МОДАЛЬНОЕ ОКНО (КОРЗИНА)
    ========================================= */
 .modal { 
     display: none; 
@@ -246,7 +322,7 @@ input:focus, textarea:focus {
 .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
 
 /* =========================================
-   6. ПОДВАЛ
+   7. ПОДВАЛ
    ========================================= */
 .site-footer { 
     background: #0f172a; 
@@ -275,7 +351,7 @@ input:focus, textarea:focus {
 }
 
 /* =========================================
-   7. АНИМАЦИИ И АДАПТИВ
+   8. АНИМАЦИИ И АДАПТИВ
    ========================================= */
 @keyframes slideUp { 
     from { transform: translateY(30px); opacity: 0; } 
@@ -290,7 +366,7 @@ input:focus, textarea:focus {
 }
 
 /* =========================================
-   8. ШАГИ (Как мы работаем)
+   9. ШАГИ (Как мы работаем)
    ========================================= */
 .steps-list { 
     list-style: none; 
@@ -337,7 +413,7 @@ input:focus, textarea:focus {
 }
 
 /* =========================================
-   9. КОНТАКТЫ (Двухколоночная раскладка)
+   10. КОНТАКТЫ (Двухколоночная раскладка)
    ========================================= */
 .contacts-wrapper { 
     display: grid; 
@@ -410,7 +486,7 @@ input:focus, textarea:focus {
 }
 
 /* =========================================
-   10. ФИЛЬТРЫ КАТАЛОГА
+   11. ФИЛЬТРЫ КАТАЛОГА
    ========================================= */
 .catalog-filters { margin-bottom: 40px; }
 
