@@ -2,7 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\docs",
-    "\\docs\\data"
+    "\\docs\\data",
+    "\\docs\\js"
   ],
+  "SelectedNode": "\\docs\\js\\products-loader.js",
   "PreviewInSolutionExplorer": true
 }
