@@ -4,39 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ФТО | Фабрика Торгового Оборудования</title>
-    <meta name="description" content="Производство торгового оборудования в Нижнем Новгороде. Стеллажи, витрины, кассы.">
+    <meta name="description" content="Производство торгового оборудования в Нижнем Новгороде. Стеллажи, витрины, кассы, кресла.">
     
     <!-- Подключение стилей -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- Отдельный файл стилей шапки -->
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- Шапка вставляется через js/header.js -->
 
-    <!-- Синий баннер -->
-    <section class="parallax-hero">
-        <div class="container">
-            <h2>Торговое оборудование от производителя</h2>
-            <p>Проектируем, производим и устанавливаем мебель для магазинов, офисов и складов</p>
-            <a href="catalog.html" class="btn">Перейти в каталог</a>
+    <!-- Главный экран на всю высоту с фоном -->
+    <section class="main-hero">
+        <div class="hero-overlay"></div> <!-- Затемнение для читаемости текста -->
+        <div class="hero-content">
+            <div class="container">
+                <h1>Торговое оборудование от производителя</h1>
+                <p>Проектируем, производим и устанавливаем мебель для магазинов, офисов и складов</p>
+                <a href="catalog.html" class="btn btn-hero">Перейти в каталог</a>
+            </div>
         </div>
     </section>
 
-    <!-- Основной контент -->
+    <!-- Раздел "Почему выбирают нас" (оставил, чтобы страница не была пустой сразу после баннера) -->
     <main class="page-content">
         <div class="container">
-            <!-- Популярные товары -->
-            <section class="section">
-                <h2 class="section-title" style="text-align:center; border:none; margin:60px 0 30px;">Популярные товары</h2>
-                
-                <!-- Контейнер для популярных товаров -->
-                <div class="products-grid" id="popular-products">
-                    <p style="text-align:center; padding:40px; color:var(--text-light);">Загрузка товаров...</p>
-                </div>
-                
-                <div style="text-align:center; margin-top:40px;">
-                    <a href="catalog.html" class="btn btn-secondary">Весь каталог</a>
+            <section class="section" style="background: var(--bg-white); padding: 60px 0; border-radius: var(--radius-lg); margin-top: -50px; position: relative; z-index: 10;">
+                <h2 class="section-title" style="text-align:center; border:none; margin-bottom: 40px;">Почему выбирают нас</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-industry"></i>
+                        <h3>Собственное производство</h3>
+                        <p>Полный цикл изготовления без посредников.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-drafting-compass"></i>
+                        <h3>Проектирование</h3>
+                        <p>3D-проект расстановки оборудования бесплатно.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-truck-loading"></i>
+                        <h3>Монтаж под ключ</h3>
+                        <p>Доставка, сборка и установка в вашем магазине.</p>
+                    </div>
                 </div>
             </section>
         </div>
@@ -101,7 +112,7 @@
         </div>
     </div>
 
-    <!-- СКРИПТЫ (порядок важен!) -->
+    <!-- СКРИПТЫ -->
     <script src="js/config.js"></script>
     <script src="js/utils.js"></script>
     <script src="data/catalog-data.js"></script>
@@ -109,69 +120,7 @@
     <script src="js/cart-module.js"></script>
     <script src="js/products-loader.js"></script>
     <script src="js/app.js"></script>
+    <!-- Отдельный файл логики шапки -->
     <script src="js/header.js"></script>
-    
-    <!-- Скрипт для отображения популярных товаров на главной -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const container = document.getElementById('popular-products');
-            if (!container) return;
-            
-            // Проверяем, что CATALOG_DATA доступен
-            if (typeof CATALOG_DATA === 'undefined' || !Array.isArray(CATALOG_DATA)) {
-                console.warn('CATALOG_DATA не загружен');
-                container.innerHTML = '<p style="text-align:center; padding:40px; color:red;">Ошибка загрузки товаров</p>';
-                return;
-            }
-            
-            // Берём первые 3 товара как "популярные"
-            const popular = CATALOG_DATA.slice(0, 3);
-            
-            if (popular.length === 0) {
-                container.innerHTML = '<p style="text-align:center; padding:40px;">Товаров пока нет</p>';
-                return;
-            }
-            
-            container.innerHTML = popular.map(product => {
-                // Формируем путь к изображению
-                const imgUrl = Utils.getProductImage(product.id);
-                
-                return `
-                    <div class="product-card" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
-                        <div class="product-image-wrap">
-                            <img src="${imgUrl}" alt="${product.name}" onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">${product.name}</h3>
-                            <p class="product-description">${product.description || ''}</p>
-                            <div class="product-price-row">
-                                <span class="price">${Utils.formatPrice(product.price)}</span>
-                                <button class="btn-add" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">В корзину</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            // Навешиваем обработчики на кнопки "В корзину"
-            container.querySelectorAll('.btn-add').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const id = e.target.dataset.id;
-                    const name = e.target.dataset.name;
-                    const price = parseFloat(e.target.dataset.price);
-                    
-                    if (typeof CartModule !== 'undefined') {
-                        CartModule.add({ id, name, price });
-                        if (typeof ToastModule !== 'undefined') {
-                            ToastModule.show('Товар добавлен в корзину', 'success');
-                        }
-                    }
-                });
-            });
-            
-            console.log(`✅ Загружено ${popular.length} популярных товаров`);
-        });
-    </script>
 </body>
 </html>
