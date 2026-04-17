@@ -1,6 +1,6 @@
 /**
- * style.css - Глобальные стили проекта
- */
+style.css - Глобальные стили проекта
+*/
 
 :root {
     --primary: #2563eb;
@@ -22,7 +22,6 @@
 /* =========================================
    1. БАЗОВЫЕ НАСТРОЙКИ
    ========================================= */
-/* ИСПРАВЛЕНО: Добавлен селектор * */
 * { 
     margin: 0; 
     padding: 0; 
@@ -55,8 +54,8 @@ img { max-width: 100%; display: block; }
    2. ГЕРОЙ (Главный экран с фоном)
    ========================================= */
 .parallax-hero {
-    /* Убедитесь, что картинка лежит в docs/images/hero-image.png */
-    background-image: url('../images/hero-image.png');
+    /* ИСПРАВЛЕНО: Путь к фоновому изображению */
+    background-image: url('../images/hero/hero-image.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
