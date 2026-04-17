@@ -143,7 +143,7 @@
             return `
                 <div class="product-card" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
                     <div class="product-image-wrap">
-                        <img src="${imgSrc}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Нет+фото'">
+                        <img src="${imgSrc}" alt="${product.name}" onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">${product.name}</h3>

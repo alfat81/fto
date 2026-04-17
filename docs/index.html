@@ -8,21 +8,17 @@
     
     <!-- Подключение стилей -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- Шапка вставляется через js/header.js -->
 
-    <!-- Полноэкранный баннер с фоновым изображением -->
-    <section class="hero-fullscreen">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <div class="container">
-                <h1 class="hero-title">Торговое оборудование от производителя</h1>
-                <p class="hero-subtitle">Проектируем, производим и устанавливаем мебель для магазинов, офисов и складов</p>
-                <a href="catalog.html" class="btn btn-hero">Перейти в каталог</a>
-            </div>
+    <!-- Синий баннер -->
+    <section class="parallax-hero">
+        <div class="container">
+            <h2>Торговое оборудование от производителя</h2>
+            <p>Проектируем, производим и устанавливаем мебель для магазинов, офисов и складов</p>
+            <a href="catalog.html" class="btn">Перейти в каталог</a>
         </div>
     </section>
 
@@ -31,7 +27,7 @@
         <div class="container">
             <!-- Популярные товары -->
             <section class="section">
-                <h2 class="section-title" style="text-align:center; border:none; margin-bottom:40px;">Популярные товары</h2>
+                <h2 class="section-title" style="text-align:center; border:none; margin:60px 0 30px;">Популярные товары</h2>
                 
                 <!-- Контейнер для популярных товаров -->
                 <div class="products-grid" id="popular-products">
@@ -116,16 +112,18 @@
     
     <!-- Скрипт для отображения популярных товаров на главной -->
     <script>
-        function renderPopularProducts() {
+        document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('popular-products');
             if (!container) return;
             
+            // Проверяем, что CATALOG_DATA доступен
             if (typeof CATALOG_DATA === 'undefined' || !Array.isArray(CATALOG_DATA)) {
                 console.warn('CATALOG_DATA не загружен');
                 container.innerHTML = '<p style="text-align:center; padding:40px; color:red;">Ошибка загрузки товаров</p>';
                 return;
             }
             
+            // Берём первые 3 товара как "популярные"
             const popular = CATALOG_DATA.slice(0, 3);
             
             if (popular.length === 0) {
@@ -134,12 +132,13 @@
             }
             
             container.innerHTML = popular.map(product => {
-                const imgUrl = `images/${product.id}.jpg`;
+                // Формируем путь к изображению
+                const imgUrl = Utils.getProductImage(product.id);
                 
                 return `
                     <div class="product-card" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
                         <div class="product-image-wrap">
-                            <img src="${imgUrl}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200/e2e8f0/64748b?text=Нет+фото'">
+                            <img src="${imgUrl}" alt="${product.name}" onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
                         </div>
                         <div class="product-info">
                             <h3 class="product-title">${product.name}</h3>
@@ -153,6 +152,7 @@
                 `;
             }).join('');
             
+            // Навешиваем обработчики на кнопки "В корзину"
             container.querySelectorAll('.btn-add').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -170,13 +170,7 @@
             });
             
             console.log(`✅ Загружено ${popular.length} популярных товаров`);
-        }
-        
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', renderPopularProducts);
-        } else {
-            setTimeout(renderPopularProducts, 100);
-        }
+        });
     </script>
 </body>
 </html>

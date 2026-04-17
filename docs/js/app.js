@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof ToastModule !== 'undefined') ToastModule.init();
     
     // Запуск каталога, если есть контейнер
-    if (document.getElementById('full-catalog') && typeof ProductsLoader !== 'undefined') {
+    if (document.getElementById('catalog-grid') && typeof ProductsLoader !== 'undefined') {
         ProductsLoader.loadCatalog();
     }
 
@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (typeof ToastModule !== 'undefined') ToastModule.show('Товар добавлен', 'success');
             }
         }
+        
         // Закрытие модалки по клику на затемнение
         if (e.target.id === 'cart-modal') {
             if (typeof CartModule !== 'undefined') CartModule.closeModal();
