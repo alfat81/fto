@@ -20,7 +20,9 @@ const ProductsLoader = (function() {
             
             allProducts = [];
             
-            // Параллельная загрузка для скорости
+            // ==========================================
+            // ПАРАЛЛЕЛЬНАЯ ЗАГРУЗКА (Promise.all)
+            // ==========================================
             const fetchPromises = files.map(file => 
                 fetch(`data/products/${file}`)
                     .then(resp => resp.ok ? resp.json() : null)
@@ -34,59 +36,37 @@ const ProductsLoader = (function() {
                 container.innerHTML = '<p style="text-align: center; padding: 40px;">Товары временно отсутствуют.</p>';
                 return;
             }
-            
-            // Проверка поиска
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchQuery = urlParams.get('search');
-            let productsToShow = allProducts;
-
-            if (searchQuery) {
-                const lowerQuery = searchQuery.toLowerCase();
-                const headerInput = document.getElementById('site-search-input');
-                if (headerInput) headerInput.value = searchQuery;
-
-                productsToShow = allProducts.filter(product => {
-                    return product.name.toLowerCase().includes(lowerQuery) || 
-                           (product.description && product.description.toLowerCase().includes(lowerQuery)) ||
-                           String(product.category).includes(lowerQuery);
-                });
-            }
 
             if (filtersContainer) renderFilters(filtersContainer);
-            renderProducts(productsToShow, container, searchQuery);
+            renderProducts(allProducts, container);
             
         } catch (e) {
-            console.error('Ошибка загрузки каталога:', e);
-            container.innerHTML = '<p style="text-align: center; padding: 40px; color: red;">Ошибка загрузки каталога.</p>';
+            console.error('Ошибка загрузки:', e);
         }
     }
 
-    function renderProducts(products, container, searchQuery) {
+    // Отрисовка простых карточек (Фото + Название)
+    function renderProducts(products, container) {
         if (!container) return;
-
-        if (products.length === 0) {
-            container.innerHTML = searchQuery 
-                ? `<div style="text-align:center; padding:40px;"><h3>По запросу "<strong>${searchQuery}</strong>" ничего не найдено</h3></div>`
-                : '<p style="text-align: center; padding: 40px;">В этой категории пока нет товаров.</p>';
-            return;
-        }
 
         container.innerHTML = products.map(product => {
             const imgSrc = product.image ? product.image : `images/${product.id}.jpg`;
             
             return `
                 <div class="product-card-simple" onclick="openProductModal('${product.id}')">
-                    <div class="product-image-wrap">
+                    <div class="simple-card-img">
                         <img src="${imgSrc}" alt="${product.name}" 
-                            onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
+                             onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
                     </div>
-                    <div class="product-title-simple">${product.name}</div>
+                    <div class="simple-card-name">${product.name}</div>
                 </div>
             `;
         }).join('');
     }
 
-    // Делаем функцию доступной глобально
+    // ==========================================
+    // ЛОГИКА МОДАЛЬНОГО ОКНА
+    // ==========================================
     window.openProductModal = function(id) {
         const product = allProducts.find(p => p.id == id);
         if (!product) return;
@@ -105,30 +85,16 @@ const ProductsLoader = (function() {
         img.onerror = function() { this.src = 'images/nofoto.png'; };
         
         title.textContent = product.name;
-        
-        // Блок цены с возможностью скидки
-        let priceHtml = '';
-        if (product.old_price) {
-            // Если есть скидка: старая цена + новая крупно
-            priceHtml = `
-                <div class="modal-price-block">
-                    <span class="modal-current-price">${Utils.formatPrice(product.price)}</span>
-                    <span class="modal-old-price">${Utils.formatPrice(product.old_price)}</span>
-                </div>
-            `;
-        } else {
-            // Обычная цена
-            priceHtml = `<div class="modal-price-block"><span class="modal-current-price">${Utils.formatPrice(product.price)}</span></div>`;
-        }
-        priceBlock.innerHTML = priceHtml;
-        
-        desc.textContent = product.description || 'Описание отсутствует.';
+        priceBlock.textContent = Utils.formatPrice(product.price);
+        desc.textContent = product.description || '';
 
-        // Характеристики
+        // Генерация таблицы характеристик
         let specsHtml = '';
         if (product.specs) {
             if (Array.isArray(product.specs)) {
-                product.specs.forEach(spec => specsHtml += `<tr><td colspan="2">• ${spec}</td></tr>`);
+                product.specs.forEach(spec => {
+                    specsHtml += `<tr><td colspan="2">• ${spec}</td></tr>`;
+                });
             } else {
                 for (const [key, val] of Object.entries(product.specs)) {
                     specsHtml += `<tr><td>${key}</td><td>${val}</td></tr>`;
@@ -137,7 +103,7 @@ const ProductsLoader = (function() {
         }
         specsTable.innerHTML = specsHtml;
 
-        // Кнопка добавления
+        // Кнопка "В корзину"
         addBtn.onclick = function() {
             if (typeof CartModule !== 'undefined') { 
                 CartModule.add({ id: product.id, name: product.name, price: product.price });
@@ -146,7 +112,6 @@ const ProductsLoader = (function() {
             }
         };
 
-        // Показать модальное окно
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     };
@@ -165,6 +130,7 @@ const ProductsLoader = (function() {
         }
     });
 
+    // Фильтры (категории)
     function renderFilters(container) {
         const categories = {};
         allProducts.forEach(p => {
@@ -173,43 +139,28 @@ const ProductsLoader = (function() {
             categories[cat]++;
         });
 
-        const categoryNames = { 0: 'Все товары', 1: 'Торговые стеллажи', 2: 'Холодильное оборудование', 3: 'Кассовое оборудование', 4: 'Кресла и стулья' };
-        let html = '<div class="filters-list">';
+        const categoryNames = { 0: 'Все товары', 1: 'Стеллажи', 2: 'Холод', 3: 'Кассы', 4: 'Кресла' };
+        let html = '<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">';
         
         Object.keys(categories).sort().forEach(catId => {
-            const catName = categoryNames[catId] || `Категория ${catId}`;
-            const isActive = catId == currentCategory ? 'active' : '';
-            html += `<button class="btn filter-btn ${isActive}" data-category="${catId}">${catName}</button>`;
+            const isActive = catId == currentCategory ? 'btn-primary' : '';
+            const name = categoryNames[catId] || `Категория ${catId}`;
+            html += `<button class="btn ${isActive}" style="background: ${isActive ? '' : 'white'}; color: ${isActive ? 'white' : 'black'}; border:1px solid #ddd;" onclick="ProductsLoader.filterByCategory(${catId})">${name}</button>`;
         });
-        
         html += '</div>';
         container.innerHTML = html;
-
-        container.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const catId = e.currentTarget.dataset.category;
-                const urlParams = new URLSearchParams(window.location.search);
-                if (urlParams.get('search')) {
-                     window.location.href = `catalog.html?category=${catId}`;
-                     return;
-                }
-                filterByCategory(catId);
-                container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                e.currentTarget.classList.add('active');
-            });
-        });
     }
 
-    function filterByCategory(categoryId) {
+    window.filterByCategory = function(categoryId) {
         currentCategory = categoryId;
         const container = document.getElementById('catalog-grid');
-        if (categoryId === 'all' || categoryId === '0') {
-            renderProducts(allProducts, container);
-        } else { 
-            const filtered = allProducts.filter(p => p.category == categoryId);
-            renderProducts(filtered, container);
-        }
-    }
+        const filtered = (categoryId === '0' || categoryId === 'all') 
+            ? allProducts 
+            : allProducts.filter(p => p.category == categoryId);
+        
+        renderProducts(filtered, container);
+        renderFilters(document.getElementById('catalog-filters')); // Обновить активную кнопку
+    };
 
-    return { loadCatalog };
+    return { loadCatalog, renderProducts, filterByCategory };
 })();
