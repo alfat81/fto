@@ -30,7 +30,7 @@
 .main-nav a:hover, .main-nav a.active { color: var(--primary); background: var(--primary-light); }
 
 .cart-btn-wrapper {
-    background: var(--primary);
+    background: var(--primary-accent);
     color: white;
     padding: 10px 18px;
     border-radius: var(--radius);
