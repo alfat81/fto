@@ -1,4 +1,7 @@
-﻿const ProductsLoader = (function() {
+﻿/**
+ * products-loader.js - Загрузка товаров, фильтрация и поиск
+ */
+const ProductsLoader = (function() {
     let allProducts = [];
     let currentCategory = 'all';
 
@@ -58,7 +61,6 @@
         }
     }
 
-    // --- НОВАЯ ФУНКЦИЯ РЕНДЕРА (Простые карточки) ---
     function renderProducts(products, container, searchQuery) {
         if (!container) return;
 
@@ -76,7 +78,7 @@
                 <div class="product-card-simple" onclick="openProductModal('${product.id}')">
                     <div class="product-image-wrap">
                         <img src="${imgSrc}" alt="${product.name}" 
-                             onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
+                            onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
                     </div>
                     <div class="product-title-simple">${product.name}</div>
                 </div>
@@ -84,8 +86,6 @@
         }).join('');
     }
 
-    // --- ЛОГИКА МОДАЛЬНОГО ОКНА ---
-    
     // Делаем функцию доступной глобально
     window.openProductModal = function(id) {
         const product = allProducts.find(p => p.id == id);
@@ -94,7 +94,7 @@
         const modal = document.getElementById('product-modal');
         const img = document.getElementById('modal-img');
         const title = document.getElementById('modal-title');
-        const price = document.getElementById('modal-price');
+        const priceBlock = document.getElementById('modal-price-block');
         const desc = document.getElementById('modal-desc');
         const specsTable = document.getElementById('modal-specs');
         const addBtn = document.getElementById('modal-add-btn');
@@ -105,7 +105,23 @@
         img.onerror = function() { this.src = 'images/nofoto.png'; };
         
         title.textContent = product.name;
-        price.textContent = Utils.formatPrice(product.price);
+        
+        // Блок цены с возможностью скидки
+        let priceHtml = '';
+        if (product.old_price) {
+            // Если есть скидка: старая цена + новая крупно
+            priceHtml = `
+                <div class="modal-price-block">
+                    <span class="modal-current-price">${Utils.formatPrice(product.price)}</span>
+                    <span class="modal-old-price">${Utils.formatPrice(product.old_price)}</span>
+                </div>
+            `;
+        } else {
+            // Обычная цена
+            priceHtml = `<div class="modal-price-block"><span class="modal-current-price">${Utils.formatPrice(product.price)}</span></div>`;
+        }
+        priceBlock.innerHTML = priceHtml;
+        
         desc.textContent = product.description || 'Описание отсутствует.';
 
         // Характеристики
@@ -123,7 +139,7 @@
 
         // Кнопка добавления
         addBtn.onclick = function() {
-            if (typeof CartModule !== 'undefined') {
+            if (typeof CartModule !== 'undefined') { 
                 CartModule.add({ id: product.id, name: product.name, price: product.price });
                 if (typeof ToastModule !== 'undefined') ToastModule.show('Товар добавлен в корзину', 'success');
                 closeProductModal();
@@ -132,7 +148,7 @@
 
         // Показать модальное окно
         modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Блокировка прокрутки фона
+        document.body.style.overflow = 'hidden';
     };
 
     window.closeProductModal = function() {
@@ -149,7 +165,6 @@
         }
     });
 
-    // --- ФИЛЬТРЫ (Без изменений) ---
     function renderFilters(container) {
         const categories = {};
         allProducts.forEach(p => {
@@ -190,7 +205,7 @@
         const container = document.getElementById('catalog-grid');
         if (categoryId === 'all' || categoryId === '0') {
             renderProducts(allProducts, container);
-        } else {
+        } else { 
             const filtered = allProducts.filter(p => p.category == categoryId);
             renderProducts(filtered, container);
         }
