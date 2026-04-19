@@ -66,7 +66,26 @@
         </div>
     </footer>
 
-    <!-- Модальное окно корзины (ОДНО!) -->
+    <!-- ✅ МОДАЛЬНОЕ ОКНО ТОВАРА (НОВОЕ!) -->
+    <div id="product-modal" class="modal modal-product">
+        <div class="modal-content">
+            <span class="modal-close-btn" onclick="closeProductModal()">&times;</span>
+            <div class="modal-image-side">
+                <img id="modal-img" src="" alt="Фото товара">
+            </div>
+            <div class="modal-info-side">
+                <h2 id="modal-title">Название товара</h2>
+                <div id="modal-price-block"></div>
+                <p id="modal-desc" class="modal-desc"></p>
+                <table class="modal-specs-table" id="modal-specs"></table>
+                <button id="modal-add-btn" class="btn-add-modal">
+                    <i class="fas fa-cart-plus"></i> Добавить в корзину
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно корзины -->
     <div id="cart-modal" class="modal">
         <div class="modal-content modal-cart">
             <span class="close-modal">&times;</span>

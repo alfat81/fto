@@ -490,6 +490,7 @@ input:focus, textarea:focus {
 @media (max-width: 768px) {
     .catalog-filters { margin-bottom: 20px; }
     .filter-btn { padding: 8px 16px; font-size: 13px; }
+<<<<<<< HEAD
 }
 /* =========================================
    МОДАЛЬНОЕ ОКНО ТОВАРА (ПОДРОБНО)
@@ -851,4 +852,6 @@ input:focus, textarea:focus {
     .modal-product .modal-current-price {
         font-size: 26px;
     }
+=======
+>>>>>>> parent of 6a99e19 (1.3)
 }

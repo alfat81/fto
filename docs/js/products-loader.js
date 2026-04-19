@@ -1,7 +1,4 @@
-﻿/**
- * products-loader.js - Загрузка товаров, фильтрация и поиск
- */
-const ProductsLoader = (function() {
+﻿const ProductsLoader = (function() {
     let allProducts = [];
     let currentCategory = 'all';
 
@@ -74,6 +71,7 @@ const ProductsLoader = (function() {
         }
     }
 
+    // --- НОВАЯ ФУНКЦИЯ РЕНДЕРА (Простые карточки) ---
     function renderProducts(products, container, searchQuery) {
         if (!container) return;
 
@@ -110,7 +108,7 @@ const ProductsLoader = (function() {
                 <div class="product-card" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
                     <div class="product-image-wrap">
                         <img src="${imgSrc}" alt="${product.name}" 
-                            onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
+                             onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">${product.name}</h3>
@@ -127,6 +125,7 @@ const ProductsLoader = (function() {
             `;
         }).join('');
 
+<<<<<<< HEAD
         // Навешиваем обработчики
         container.querySelectorAll('.btn-add').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -143,7 +142,74 @@ const ProductsLoader = (function() {
             });
         });
     }
+=======
+    // --- ЛОГИКА МОДАЛЬНОГО ОКНА ---
+    
+    // Делаем функцию доступной глобально
+    window.openProductModal = function(id) {
+        const product = allProducts.find(p => p.id == id);
+        if (!product) return;
 
+        const modal = document.getElementById('product-modal');
+        const img = document.getElementById('modal-img');
+        const title = document.getElementById('modal-title');
+        const price = document.getElementById('modal-price');
+        const desc = document.getElementById('modal-desc');
+        const specsTable = document.getElementById('modal-specs');
+        const addBtn = document.getElementById('modal-add-btn');
+
+        // Заполнение данными
+        const imgSrc = product.image ? product.image : `images/${product.id}.jpg`;
+        img.src = imgSrc;
+        img.onerror = function() { this.src = 'images/nofoto.png'; };
+        
+        title.textContent = product.name;
+        price.textContent = Utils.formatPrice(product.price);
+        desc.textContent = product.description || 'Описание отсутствует.';
+
+        // Характеристики
+        let specsHtml = '';
+        if (product.specs) {
+            if (Array.isArray(product.specs)) {
+                product.specs.forEach(spec => specsHtml += `<tr><td colspan="2">• ${spec}</td></tr>`);
+            } else {
+                for (const [key, val] of Object.entries(product.specs)) {
+                    specsHtml += `<tr><td>${key}</td><td>${val}</td></tr>`;
+                }
+            }
+        }
+        specsTable.innerHTML = specsHtml;
+
+        // Кнопка добавления
+        addBtn.onclick = function() {
+            if (typeof CartModule !== 'undefined') {
+                CartModule.add({ id: product.id, name: product.name, price: product.price });
+                if (typeof ToastModule !== 'undefined') ToastModule.show('Товар добавлен в корзину', 'success');
+                closeProductModal();
+            }
+        };
+
+        // Показать модальное окно
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Блокировка прокрутки фона
+    };
+
+    window.closeProductModal = function() {
+        const modal = document.getElementById('product-modal');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    };
+
+    // Закрытие по клику вне окна
+    document.addEventListener('click', function(e) {
+        const modal = document.getElementById('product-modal');
+        if (e.target === modal) {
+            closeProductModal();
+        }
+    });
+>>>>>>> parent of 6a99e19 (1.3)
+
+    // --- ФИЛЬТРЫ (Без изменений) ---
     function renderFilters(container) {
         const categories = {};
         allProducts.forEach(p => {
