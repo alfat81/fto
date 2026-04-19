@@ -625,7 +625,7 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
     font-size: 13px;
     font-family: 'Courier New', monospace;
     letter-spacing: 0.5px;
-    min-height: 10px;
+    min-height: 30px;
 }
 
 .typewriter-footer .cursor {
