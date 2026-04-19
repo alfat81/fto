@@ -3,12 +3,13 @@
  */
 const ProductsLoader = (function() {
     let allProducts = [];
-    // Текущее состояние фильтров
+    
+    // Состояние фильтров
     const state = {
         category: 'all',
         minPrice: null,
         maxPrice: null,
-        sortBy: 'new' // 'new' или 'old'
+        sortBy: 'new' // 'new' (новые) или 'old' (старые)
     };
 
     async function loadCatalog() {
@@ -19,28 +20,30 @@ const ProductsLoader = (function() {
 
         try {
             container.innerHTML = '<p style="text-align: center; padding: 40px; color: var(--text-light);">Загрузка товаров...</p>';
-
+            
             const indexResp = await fetch('data/products/index.json');
             if (!indexResp.ok) throw new Error('Не найден index.json');
             const files = await indexResp.json();
-
+            
             allProducts = [];
-
-            // Параллельная загрузка для скорости
+            
+            // ==========================================
+            // ПАРАЛЛЕЛЬНАЯ ЗАГРУЗКА (Быстро!)
+            // ==========================================
             const fetchPromises = files.map(file => 
                 fetch(`data/products/${file}`)
                     .then(resp => resp.ok ? resp.json() : null)
                     .catch(() => null)
             );
-
+            
             const results = await Promise.all(fetchPromises);
             allProducts = results.filter(p => p !== null);
-
+            
             // Если нет даты в JSON, добавим индекс как прокси даты
             allProducts.forEach((p, index) => {
                 if (!p.dateAdded) p.dateAdded = index; 
             });
-
+            
             if (allProducts.length === 0) {
                 container.innerHTML = '<p style="text-align: center; padding: 40px;">Товары временно отсутствуют.</p>';
                 return;
@@ -48,32 +51,34 @@ const ProductsLoader = (function() {
 
             // 1. Рендерим кнопки категорий
             if (filtersContainer) renderCategoryFilters(filtersContainer);
-
+            
             // 2. Инициализируем события инпутов (Цена/Сортировка)
             initAdvancedFilters();
-
-            // 3. Первичный рендер
+            
+            // 3. Применяем начальные фильтры
             applyFilters();
 
         } catch (e) {
-            console.error('Ошибка загрузки:', e);
+            console.error('Ошибка загрузки каталога:', e);
+            container.innerHTML = '<p style="text-align: center; padding: 40px; color: red;">Ошибка загрузки каталога.</p>';
         }
     }
 
-    // --- Инициализация событий инпутов ---
+    // --- Инициализация событий инпутов (Цена и Сортировка) ---
     function initAdvancedFilters() {
         const minInput = document.getElementById('min-price');
         const maxInput = document.getElementById('max-price');
         const sortSelect = document.getElementById('sort-date');
 
-        // Слушаем ввод цены
+        // Слушаем ввод цены "От"
         if (minInput) {
             minInput.addEventListener('input', (e) => {
                 state.minPrice = e.target.value ? Number(e.target.value) : null;
                 applyFilters();
             });
         }
-
+        
+        // Слушаем ввод цены "До"
         if (maxInput) {
             maxInput.addEventListener('input', (e) => {
                 state.maxPrice = e.target.value ? Number(e.target.value) : null;
@@ -110,9 +115,9 @@ const ProductsLoader = (function() {
         // 3. Сортировка по Дате
         filtered.sort((a, b) => {
             if (state.sortBy === 'new') {
-                return b.dateAdded - a.dateAdded; // Новые сверху
+                return b.dateAdded - a.dateAdded; // Новые (больший индекс) сверху
             } else {
-                return a.dateAdded - b.dateAdded; // Старые сверху
+                return a.dateAdded - b.dateAdded; // Старые (меньший индекс) сверху
             }
         });
 
@@ -120,7 +125,7 @@ const ProductsLoader = (function() {
         renderProducts(filtered, document.getElementById('catalog-grid'));
     }
 
-    // --- Рендер карточек ---
+    // --- Рендер карточек (Упрощенные: Фото + Название) ---
     function renderProducts(products, container) {
         if (!container) return;
 
@@ -131,12 +136,12 @@ const ProductsLoader = (function() {
 
         container.innerHTML = products.map(product => {
             const imgSrc = product.image ? product.image : `images/${product.id}.jpg`;
-
+            
             return `
                 <div class="product-card-simple" onclick="openProductModal('${product.id}')">
                     <div class="simple-card-img">
                         <img src="${imgSrc}" alt="${product.name}" 
-                            onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
+                             onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
                     </div>
                     <div class="simple-card-name">${product.name}</div>
                 </div>
@@ -160,9 +165,9 @@ const ProductsLoader = (function() {
             3: 'Армейская мебель', 
             4: 'Кресла и стулья' 
         };
-
+        
         let html = '<div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">';
-
+        
         Object.keys(categories).sort().forEach(catId => {
             const isActive = catId == state.category ? 'btn-primary' : '';
             const name = categoryNames[catId] || `Раздел ${catId}`;
@@ -173,13 +178,17 @@ const ProductsLoader = (function() {
     }
 
     // --- Публичные методы ---
+    
+    // Смена категории (вызывается из HTML onclick)
     window.setCategory = function(catId) {
         state.category = catId;
-        renderCategoryFilters(document.getElementById('catalog-filters'));
+        // Обновляем визуально кнопки
+        const container = document.getElementById('catalog-filters');
+        if (container) renderCategoryFilters(container);
         applyFilters();
     };
 
-    // Делаем функцию доступной глобально
+    // --- ЛОГИКА МОДАЛЬНОГО ОКНА ---
     window.openProductModal = function(id) {
         const product = allProducts.find(p => p.id == id);
         if (!product) return;
@@ -197,10 +206,10 @@ const ProductsLoader = (function() {
         img.onerror = function() { this.src = 'images/nofoto.png'; };
 
         title.textContent = product.name;
-
-        // Блок цены с возможностью скидки
+        
+        // Цена со скидкой (если есть old_price и она больше текущей)
         let priceHtml = '';
-        if (product.old_price) {
+        if (product.old_price && product.old_price > product.price) {
             priceHtml = `
                 <div class="modal-price-block">
                     <span class="modal-current-price">${Utils.formatPrice(product.price)}</span>
@@ -218,9 +227,7 @@ const ProductsLoader = (function() {
         let specsHtml = '<table class="modal-specs-table">';
         if (product.specs) {
             if (Array.isArray(product.specs)) {
-                product.specs.forEach(spec => {
-                    specsHtml += `<tr><td colspan="2">• ${spec}</td></tr>`;
-                });
+                product.specs.forEach(spec => specsHtml += `<tr><td colspan="2">• ${spec}</td></tr>`);
             } else {
                 for (const [key, val] of Object.entries(product.specs)) {
                     specsHtml += `<tr><td>${key}</td><td>${val}</td></tr>`;
@@ -230,7 +237,7 @@ const ProductsLoader = (function() {
         specsHtml += '</table>';
         specsTable.innerHTML = specsHtml;
 
-        // Кнопка добавления
+        // Кнопка "В корзину"
         addBtn.onclick = function() {
             if (typeof CartModule !== 'undefined') { 
                 CartModule.add({ id: product.id, name: product.name, price: product.price });
@@ -253,9 +260,7 @@ const ProductsLoader = (function() {
     // Закрытие по клику вне окна
     document.addEventListener('click', function(e) {
         const modal = document.getElementById('product-modal');
-        if (e.target === modal) {
-            closeProductModal();
-        }
+        if (e.target === modal) closeProductModal();
     });
 
     return { loadCatalog, setCategory };
