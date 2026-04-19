@@ -613,3 +613,29 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
     .filter-divider { display: none; }
     .filter-input { width: 100%; }
 }
+/* =========================================
+   ЭФФЕКТ ПЕЧАТНОЙ МАШИНКИ В ФУТЕРЕ
+   ========================================= */
+.typewriter-footer {
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #64748b;
+    font-size: 13px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
+    min-height: 30px;
+}
+
+.typewriter-footer .cursor {
+    display: inline-block;
+    margin-left: 2px;
+    color: var(--primary);
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}

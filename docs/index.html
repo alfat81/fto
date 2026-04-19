@@ -102,5 +102,36 @@
     <script src="js/app.js"></script>
     <!-- Отдельный файл логики шапки -->
     <script src="js/header.js"></script>
+<!-- Эффект печатной машинки в футере -->
+<div class="typewriter-footer">
+    <span id="typewriter-text"></span><span class="cursor">|</span>
+</div>
+
+<script>
+(function() {
+    const text = "Made by Fatyanov";
+    const element = document.getElementById('typewriter-text');
+    const cursor = document.querySelector('.cursor');
+    let index = 0;
+    
+    function typeWriter() {
+        if (index < text.length) {
+            element.textContent += text.charAt(index);
+            index++;
+            setTimeout(typeWriter, 100); // Скорость печати (мс)
+        } else {
+            // Оставляем курсор мигать или убираем его
+            setTimeout(() => {
+                if (cursor) cursor.style.display = 'none';
+            }, 1000);
+        }
+    }
+    
+    // Запускаем после загрузки страницы
+    window.addEventListener('load', () => {
+        setTimeout(typeWriter, 500);
+    });
+})();
+</script>
 </body>
 </html>
