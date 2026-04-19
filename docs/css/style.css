@@ -142,14 +142,14 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
 }
 
 .modal-product .modal-content {
-    max-width: 900px;
+    max-width: 1000px;
     width: 90%;
     max-height: 90vh;
     background: var(--bg-white);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 450px 1fr; /* Фиксированная левая колонка */
     overflow: hidden;
     position: relative;
     animation: slideUp 0.3s ease;
@@ -171,21 +171,22 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
     color: var(--primary);
 }
 
-/* Левая часть: Картинка - СТАНДАРТИЗИРОВАННЫЙ РАЗМЕР */
+/* Левая часть: Картинка - ФИКСИРОВАННЫЙ РАЗМЕР */
 .modal-product .modal-image-side {
     background: var(--bg-gray);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 40px;
-    aspect-ratio: 1 / 1; /* Квадратное соотношение сторон */
-    min-height: 450px; /* Минимальная высота */
+    width: 450px; /* Фиксированная ширина */
+    height: 450px; /* Фиксированная высота */
+    flex-shrink: 0; /* Не сжимать */
 }
 
 .modal-product .modal-image-side img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain; /* Сохраняет пропорции, вписывается в контейнер */
+    object-fit: contain; /* Вписать в контейнер */
     transition: transform 0.3s;
 }
 
@@ -199,6 +200,7 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    min-width: 0; /* Позволяет сжиматься */
 }
 
 .modal-product .modal-info-side h2 {
@@ -207,7 +209,6 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
     color: var(--text-main);
     margin: 0 0 15px 0;
     line-height: 1.3;
-    padding-right: 20px;
 }
 
 .modal-product .modal-price-block {
@@ -239,28 +240,32 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
     flex-grow: 1;
 }
 
-/* Таблица характеристик */
+/* Таблица характеристик - ФИКСИРОВАННАЯ ШИРИНА */
 .modal-product .modal-specs-table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 30px;
     font-size: 14px;
+    table-layout: fixed; /* Фиксированная ширина колонок */
 }
 
 .modal-product .modal-specs-table td {
     padding: 10px 0;
     border-bottom: 1px solid var(--border);
     vertical-align: top;
+    word-wrap: break-word; /* Перенос длинных слов */
 }
 
 .modal-product .modal-specs-table td:first-child {
     font-weight: 600;
     color: var(--text-main);
-    width: 40%;
+    width: 45%; /* Фиксированная ширина первой колонки */
+    padding-right: 20px;
 }
 
 .modal-product .modal-specs-table td:last-child {
     color: var(--text-light);
+    width: 55%; /* Фиксированная ширина второй колонки */
 }
 
 .modal-product .btn-add-modal {
@@ -287,8 +292,8 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
-/* Адаптив для мобильных */
-@media (max-width: 768px) {
+/* Адаптив для планшетов и мобильных */
+@media (max-width: 900px) {
     .modal-product .modal-content {
         grid-template-columns: 1fr;
         max-height: 95vh;
@@ -296,9 +301,9 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
     }
     
     .modal-product .modal-image-side {
-        aspect-ratio: 4 / 3; /* На мобильных чуть шире */
-        min-height: 300px;
-        padding: 20px;
+        width: 100%;
+        height: 350px;
+        flex-shrink: 0;
     }
     
     .modal-product .modal-info-side {
@@ -307,6 +312,13 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
     
     .modal-product .modal-current-price {
         font-size: 26px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-product .modal-image-side {
+        height: 250px;
+        padding: 20px;
     }
 }
 
