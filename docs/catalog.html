@@ -6,6 +6,7 @@
     <title>Каталог | ФТО - Фабрика Торгового Оборудования</title>
     <meta name="description" content="Каталог торгового оборудования: стеллажи, витрины, кассы, кресла.">
     
+    <!-- Подключение стилей -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -66,8 +67,8 @@
         </div>
     </footer>
 
-    <!-- ✅ МОДАЛЬНОЕ ОКНО ТОВАРА (НОВОЕ!) -->
-    <div id="product-modal" class="modal modal-product">
+    <!-- Модальное окно товара (ПОДРОБНОЕ) -->
+    <div id="product-modal" class="modal modal-product" style="display: none;">
         <div class="modal-content">
             <span class="modal-close-btn" onclick="closeProductModal()">&times;</span>
             <div class="modal-image-side">
@@ -75,10 +76,10 @@
             </div>
             <div class="modal-info-side">
                 <h2 id="modal-title">Название товара</h2>
-                <div id="modal-price-block"></div>
+                <div id="modal-price" class="modal-price">0 ₽</div>
                 <p id="modal-desc" class="modal-desc"></p>
-                <table class="modal-specs-table" id="modal-specs"></table>
-                <button id="modal-add-btn" class="btn-add-modal">
+                <table class="specs-table" id="modal-specs"></table>
+                <button id="modal-add-btn" class="btn btn-primary btn-add-modal">
                     <i class="fas fa-cart-plus"></i> Добавить в корзину
                 </button>
             </div>
@@ -113,7 +114,7 @@
         </div>
     </div>
 
-    <!-- СКРИПТЫ -->
+    <!-- СКРИПТЫ (порядок важен!) -->
     <script src="js/config.js"></script>
     <script src="js/utils.js"></script>
     <script src="data/catalog-data.js"></script>
