@@ -618,13 +618,14 @@ input:focus, textarea:focus { outline: none; border-color: var(--primary); box-s
    ========================================= */
 .typewriter-footer {
     text-align: center;
-    padding: 20px 0;
-    margin-top: 30px;
+    padding: 10px 0;
+    margin-top: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: #64748b;
-    font-size: 13px;
-    font-family: 'Courier New', monospace;
-    letter-spacing: 0.5px;
+    color: #ef4444;              /* Красный цвет */
+    font-family: 'Dancing Script', cursive; /* Красивый курсив */
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
     min-height: 20px;
 }
 
