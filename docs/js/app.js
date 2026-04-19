@@ -5,11 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof CartModule !== 'undefined') CartModule.init();
     if (typeof ToastModule !== 'undefined') ToastModule.init();
     
-    // Запуск каталога, если есть контейнер
+    // Запуск каталога, если есть контейнер catalog-grid
     if (document.getElementById('catalog-grid') && typeof ProductsLoader !== 'undefined') {
         ProductsLoader.loadCatalog();
     }
-
+    
     // Глобальные клики (делегирование)
     document.addEventListener('click', (e) => {
         // Кнопка "В корзину"
@@ -26,14 +26,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof CartModule !== 'undefined') CartModule.closeModal();
         }
     });
-
+    
     // Крестик закрытия
     document.querySelectorAll('.close-modal').forEach(btn => {
         btn.addEventListener('click', () => {
             if (typeof CartModule !== 'undefined') CartModule.closeModal();
         });
     });
-
+    
     // Формы
     const contactForm = document.getElementById('contact-form');
     if (contactForm) contactForm.addEventListener('submit', handleContactSubmit);
