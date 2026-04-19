@@ -109,6 +109,7 @@ const ProductsLoader = (function() {
         // Блок цены с возможностью скидки
         let priceHtml = '';
         if (product.old_price) {
+            // Если есть скидка: старая цена + новая крупно
             priceHtml = `
                 <div class="modal-price-block">
                     <span class="modal-current-price">${Utils.formatPrice(product.price)}</span>
@@ -116,26 +117,24 @@ const ProductsLoader = (function() {
                 </div>
             `;
         } else {
+            // Обычная цена
             priceHtml = `<div class="modal-price-block"><span class="modal-current-price">${Utils.formatPrice(product.price)}</span></div>`;
         }
         priceBlock.innerHTML = priceHtml;
         
         desc.textContent = product.description || 'Описание отсутствует.';
 
-        // Характеристики в виде таблицы
-        let specsHtml = '<table class="modal-specs-table">';
+        // Характеристики
+        let specsHtml = '';
         if (product.specs) {
             if (Array.isArray(product.specs)) {
-                product.specs.forEach(spec => {
-                    specsHtml += `<tr><td colspan="2">• ${spec}</td></tr>`;
-                });
+                product.specs.forEach(spec => specsHtml += `<tr><td colspan="2">• ${spec}</td></tr>`);
             } else {
                 for (const [key, val] of Object.entries(product.specs)) {
                     specsHtml += `<tr><td>${key}</td><td>${val}</td></tr>`;
                 }
             }
         }
-        specsHtml += '</table>';
         specsTable.innerHTML = specsHtml;
 
         // Кнопка добавления
