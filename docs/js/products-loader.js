@@ -1,9 +1,15 @@
 ﻿/**
- * products-loader.js - Загрузка товаров, фильтрация и поиск
+ * products-loader.js - Загрузка, фильтрация и сортировка
  */
 const ProductsLoader = (function() {
     let allProducts = [];
-    let currentCategory = 'all';
+    // Текущее состояние фильтров
+    const state = {
+        category: 'all',
+        minPrice: null,
+        maxPrice: null,
+        sortBy: 'new' // 'new' или 'old'
+    };
 
     async function loadCatalog() {
         const container = document.getElementById('catalog-grid');
@@ -13,78 +19,165 @@ const ProductsLoader = (function() {
 
         try {
             container.innerHTML = '<p style="text-align: center; padding: 40px; color: var(--text-light);">Загрузка товаров...</p>';
-            
+
             const indexResp = await fetch('data/products/index.json');
             if (!indexResp.ok) throw new Error('Не найден index.json');
             const files = await indexResp.json();
-            
+
             allProducts = [];
-            
+
             // Параллельная загрузка для скорости
             const fetchPromises = files.map(file => 
                 fetch(`data/products/${file}`)
                     .then(resp => resp.ok ? resp.json() : null)
                     .catch(() => null)
             );
-            
+
             const results = await Promise.all(fetchPromises);
             allProducts = results.filter(p => p !== null);
-            
+
+            // Если нет даты в JSON, добавим индекс как прокси даты
+            allProducts.forEach((p, index) => {
+                if (!p.dateAdded) p.dateAdded = index; 
+            });
+
             if (allProducts.length === 0) {
                 container.innerHTML = '<p style="text-align: center; padding: 40px;">Товары временно отсутствуют.</p>';
                 return;
             }
 
-            // Проверка поиска
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchQuery = urlParams.get('search');
-            let productsToShow = allProducts;
+            // 1. Рендерим кнопки категорий
+            if (filtersContainer) renderCategoryFilters(filtersContainer);
 
-            if (searchQuery) {
-                const lowerQuery = searchQuery.toLowerCase();
-                const headerInput = document.getElementById('site-search-input');
-                if (headerInput) headerInput.value = searchQuery;
+            // 2. Инициализируем события инпутов (Цена/Сортировка)
+            initAdvancedFilters();
 
-                productsToShow = allProducts.filter(product => {
-                    return product.name.toLowerCase().includes(lowerQuery) || 
-                           (product.description && product.description.toLowerCase().includes(lowerQuery)) ||
-                           String(product.category).includes(lowerQuery);
-                });
-            }
+            // 3. Первичный рендер
+            applyFilters();
 
-            if (filtersContainer) renderFilters(filtersContainer);
-            renderProducts(productsToShow, container, searchQuery);
-            
         } catch (e) {
-            console.error('Ошибка загрузки каталога:', e);
-            container.innerHTML = '<p style="text-align: center; padding: 40px; color: red;">Ошибка загрузки каталога.</p>';
+            console.error('Ошибка загрузки:', e);
         }
     }
 
-    function renderProducts(products, container, searchQuery) {
+    // --- Инициализация событий инпутов ---
+    function initAdvancedFilters() {
+        const minInput = document.getElementById('min-price');
+        const maxInput = document.getElementById('max-price');
+        const sortSelect = document.getElementById('sort-date');
+
+        // Слушаем ввод цены
+        if (minInput) {
+            minInput.addEventListener('input', (e) => {
+                state.minPrice = e.target.value ? Number(e.target.value) : null;
+                applyFilters();
+            });
+        }
+
+        if (maxInput) {
+            maxInput.addEventListener('input', (e) => {
+                state.maxPrice = e.target.value ? Number(e.target.value) : null;
+                applyFilters();
+            });
+        }
+
+        // Слушаем сортировку
+        if (sortSelect) {
+            sortSelect.addEventListener('change', (e) => {
+                state.sortBy = e.target.value;
+                applyFilters();
+            });
+        }
+    }
+
+    // --- ГЛАВНАЯ ФУНКЦИЯ ПРИМЕНЕНИЯ ФИЛЬТРОВ ---
+    function applyFilters() {
+        let filtered = [...allProducts];
+
+        // 1. Фильтр по Категории
+        if (state.category !== 'all') {
+            filtered = filtered.filter(p => p.category == state.category);
+        }
+
+        // 2. Фильтр по Цене
+        if (state.minPrice !== null) {
+            filtered = filtered.filter(p => p.price >= state.minPrice);
+        }
+        if (state.maxPrice !== null) {
+            filtered = filtered.filter(p => p.price <= state.maxPrice);
+        }
+
+        // 3. Сортировка по Дате
+        filtered.sort((a, b) => {
+            if (state.sortBy === 'new') {
+                return b.dateAdded - a.dateAdded; // Новые сверху
+            } else {
+                return a.dateAdded - b.dateAdded; // Старые сверху
+            }
+        });
+
+        // Рендерим результат
+        renderProducts(filtered, document.getElementById('catalog-grid'));
+    }
+
+    // --- Рендер карточек ---
+    function renderProducts(products, container) {
         if (!container) return;
 
         if (products.length === 0) {
-            container.innerHTML = searchQuery 
-                ? `<div style="text-align:center; padding:40px;"><h3>По запросу "<strong>${searchQuery}</strong>" ничего не найдено</h3></div>`
-                : '<p style="text-align: center; padding: 40px;">В этой категории пока нет товаров.</p>';
+            container.innerHTML = '<div style="text-align:center; padding:40px;"><h3>Ничего не найдено</h3><p>Попробуйте изменить параметры фильтра.</p></div>';
             return;
         }
 
         container.innerHTML = products.map(product => {
             const imgSrc = product.image ? product.image : `images/${product.id}.jpg`;
-            
+
             return `
                 <div class="product-card-simple" onclick="openProductModal('${product.id}')">
-                    <div class="product-image-wrap">
+                    <div class="simple-card-img">
                         <img src="${imgSrc}" alt="${product.name}" 
-                             onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
+                            onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
                     </div>
-                    <div class="product-title-simple">${product.name}</div>
+                    <div class="simple-card-name">${product.name}</div>
                 </div>
             `;
         }).join('');
     }
+
+    // --- Рендер кнопок категорий ---
+    function renderCategoryFilters(container) {
+        const categories = {};
+        allProducts.forEach(p => {
+            const cat = p.category || 0;
+            if (!categories[cat]) categories[cat] = 0;
+            categories[cat]++;
+        });
+
+        const categoryNames = { 
+            0: 'Все товары', 
+            1: 'Торговое оборудование', 
+            2: 'Складское оборудование', 
+            3: 'Армейская мебель', 
+            4: 'Кресла и стулья' 
+        };
+
+        let html = '<div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">';
+
+        Object.keys(categories).sort().forEach(catId => {
+            const isActive = catId == state.category ? 'btn-primary' : '';
+            const name = categoryNames[catId] || `Раздел ${catId}`;
+            html += `<button class="btn ${isActive}" style="background: ${isActive ? '' : 'white'}; color: ${isActive ? 'white' : 'black'}; border:1px solid #ddd;" onclick="ProductsLoader.setCategory(${catId})">${name}</button>`;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+    }
+
+    // --- Публичные методы ---
+    window.setCategory = function(catId) {
+        state.category = catId;
+        renderCategoryFilters(document.getElementById('catalog-filters'));
+        applyFilters();
+    };
 
     // Делаем функцию доступной глобально
     window.openProductModal = function(id) {
@@ -99,13 +192,12 @@ const ProductsLoader = (function() {
         const specsTable = document.getElementById('modal-specs');
         const addBtn = document.getElementById('modal-add-btn');
 
-        // Заполнение данными
         const imgSrc = product.image ? product.image : `images/${product.id}.jpg`;
         img.src = imgSrc;
         img.onerror = function() { this.src = 'images/nofoto.png'; };
-        
+
         title.textContent = product.name;
-        
+
         // Блок цены с возможностью скидки
         let priceHtml = '';
         if (product.old_price) {
@@ -119,14 +211,16 @@ const ProductsLoader = (function() {
             priceHtml = `<div class="modal-price-block"><span class="modal-current-price">${Utils.formatPrice(product.price)}</span></div>`;
         }
         priceBlock.innerHTML = priceHtml;
-        
+
         desc.textContent = product.description || 'Описание отсутствует.';
 
-        // Характеристики
+        // Характеристики в виде таблицы
         let specsHtml = '<table class="modal-specs-table">';
         if (product.specs) {
             if (Array.isArray(product.specs)) {
-                product.specs.forEach(spec => specsHtml += `<tr><td colspan="2">• ${spec}</td></tr>`);
+                product.specs.forEach(spec => {
+                    specsHtml += `<tr><td colspan="2">• ${spec}</td></tr>`;
+                });
             } else {
                 for (const [key, val] of Object.entries(product.specs)) {
                     specsHtml += `<tr><td>${key}</td><td>${val}</td></tr>`;
@@ -164,51 +258,5 @@ const ProductsLoader = (function() {
         }
     });
 
-    function renderFilters(container) {
-        const categories = {};
-        allProducts.forEach(p => {
-            const cat = p.category || 0;
-            if (!categories[cat]) categories[cat] = 0;
-            categories[cat]++;
-        });
-
-        const categoryNames = { 0: 'Все товары', 1: 'Торговые стеллажи', 2: 'Холодильное оборудование', 3: 'Кассовое оборудование', 4: 'Кресла и стулья' };
-        let html = '<div class="filters-list">';
-        
-        Object.keys(categories).sort().forEach(catId => {
-            const catName = categoryNames[catId] || `Категория ${catId}`;
-            const isActive = catId == currentCategory ? 'active' : '';
-            html += `<button class="btn filter-btn ${isActive}" data-category="${catId}">${catName}</button>`;
-        });
-        
-        html += '</div>';
-        container.innerHTML = html;
-
-        container.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const catId = e.currentTarget.dataset.category;
-                const urlParams = new URLSearchParams(window.location.search);
-                if (urlParams.get('search')) {
-                     window.location.href = `catalog.html?category=${catId}`;
-                     return;
-                }
-                filterByCategory(catId);
-                container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                e.currentTarget.classList.add('active');
-            });
-        });
-    }
-
-    function filterByCategory(categoryId) {
-        currentCategory = categoryId;
-        const container = document.getElementById('catalog-grid');
-        if (categoryId === 'all' || categoryId === '0') {
-            renderProducts(allProducts, container);
-        } else { 
-            const filtered = allProducts.filter(p => p.category == categoryId);
-            renderProducts(filtered, container);
-        }
-    }
-
-    return { loadCatalog };
+    return { loadCatalog, setCategory };
 })();

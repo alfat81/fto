@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог | ФТО - Фабрика Торгового Оборудования</title>
     <meta name="description" content="Каталог торгового оборудования: стеллажи, витрины, кассы, кресла.">
-<!-- Фавиконы -->
-     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    
+    <!-- Фавиконы -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon180x180.png">
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/header.css">
@@ -25,6 +28,28 @@
 
     <main class="page-content">
         <div class="container">
+            <!-- Панель расширенных фильтров -->
+            <div class="filter-bar">
+                <!-- Фильтр цены -->
+                <div class="filter-group">
+                    <span class="filter-label">Цена, ₽</span>
+                    <input type="number" id="min-price" class="filter-input" placeholder="От">
+                    <span style="color: var(--text-light);">—</span>
+                    <input type="number" id="max-price" class="filter-input" placeholder="До">
+                </div>
+
+                <div class="filter-divider"></div>
+
+                <!-- Сортировка по дате -->
+                <div class="filter-group">
+                    <span class="filter-label">Сортировка</span>
+                    <select id="sort-date" class="filter-select">
+                        <option value="new">Сначала новые</option>
+                        <option value="old">Сначала старые</option>
+                    </select>
+                </div>
+            </div>
+
             <!-- Фильтры по категориям -->
             <div id="catalog-filters" class="catalog-filters" style="margin-bottom: 40px;">
                 <p style="text-align: center; color: var(--text-light);">Загрузка категорий...</p>
