@@ -3,7 +3,6 @@
  */
 const ProductsLoader = (function() {
     let allProducts = [];
-    
     // Состояние фильтров
     const state = {
         category: 'all',
@@ -20,13 +19,13 @@ const ProductsLoader = (function() {
 
         try {
             container.innerHTML = '<p style="text-align: center; padding: 40px; color: var(--text-light);">Загрузка товаров...</p>';
-            
+
             const indexResp = await fetch('data/products/index.json');
             if (!indexResp.ok) throw new Error('Не найден index.json');
             const files = await indexResp.json();
-            
+
             allProducts = [];
-            
+
             // ==========================================
             // ПАРАЛЛЕЛЬНАЯ ЗАГРУЗКА (Быстро!)
             // ==========================================
@@ -35,15 +34,15 @@ const ProductsLoader = (function() {
                     .then(resp => resp.ok ? resp.json() : null)
                     .catch(() => null)
             );
-            
+
             const results = await Promise.all(fetchPromises);
             allProducts = results.filter(p => p !== null);
-            
+
             // Если нет даты в JSON, добавим индекс как прокси даты
             allProducts.forEach((p, index) => {
                 if (!p.dateAdded) p.dateAdded = index; 
             });
-            
+
             if (allProducts.length === 0) {
                 container.innerHTML = '<p style="text-align: center; padding: 40px;">Товары временно отсутствуют.</p>';
                 return;
@@ -51,10 +50,10 @@ const ProductsLoader = (function() {
 
             // 1. Рендерим кнопки категорий
             if (filtersContainer) renderCategoryFilters(filtersContainer);
-            
+
             // 2. Инициализируем события инпутов (Цена/Сортировка)
             initAdvancedFilters();
-            
+
             // 3. Применяем начальные фильтры
             applyFilters();
 
@@ -77,7 +76,7 @@ const ProductsLoader = (function() {
                 applyFilters();
             });
         }
-        
+
         // Слушаем ввод цены "До"
         if (maxInput) {
             maxInput.addEventListener('input', (e) => {
@@ -125,7 +124,7 @@ const ProductsLoader = (function() {
         renderProducts(filtered, document.getElementById('catalog-grid'));
     }
 
-    // --- Рендер карточек (Упрощенные: Фото + Название) ---
+    // --- Рендер карточек (ИСПРАВЛЕНО: добавлены Цена и Название) ---
     function renderProducts(products, container) {
         if (!container) return;
 
@@ -136,14 +135,22 @@ const ProductsLoader = (function() {
 
         container.innerHTML = products.map(product => {
             const imgSrc = product.image ? product.image : `images/${product.id}.jpg`;
-            
+            // Проверяем наличие скидки
+            const hasDiscount = product.old_price && product.old_price > product.price;
+
             return `
                 <div class="product-card-simple" onclick="openProductModal('${product.id}')">
                     <div class="simple-card-img">
                         <img src="${imgSrc}" alt="${product.name}" 
                              onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
                     </div>
-                    <div class="simple-card-name">${product.name}</div>
+                    <div class="card-content">
+                        <div class="product-price-block">
+                            ${hasDiscount ? `<span class="old-price">${Utils.formatPrice(product.old_price)}</span>` : ''}
+                            <span class="current-price">${Utils.formatPrice(product.price)}</span>
+                        </div>
+                        <div class="simple-card-name">${product.name}</div>
+                    </div>
                 </div>
             `;
         }).join('');
@@ -165,9 +172,9 @@ const ProductsLoader = (function() {
             3: 'Армейская мебель', 
             4: 'Кресла и стулья' 
         };
-        
+
         let html = '<div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">';
-        
+
         Object.keys(categories).sort().forEach(catId => {
             const isActive = catId == state.category ? 'btn-primary' : '';
             const name = categoryNames[catId] || `Раздел ${catId}`;
