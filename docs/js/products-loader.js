@@ -1,11 +1,7 @@
-﻿/**
- * products-loader.js - Загрузка товаров, фильтрация и поиск
- */
-const ProductsLoader = (function() {
+﻿const ProductsLoader = (function() {
     let allProducts = [];
     let currentCategory = 'all';
 
-    // Главная функция загрузки
     async function loadCatalog() {
         const container = document.getElementById('catalog-grid');
         const filtersContainer = document.getElementById('catalog-filters');
@@ -15,67 +11,45 @@ const ProductsLoader = (function() {
         try {
             container.innerHTML = '<p style="text-align: center; padding: 40px; color: var(--text-light);">Загрузка товаров...</p>';
             
-            // 1. Загружаем список файлов (index.json)
             const indexResp = await fetch('data/products/index.json');
             if (!indexResp.ok) throw new Error('Не найден index.json');
             const files = await indexResp.json();
             
             allProducts = [];
             
-            // 2. ОПТИМИЗАЦИЯ: Загружаем все товары ПАРАЛЛЕЛЬНО
-            // Создаем массив промисов (запросов)
+            // Параллельная загрузка для скорости
             const fetchPromises = files.map(file => 
                 fetch(`data/products/${file}`)
-                    .then(resp => resp.ok ? resp.json() : null) // Если файл не найден, возвращаем null
-                    .catch(err => {
-                        console.error(`Ошибка загрузки ${file}:`, err);
-                        return null;
-                    })
+                    .then(resp => resp.ok ? resp.json() : null)
+                    .catch(() => null)
             );
             
-            // Ждем завершения всех запросов одновременно
             const results = await Promise.all(fetchPromises);
-            
-            // Фильтруем null-результаты (ошибки загрузки)
-            allProducts = results.filter(product => product !== null);
+            allProducts = results.filter(p => p !== null);
             
             if (allProducts.length === 0) {
                 container.innerHTML = '<p style="text-align: center; padding: 40px;">Товары временно отсутствуют.</p>';
                 return;
             }
             
-            // 3. Проверка поискового запроса в URL (?search=...)
+            // Проверка поиска
             const urlParams = new URLSearchParams(window.location.search);
             const searchQuery = urlParams.get('search');
-            let productsToShow = allProducts; // По умолчанию показываем всё
+            let productsToShow = allProducts;
 
-            // Если есть запрос поиска
             if (searchQuery) {
                 const lowerQuery = searchQuery.toLowerCase();
-                
-                // Вставляем текст в поле поиска в шапке, если оно есть
                 const headerInput = document.getElementById('site-search-input');
                 if (headerInput) headerInput.value = searchQuery;
 
-                // Фильтруем массив товаров
                 productsToShow = allProducts.filter(product => {
-                    // Поиск по названию
-                    if (product.name.toLowerCase().includes(lowerQuery)) return true;
-                    // Поиск по описанию
-                    if (product.description && product.description.toLowerCase().includes(lowerQuery)) return true;
-                    // Поиск по категориям (цифровой ID)
-                    if (String(product.category).includes(lowerQuery)) return true;
-                    
-                    return false;
+                    return product.name.toLowerCase().includes(lowerQuery) || 
+                           (product.description && product.description.toLowerCase().includes(lowerQuery)) ||
+                           String(product.category).includes(lowerQuery);
                 });
             }
 
-            // 4. Рендерим фильтры (по категориям)
-            if (filtersContainer) {
-                renderFilters(filtersContainer);
-            }
-            
-            // 5. Показываем товары (отфильтрованные или все)
+            if (filtersContainer) renderFilters(filtersContainer);
             renderProducts(productsToShow, container, searchQuery);
             
         } catch (e) {
@@ -84,78 +58,98 @@ const ProductsLoader = (function() {
         }
     }
 
-    // Функция отрисовки карточек
+    // --- НОВАЯ ФУНКЦИЯ РЕНДЕРА (Простые карточки) ---
     function renderProducts(products, container, searchQuery) {
         if (!container) return;
 
         if (products.length === 0) {
-            if (searchQuery) {
-                container.innerHTML = `<div style="text-align:center; padding:40px;">
-                    <h3>По запросу "<strong>${searchQuery}</strong>" ничего не найдено</h3>
-                    <p>Попробуйте изменить запрос или посмотрите весь каталог.</p>
-                </div>`;
-            } else {
-                container.innerHTML = '<p style="text-align: center; padding: 40px;">В этой категории пока нет товаров.</p>';
-            }
+            container.innerHTML = searchQuery 
+                ? `<div style="text-align:center; padding:40px;"><h3>По запросу "<strong>${searchQuery}</strong>" ничего не найдено</h3></div>`
+                : '<p style="text-align: center; padding: 40px;">В этой категории пока нет товаров.</p>';
             return;
         }
 
         container.innerHTML = products.map(product => {
             const imgSrc = product.image ? product.image : `images/${product.id}.jpg`;
             
-            // Формируем характеристики
-            let specsHtml = '';
-            if (product.specs) {
-                specsHtml = '<ul class="product-specs">';
-                if (Array.isArray(product.specs)) {
-                    specsHtml += product.specs.map(s => `<li>${s}</li>`).join('');
-                } else {
-                    for (const [key, val] of Object.entries(product.specs)) {
-                        specsHtml += `<li><b>${key}:</b> ${val}</li>`;
-                    }
-                }
-                specsHtml += '</ul>';
-            }
-
             return `
-                <div class="product-card" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
+                <div class="product-card-simple" onclick="openProductModal('${product.id}')">
                     <div class="product-image-wrap">
-                        <img src="${imgSrc}" alt="${product.name}" loading="lazy"
+                        <img src="${imgSrc}" alt="${product.name}" 
                              onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
                     </div>
-                    <div class="product-info">
-                        <h3 class="product-title">${product.name}</h3>
-                        <p class="product-description">${product.description || ''}</p>
-                        ${specsHtml}
-                        <div class="product-price-row">
-                            <span class="price">${Utils.formatPrice(product.price)}</span>
-                            <button class="btn-add" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
-                                <i class="fas fa-cart-plus"></i> В корзину
-                            </button>
-                        </div>
-                    </div>
+                    <div class="product-title-simple">${product.name}</div>
                 </div>
             `;
         }).join('');
-
-        // Навешиваем обработчики на кнопки "В корзину"
-        container.querySelectorAll('.btn-add').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = e.currentTarget.dataset.id;
-                const name = e.currentTarget.dataset.name;
-                const price = parseFloat(e.currentTarget.dataset.price);
-                
-                if (typeof CartModule !== 'undefined') {
-                    CartModule.add({ id, name, price });
-                    if (typeof ToastModule !== 'undefined') {
-                        ToastModule.show('Товар добавлен в корзину', 'success');
-                    }
-                }
-            });
-        });
     }
 
-    // Рендер кнопок категорий
+    // --- ЛОГИКА МОДАЛЬНОГО ОКНА ---
+    
+    // Делаем функцию доступной глобально
+    window.openProductModal = function(id) {
+        const product = allProducts.find(p => p.id == id);
+        if (!product) return;
+
+        const modal = document.getElementById('product-modal');
+        const img = document.getElementById('modal-img');
+        const title = document.getElementById('modal-title');
+        const price = document.getElementById('modal-price');
+        const desc = document.getElementById('modal-desc');
+        const specsTable = document.getElementById('modal-specs');
+        const addBtn = document.getElementById('modal-add-btn');
+
+        // Заполнение данными
+        const imgSrc = product.image ? product.image : `images/${product.id}.jpg`;
+        img.src = imgSrc;
+        img.onerror = function() { this.src = 'images/nofoto.png'; };
+        
+        title.textContent = product.name;
+        price.textContent = Utils.formatPrice(product.price);
+        desc.textContent = product.description || 'Описание отсутствует.';
+
+        // Характеристики
+        let specsHtml = '';
+        if (product.specs) {
+            if (Array.isArray(product.specs)) {
+                product.specs.forEach(spec => specsHtml += `<tr><td colspan="2">• ${spec}</td></tr>`);
+            } else {
+                for (const [key, val] of Object.entries(product.specs)) {
+                    specsHtml += `<tr><td>${key}</td><td>${val}</td></tr>`;
+                }
+            }
+        }
+        specsTable.innerHTML = specsHtml;
+
+        // Кнопка добавления
+        addBtn.onclick = function() {
+            if (typeof CartModule !== 'undefined') {
+                CartModule.add({ id: product.id, name: product.name, price: product.price });
+                if (typeof ToastModule !== 'undefined') ToastModule.show('Товар добавлен в корзину', 'success');
+                closeProductModal();
+            }
+        };
+
+        // Показать модальное окно
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Блокировка прокрутки фона
+    };
+
+    window.closeProductModal = function() {
+        const modal = document.getElementById('product-modal');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    };
+
+    // Закрытие по клику вне окна
+    document.addEventListener('click', function(e) {
+        const modal = document.getElementById('product-modal');
+        if (e.target === modal) {
+            closeProductModal();
+        }
+    });
+
+    // --- ФИЛЬТРЫ (Без изменений) ---
     function renderFilters(container) {
         const categories = {};
         allProducts.forEach(p => {
@@ -164,45 +158,27 @@ const ProductsLoader = (function() {
             categories[cat]++;
         });
 
-        const categoryNames = {
-            0: 'Все товары',
-            1: 'Торговые стеллажи',
-            2: 'Холодильное оборудование',
-            3: 'Кассовое оборудование',
-            4: 'Кресла и стулья'
-        };
-
+        const categoryNames = { 0: 'Все товары', 1: 'Торговые стеллажи', 2: 'Холодильное оборудование', 3: 'Кассовое оборудование', 4: 'Кресла и стулья' };
         let html = '<div class="filters-list">';
         
         Object.keys(categories).sort().forEach(catId => {
             const catName = categoryNames[catId] || `Категория ${catId}`;
             const isActive = catId == currentCategory ? 'active' : '';
-            
-            html += `
-                <button class="btn filter-btn ${isActive}" data-category="${catId}">
-                    ${catName}
-                </button>
-            `;
+            html += `<button class="btn filter-btn ${isActive}" data-category="${catId}">${catName}</button>`;
         });
         
         html += '</div>';
         container.innerHTML = html;
 
-        // Обработчик клика по фильтру
         container.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const catId = e.currentTarget.dataset.category;
-                
-                // Если был активен поиск, сбрасываем его и перезагружаем страницу
                 const urlParams = new URLSearchParams(window.location.search);
                 if (urlParams.get('search')) {
                      window.location.href = `catalog.html?category=${catId}`;
                      return;
                 }
-
                 filterByCategory(catId);
-                
-                // Визуальное обновление кнопок
                 container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 e.currentTarget.classList.add('active');
             });
@@ -212,7 +188,6 @@ const ProductsLoader = (function() {
     function filterByCategory(categoryId) {
         currentCategory = categoryId;
         const container = document.getElementById('catalog-grid');
-        
         if (categoryId === 'all' || categoryId === '0') {
             renderProducts(allProducts, container);
         } else {
@@ -221,5 +196,5 @@ const ProductsLoader = (function() {
         }
     }
 
-    return { loadCatalog, renderProducts };
+    return { loadCatalog };
 })();

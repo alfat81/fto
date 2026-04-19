@@ -6,6 +6,7 @@
     <title>Каталог | ФТО - Фабрика Торгового Оборудования</title>
     <meta name="description" content="Каталог торгового оборудования: стеллажи, витрины, кассы, кресла.">
     
+    <!-- Подключение стилей -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -28,7 +29,7 @@
                 <p style="text-align: center; color: var(--text-light);">Загрузка категорий...</p>
             </div>
             
-            <!-- Сетка товаров - ТОЛЬКО ОДИН КОНТЕЙНЕР! -->
+            <!-- Сетка товаров -->
             <div class="products-grid" id="catalog-grid">
                 <p style="text-align: center; padding: 40px; color: var(--text-light);">Загрузка товаров...</p>
             </div>
@@ -66,6 +67,25 @@
         </div>
     </footer>
 
+    <!-- Модальное окно товара (ПОДРОБНОЕ) -->
+    <div id="product-modal" class="modal modal-product" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close-btn" onclick="closeProductModal()">&times;</span>
+            <div class="modal-image-side">
+                <img id="modal-img" src="" alt="Фото товара">
+            </div>
+            <div class="modal-info-side">
+                <h2 id="modal-title">Название товара</h2>
+                <div id="modal-price" class="modal-price">0 ₽</div>
+                <p id="modal-desc" class="modal-desc"></p>
+                <table class="specs-table" id="modal-specs"></table>
+                <button id="modal-add-btn" class="btn btn-primary btn-add-modal">
+                    <i class="fas fa-cart-plus"></i> Добавить в корзину
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Модальное окно корзины -->
     <div id="cart-modal" class="modal">
         <div class="modal-content modal-cart">
@@ -94,7 +114,7 @@
         </div>
     </div>
 
-    <!-- СКРИПТЫ - ПОДКЛЮЧАТЬ ТОЛЬКО ОДИН РАЗ! -->
+    <!-- СКРИПТЫ (порядок важен!) -->
     <script src="js/config.js"></script>
     <script src="js/utils.js"></script>
     <script src="data/catalog-data.js"></script>
