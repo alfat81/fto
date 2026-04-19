@@ -1,7 +1,7 @@
 ﻿/**
  * products-loader.js - Загрузка товаров, фильтрация и поиск
  */
-const ProductsLoader = (function () {
+const ProductsLoader = (function() {
     let allProducts = [];
     let currentCategory = 'all';
 
@@ -9,36 +9,41 @@ const ProductsLoader = (function () {
     async function loadCatalog() {
         const container = document.getElementById('catalog-grid');
         const filtersContainer = document.getElementById('catalog-filters');
-
+        
         if (!container) return;
 
         try {
             container.innerHTML = '<p style="text-align: center; padding: 40px; color: var(--text-light);">Загрузка товаров...</p>';
-
+            
             // 1. Загружаем список файлов (index.json)
             const indexResp = await fetch('data/products/index.json');
             if (!indexResp.ok) throw new Error('Не найден index.json');
             const files = await indexResp.json();
-
+            
             allProducts = [];
-
-            // 2. Загружаем каждый товар
-            for (const file of files) {
-                try {
-                    const resp = await fetch(`data/products/${file}`);
-                    if (!resp.ok) continue;
-                    const product = await resp.json();
-                    allProducts.push(product);
-                } catch (e) {
-                    console.error(`Ошибка загрузки ${file}:`, e);
-                }
-            }
-
+            
+            // 2. ОПТИМИЗАЦИЯ: Загружаем все товары ПАРАЛЛЕЛЬНО
+            // Создаем массив промисов (запросов)
+            const fetchPromises = files.map(file => 
+                fetch(`data/products/${file}`)
+                    .then(resp => resp.ok ? resp.json() : null) // Если файл не найден, возвращаем null
+                    .catch(err => {
+                        console.error(`Ошибка загрузки ${file}:`, err);
+                        return null;
+                    })
+            );
+            
+            // Ждем завершения всех запросов одновременно
+            const results = await Promise.all(fetchPromises);
+            
+            // Фильтруем null-результаты (ошибки загрузки)
+            allProducts = results.filter(product => product !== null);
+            
             if (allProducts.length === 0) {
                 container.innerHTML = '<p style="text-align: center; padding: 40px;">Товары временно отсутствуют.</p>';
                 return;
             }
-
+            
             // 3. Проверка поискового запроса в URL (?search=...)
             const urlParams = new URLSearchParams(window.location.search);
             const searchQuery = urlParams.get('search');
@@ -47,7 +52,7 @@ const ProductsLoader = (function () {
             // Если есть запрос поиска
             if (searchQuery) {
                 const lowerQuery = searchQuery.toLowerCase();
-
+                
                 // Вставляем текст в поле поиска в шапке, если оно есть
                 const headerInput = document.getElementById('site-search-input');
                 if (headerInput) headerInput.value = searchQuery;
@@ -60,21 +65,19 @@ const ProductsLoader = (function () {
                     if (product.description && product.description.toLowerCase().includes(lowerQuery)) return true;
                     // Поиск по категориям (цифровой ID)
                     if (String(product.category).includes(lowerQuery)) return true;
-
+                    
                     return false;
                 });
             }
 
             // 4. Рендерим фильтры (по категориям)
-            // ВАЖНО: При поиске фильтры категорий лучше скрыть или оставить, 
-            // но сейчас оставим их активными для всех товаров
             if (filtersContainer) {
                 renderFilters(filtersContainer);
             }
-
+            
             // 5. Показываем товары (отфильтрованные или все)
             renderProducts(productsToShow, container, searchQuery);
-
+            
         } catch (e) {
             console.error('Ошибка загрузки каталога:', e);
             container.innerHTML = '<p style="text-align: center; padding: 40px; color: red;">Ошибка загрузки каталога.</p>';
@@ -99,7 +102,7 @@ const ProductsLoader = (function () {
 
         container.innerHTML = products.map(product => {
             const imgSrc = product.image ? product.image : `images/${product.id}.jpg`;
-
+            
             // Формируем характеристики
             let specsHtml = '';
             if (product.specs) {
@@ -117,7 +120,7 @@ const ProductsLoader = (function () {
             return `
                 <div class="product-card" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
                     <div class="product-image-wrap">
-                        <img src="${imgSrc}" alt="${product.name}" 
+                        <img src="${imgSrc}" alt="${product.name}" loading="lazy"
                              onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
                     </div>
                     <div class="product-info">
@@ -141,7 +144,7 @@ const ProductsLoader = (function () {
                 const id = e.currentTarget.dataset.id;
                 const name = e.currentTarget.dataset.name;
                 const price = parseFloat(e.currentTarget.dataset.price);
-
+                
                 if (typeof CartModule !== 'undefined') {
                     CartModule.add({ id, name, price });
                     if (typeof ToastModule !== 'undefined') {
@@ -170,18 +173,18 @@ const ProductsLoader = (function () {
         };
 
         let html = '<div class="filters-list">';
-
+        
         Object.keys(categories).sort().forEach(catId => {
             const catName = categoryNames[catId] || `Категория ${catId}`;
             const isActive = catId == currentCategory ? 'active' : '';
-
+            
             html += `
                 <button class="btn filter-btn ${isActive}" data-category="${catId}">
                     ${catName}
                 </button>
             `;
         });
-
+        
         html += '</div>';
         container.innerHTML = html;
 
@@ -189,16 +192,16 @@ const ProductsLoader = (function () {
         container.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const catId = e.currentTarget.dataset.category;
-
-                // Если был активен поиск, сбрасываем его
+                
+                // Если был активен поиск, сбрасываем его и перезагружаем страницу
                 const urlParams = new URLSearchParams(window.location.search);
                 if (urlParams.get('search')) {
-                    window.location.href = `catalog.html?category=${catId}`;
-                    return;
+                     window.location.href = `catalog.html?category=${catId}`;
+                     return;
                 }
 
                 filterByCategory(catId);
-
+                
                 // Визуальное обновление кнопок
                 container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 e.currentTarget.classList.add('active');
@@ -209,7 +212,7 @@ const ProductsLoader = (function () {
     function filterByCategory(categoryId) {
         currentCategory = categoryId;
         const container = document.getElementById('catalog-grid');
-
+        
         if (categoryId === 'all' || categoryId === '0') {
             renderProducts(allProducts, container);
         } else {
