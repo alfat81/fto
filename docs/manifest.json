@@ -1,0 +1,27 @@
+{
+    "name": "ФТО — Фабрика торгового оборудования",
+    "short_name": "ФТО",
+    "description": "Производство и монтаж торгового оборудования в Нижнем Новгороде: стеллажи, витрины, кассы, кресла.",
+    "lang": "ru",
+    "dir": "ltr",
+    "start_url": "/fto/index.html",
+    "scope": "/fto/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#f8fafc",
+    "theme_color": "#0B1220",
+    "icons": [
+        {
+            "src": "images/favicon.ico",
+            "sizes": "16x16 32x32 48x48",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "images/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["business", "shopping", "productivity"]
+}

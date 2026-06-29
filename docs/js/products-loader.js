@@ -141,7 +141,7 @@ const ProductsLoader = (function() {
             return `
                 <div class="product-card-simple" onclick="openProductModal('${product.id}')">
                     <div class="simple-card-img">
-                        <img src="${imgSrc}" alt="${product.name}" 
+                        <img src="${imgSrc}" alt="${product.name}" loading="lazy" decoding="async"
                              onerror="if(!this.src.endsWith('nofoto.png')) this.src='images/nofoto.png'">
                     </div>
                     <div class="card-content">
@@ -210,6 +210,8 @@ const ProductsLoader = (function() {
 
         const imgSrc = product.image ? product.image : `images/${product.id}.jpg`;
         img.src = imgSrc;
+        img.loading = 'lazy';
+        img.decoding = 'async';
         img.onerror = function() { this.src = 'images/nofoto.png'; };
 
         title.textContent = product.name;

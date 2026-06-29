@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: fabrika-mebeli-backend
+    name: fto-backend
     env: node
     repo: https://github.com/alfat81/fto
     rootDir: backend
@@ -19,3 +19,5 @@ services:
         value: https://alfat81.github.io
       - key: PORT
         value: 10000
+    healthCheckPath: /api/health
+    autoDeploy: true

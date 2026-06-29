@@ -3,16 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Каталог | ФТО - Фабрика Торгового Оборудования</title>
-    <meta name="description" content="Каталог торгового оборудования: стеллажи, витрины, кассы, кресла.">
-    
-<!-- Фавиконы -->
-     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    
+
+    <title>Каталог торгового оборудования | ФТО — стеллажи, витрины, кассы, кресла</title>
+    <meta name="description" content="Каталог торгового оборудования ФТО: офисные и конференц-кресла, стеллажи, витрины, кассовые боксы. Цены от производителя, доставка по России.">
+    <link rel="canonical" href="https://alfat81.github.io/fto/catalog.html">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0B1220">
+    <meta name="apple-mobile-web-app-title" content="ФТО">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="ФТО — Фабрика торгового оборудования">
+    <meta property="og:url" content="https://alfat81.github.io/fto/catalog.html">
+    <meta property="og:title" content="Каталог торгового оборудования | ФТО — стеллажи, витрины, кассы, кресла">
+    <meta property="og:description" content="Каталог торгового оборудования ФТО: офисные и конференц-кресла, стеллажи, витрины, кассовые боксы. Цены от производителя, доставка по России.">
+    <meta property="og:image" content="https://alfat81.github.io/fto/images/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Каталог торгового оборудования | ФТО — стеллажи, витрины, кассы, кресла">
+    <meta name="twitter:description" content="Каталог торгового оборудования ФТО: офисные и конференц-кресла, стеллажи, витрины, кассовые боксы. Цены от производителя, доставка по России.">
+    <meta name="twitter:image" content="https://alfat81.github.io/fto/images/og-image.jpg">
+
+    <!-- Preconnect to external hosts (performance) -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
 </head>
 <body>
     <!-- Шапка вставляется через js/header.js -->
@@ -85,9 +114,14 @@
                         <li><a href="contacts.html">Контакты</a></li>
                     </ul>
                 </div>
+                <div class="footer-col">
+                    <h3>Документы</h3>
+                    <p class="footer-legal"><a href="privacy.html">Политика конфиденциальности</a></p>
+                    <p class="footer-legal"><a href="privacy.html#pdn">Согласие на обработку ПДн</a></p>
+                </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 ФТО. Все права защищены.</p>
+                <p>&copy; 2025 ФТО. Все права защищены.</p>
             </div>
         </div>
     </footer>
@@ -97,7 +131,7 @@
         <div class="modal-content">
             <span class="modal-close-btn" onclick="closeProductModal()">&times;</span>
             <div class="modal-image-side">
-                <img id="modal-img" src="" alt="Фото товара">
+                <img loading="lazy" decoding="async" id="modal-img" src="" alt="Фото товара">
             </div>
             <div class="modal-info-side">
                 <h2 id="modal-title">Название товара</h2>
@@ -133,6 +167,18 @@
                     <div class="form-group">
                         <textarea name="address" placeholder="Адрес доставки"></textarea>
                     </div>
+                                        <div class="form-group form-consent">
+                        <label class="consent-label">
+                            <input type="checkbox" name="consent" required>
+                            <span>Я согласен на обработку персональных данных в соответствии с <a href="privacy.html" target="_blank">Политикой конфиденциальности</a>.</span>
+                        </label>
+                    </div>
+                                        <div class="form-group form-consent">
+                        <label class="consent-label">
+                            <input type="checkbox" name="consent" required>
+                            <span>Я согласен на обработку персональных данных в соответствии с <a href="privacy.html" target="_blank">Политикой конфиденциальности</a>.</span>
+                        </label>
+                    </div>
                     <button type="submit" class="btn btn-primary btn-block" id="checkout-btn" disabled>Оформить заказ</button>
                 </form>
             </div>
@@ -140,44 +186,13 @@
     </div>
 
     <!-- СКРИПТЫ -->
-    <script src="js/config.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="data/catalog-data.js"></script>
-    <script src="js/toast-module.js"></script>
-    <script src="js/cart-module.js"></script>
-    <script src="js/products-loader.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/header.js"></script>
-<!-- Эффект печатной машинки в футере -->
-<div class="typewriter-footer">
-    <span id="typewriter-text"></span><span class="cursor">|</span>
-</div>
-
-<script>
-(function() {
-    const text = "Made by Fatyanov";
-    const element = document.getElementById('typewriter-text');
-    const cursor = document.querySelector('.cursor');
-    let index = 0;
-    
-    function typeWriter() {
-        if (index < text.length) {
-            element.textContent += text.charAt(index);
-            index++;
-            setTimeout(typeWriter, 100); // Скорость печати (мс)
-        } else {
-            // Оставляем курсор мигать или убираем его
-            setTimeout(() => {
-                if (cursor) cursor.style.display = 'none';
-            }, 1000);
-        }
-    }
-    
-    // Запускаем после загрузки страницы
-    window.addEventListener('load', () => {
-        setTimeout(typeWriter, 500);
-    });
-})();
-</script>
+    <script src="js/config.js" defer></script>
+    <script src="js/utils.js" defer></script>
+    <script src="js/toast-module.js" defer></script>
+    <script src="js/cart-module.js" defer></script>
+    <script src="js/products-loader.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script src="js/header.js" defer></script>
+<!-- typewriter removed in Phase 1 -->
 </body>
 </html>
