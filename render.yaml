@@ -11,13 +11,21 @@ services:
         value: 20.15.1
       - key: NODE_ENV
         value: production
-      - key: TELEGRAM_BOT_TOKEN
+      - key: SMTP_HOST
+        value: smtp.mail.ru
+      - key: SMTP_PORT
+        value: "465"
+      - key: SMTP_USER
+        value: alfat@list.ru
+      - key: SMTP_PASS
         sync: false
-      - key: TELEGRAM_CHAT_ID
-        sync: false
+      - key: EMAIL_FROM
+        value: Сайт ФТО
+      - key: EMAIL_TO
+        value: alfat@list.ru
       - key: CORS_ORIGIN
         value: https://alfat81.github.io
       - key: PORT
-        value: 10000
+        value: "10000"
     healthCheckPath: /api/health
     autoDeploy: true

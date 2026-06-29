@@ -5,70 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Каталог торгового оборудования | ФТО — стеллажи, витрины, кассы, кресла</title>
-    <meta name="description" content="Каталог торгового оборудования ФТО: офисные и конференц-кресла, стеллажи, витрины, кассовые боксы. Цены от производителя, доставка по России.">
+    <meta name="description" content="Каталог торгового оборудования ФТО: торговые стеллажи, витрины и прилавки, кассовые боксы, офисные кресла. Цены от производителя, доставка по России.">
     <link rel="canonical" href="https://alfat81.github.io/fto/catalog.html">
 
-    <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0B1220">
-    <meta name="apple-mobile-web-app-title" content="ФТО">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ru_RU">
     <meta property="og:site_name" content="ФТО — Фабрика торгового оборудования">
     <meta property="og:url" content="https://alfat81.github.io/fto/catalog.html">
-    <meta property="og:title" content="Каталог торгового оборудования | ФТО — стеллажи, витрины, кассы, кресла">
-    <meta property="og:description" content="Каталог торгового оборудования ФТО: офисные и конференц-кресла, стеллажи, витрины, кассовые боксы. Цены от производителя, доставка по России.">
+    <meta property="og:title" content="Каталог торгового оборудования ФТО">
+    <meta property="og:description" content="Стеллажи, витрины, кассовые боксы, кресла — цены от производителя. Доставка по России.">
     <meta property="og:image" content="https://alfat81.github.io/fto/images/og-image.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Каталог торгового оборудования | ФТО — стеллажи, витрины, кассы, кресла">
-    <meta name="twitter:description" content="Каталог торгового оборудования ФТО: офисные и конференц-кресла, стеллажи, витрины, кассовые боксы. Цены от производителя, доставка по России.">
-    <meta name="twitter:image" content="https://alfat81.github.io/fto/images/og-image.jpg">
-
-    <!-- Preconnect to external hosts (performance) -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
 </head>
 <body>
-    <!-- Шапка вставляется через js/header.js -->
 
-    <!-- Синий баннер -->
-    <section class="parallax-hero">
+    <!-- HERO -->
+    <section class="hero" style="padding: 60px 0 40px;">
         <div class="container">
-            <h2>Каталог продукции</h2>
-            <p>Торговое оборудование, мебель и кресла для вашего бизнеса</p>
+            <span class="eyebrow" style="color: #93c5fd;">Каталог продукции</span>
+            <h1 style="font-size: 40px;">Торговое оборудование от производителя</h1>
+            <p class="hero-sub">Цены без посредников. Срок изготовления от 2 недель. Доставка по России.</p>
         </div>
     </section>
 
     <main class="page-content">
         <div class="container">
-            <!-- Панель расширенных фильтров -->
+
+            <!-- Поиск + сортировка + цена -->
             <div class="filter-bar">
-                <!-- Фильтр цены -->
-                <div class="filter-group">
-                    <span class="filter-label">Цена, ₽</span>
-                    <input type="number" id="min-price" class="filter-input" placeholder="От">
-                    <span style="color: var(--text-light);">—</span>
-                    <input type="number" id="max-price" class="filter-input" placeholder="До">
+                <div class="filter-group" style="flex: 1; min-width: 220px;">
+                    <span class="filter-label"><i class="fas fa-search"></i></span>
+                    <input type="text" id="catalog-search" class="filter-input" placeholder="Поиск по названию..." style="width: 100%; flex: 1;">
                 </div>
 
                 <div class="filter-divider"></div>
 
-                <!-- Сортировка по дате -->
+                <div class="filter-group">
+                    <span class="filter-label">Цена, ₽</span>
+                    <input type="number" id="min-price" class="filter-input" placeholder="От" min="0">
+                    <span style="color: var(--text-light);">—</span>
+                    <input type="number" id="max-price" class="filter-input" placeholder="До" min="0">
+                </div>
+
+                <div class="filter-divider"></div>
+
                 <div class="filter-group">
                     <span class="filter-label">Сортировка</span>
                     <select id="sort-date" class="filter-select">
@@ -76,62 +66,92 @@
                         <option value="old">Сначала старые</option>
                     </select>
                 </div>
+
+                <div class="filter-divider"></div>
+
+                <div class="filter-group">
+                    <span class="filter-label">Найдено:</span>
+                    <strong id="catalog-count" style="color: var(--primary); font-size: 16px;">—</strong>
+                </div>
             </div>
 
-            <!-- Фильтры по категориям -->
-            <div id="catalog-filters" class="catalog-filters" style="margin-bottom: 40px;">
+            <!-- Категории -->
+            <div id="catalog-filters" class="catalog-filters" style="margin-bottom: 30px;">
                 <p style="text-align: center; color: var(--text-light);">Загрузка категорий...</p>
             </div>
-            
+
             <!-- Сетка товаров -->
             <div class="products-grid" id="catalog-grid">
                 <p style="text-align: center; padding: 40px; color: var(--text-light);">Загрузка товаров...</p>
+            </div>
+
+            <!-- CTA внизу каталога -->
+            <div style="margin-top: 60px; padding: 40px; background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 16px; text-align: center;">
+                <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 12px; color: var(--text-main);">Не нашли подходящее оборудование?</h3>
+                <p style="font-size: 16px; color: var(--text-light); max-width: 600px; margin: 0 auto 20px;">Изготавливаем нестандартные изделия по вашим чертежам. Опишите задачу — рассчитаем стоимость за 1 день.</p>
+                <a href="index.html#lead-form" class="btn btn-primary" style="padding: 14px 28px; font-size: 15px;">
+                    <i class="fas fa-calculator"></i>&nbsp; Рассчитать индивидуальный проект
+                </a>
             </div>
         </div>
     </main>
 
     <!-- Подвал -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>ФТО</h3>
-                    <p>Фабрика Торгового Оборудования</p>
-                    <p>г. Нижний Новгород, ул. Тургенева, 9</p>
-                </div>
-                <div class="footer-col">
-                    <h3>Контакты</h3>
-                    <p><i class="fas fa-phone"></i> <a href="tel:+79601786738">+7 (960) 178-67-38</a></p>
-                    <p><i class="fas fa-envelope"></i> <a href="mailto:a20072005@yandex.ru">a20072005@yandex.ru</a></p>
-                    <p><i class="fas fa-clock"></i> Пн-Пт: 9:00 - 18:00</p>
-                </div>
-                <div class="footer-col">
-                    <h3>Меню</h3>
-                    <ul>
-                        <li><a href="index.html">Главная</a></li>
-                        <li><a href="catalog.html">Каталог</a></li>
-                        <li><a href="about.html">О нас</a></li>
-                        <li><a href="contacts.html">Контакты</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Документы</h3>
-                    <p class="footer-legal"><a href="privacy.html">Политика конфиденциальности</a></p>
-                    <p class="footer-legal"><a href="privacy.html#pdn">Согласие на обработку ПДн</a></p>
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>О фабрике ФТО</h3>
+                <p>Производство торгового оборудования в Нижнем Новгороде с 2010 года. Полный цикл: проектирование, изготовление, монтаж.</p>
+                <p class="footer-rekvizity">
+                    ООО «ФТО»<br>
+                    ИНН: [УТОЧНИТЬ]<br>
+                    ОГРН: [УТОЧНИТЬ]<br>
+                    г. Нижний Новгород, ул. Тургенева, 9
+                </p>
+                <div class="footer-social">
+                    <a href="https://vk.com/ooofto" target="_blank" title="ВКонтакте"><i class="fab fa-vk"></i></a>
+                    <a href="https://wa.me/79601786738" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:a20072005@yandex.ru" title="Email"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 ФТО. Все права защищены.</p>
+            <div class="footer-col">
+                <h3>Каталог</h3>
+                <a href="catalog.html?cat=1">Торговые стеллажи</a>
+                <a href="catalog.html?cat=2">Витрины и прилавки</a>
+                <a href="catalog.html?cat=3">Кассовые боксы</a>
+                <a href="catalog.html?cat=4">Кресла и стулья</a>
+            </div>
+            <div class="footer-col">
+                <h3>Компания</h3>
+                <a href="services.html">Услуги</a>
+                <a href="cases.html">Проекты</a>
+                <a href="about.html">О фабрике</a>
+                <a href="delivery.html">Доставка и оплата</a>
+                <a href="contacts.html">Контакты</a>
+            </div>
+            <div class="footer-col">
+                <h3>Контакты</h3>
+                <p><i class="fas fa-phone"></i> <a href="tel:+79601786738">+7 (960) 178-67-38</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:a20072005@yandex.ru">a20072005@yandex.ru</a></p>
+                <p><i class="fas fa-clock"></i> Пн-Пт: 9:00 - 18:00</p>
+                <p><i class="fas fa-map-marker-alt"></i> г. Нижний Новгород, ул. Тургенева, 9</p>
+                <p class="footer-legal"><a href="privacy.html">Политика конфиденциальности</a></p>
+                <p class="footer-legal"><a href="privacy.html#pdn">Согласие на обработку ПДн</a></p>
             </div>
         </div>
-    </footer>
+        <div class="footer-bottom">
+            <p>&copy; 2010-2025 ФТО — Фабрика торгового оборудования. Все права защищены.</p>
+        </div>
+    </div>
+</footer>
 
     <!-- Модальное окно товара -->
     <div id="product-modal" class="modal modal-product">
         <div class="modal-content">
             <span class="modal-close-btn" onclick="closeProductModal()">&times;</span>
             <div class="modal-image-side">
-                <img loading="lazy" decoding="async" id="modal-img" src="" alt="Фото товара">
+                <img id="modal-img" src="" alt="Фото товара">
             </div>
             <div class="modal-info-side">
                 <h2 id="modal-title">Название товара</h2>
@@ -148,7 +168,7 @@
     <!-- Модальное окно корзины -->
     <div id="cart-modal" class="modal">
         <div class="modal-content modal-cart">
-            <span class="close-modal" onclick="CartModule.closeModal()">&times;</span>
+            <span class="close-modal">&times;</span>
             <h2><i class="fas fa-shopping-basket"></i> Ваша корзина</h2>
             <div class="cart-body" id="cart-items-container"></div>
             <div class="cart-footer">
@@ -167,7 +187,7 @@
                     <div class="form-group">
                         <textarea name="address" placeholder="Адрес доставки"></textarea>
                     </div>
-                                        <div class="form-group form-consent">
+                    <div class="form-group form-consent">
                         <label class="consent-label">
                             <input type="checkbox" name="consent" required>
                             <span>Я согласен на обработку персональных данных в соответствии с <a href="privacy.html" target="_blank">Политикой конфиденциальности</a>.</span>
@@ -179,7 +199,6 @@
         </div>
     </div>
 
-    <!-- СКРИПТЫ -->
     <script src="js/config.js" defer></script>
     <script src="js/utils.js" defer></script>
     <script src="js/toast-module.js" defer></script>
@@ -187,6 +206,5 @@
     <script src="js/products-loader.js" defer></script>
     <script src="js/app.js" defer></script>
     <script src="js/header.js" defer></script>
-<!-- typewriter removed in Phase 1 -->
 </body>
 </html>

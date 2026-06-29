@@ -1,7 +1,7 @@
 {
     "name": "fto-backend",
-    "version": "1.0.0",
-    "description": "Backend proxy for FTO website — securely forwards orders/contact messages to Telegram",
+    "version": "2.0.0",
+    "description": "Backend proxy for FTO website — sends form submissions to email via SMTP (Mail.ru)",
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
@@ -11,10 +11,11 @@
         "node": ">=18.0.0"
     },
     "dependencies": {
-        "express": "^4.19.2",
         "cors": "^2.8.5",
         "dotenv": "^16.4.5",
-        "express-rate-limit": "^7.4.0"
+        "express": "^4.19.2",
+        "express-rate-limit": "^7.4.0",
+        "nodemailer": "^6.10.1"
     },
     "license": "MIT"
 }

@@ -1,12 +1,13 @@
 /**
- * app.js - Точка входа (Phase 1 — обновлено)
+ * app.js — Точка входа (Phase 2)
  *
- * Изменения Phase 1:
- * - alert() заменён на ToastModule.show() для всех уведомлений
- * - sendToTelegram() теперь идёт через backend-прокси (/api/send)
- * - Если бэкенд недоступен или токен пустой — честное сообщение об ошибке,
- *   а НЕ ложное «Заказ оформлен!»
- * - Добавлена проверка чекбокса согласия перед отправкой
+ * Изменения:
+ * - Telegram полностью убран (заблокирован в России)
+ * - Уведомления отправляются на email через backend-прокси (nodemailer + SMTP)
+ * - Добавлена поддержка формы расчёта стоимости (lead-calc-form)
+ * - alert() заменён на toast-уведомления
+ * - Закрытие модалок по Escape
+ * - Проверка чекбокса согласия перед отправкой
  */
 document.addEventListener('DOMContentLoaded', () => {
     if (typeof CartModule !== 'undefined') CartModule.init();
@@ -52,16 +53,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Формы
+    // Подключаем все формы
     const contactForm = document.getElementById('contact-form');
     if (contactForm) contactForm.addEventListener('submit', handleContactSubmit);
+
     const orderForm = document.getElementById('order-form');
     if (orderForm) orderForm.addEventListener('submit', handleOrderSubmit);
+
+    const leadForm = document.getElementById('lead-calc-form');
+    if (leadForm) leadForm.addEventListener('submit', handleLeadSubmit);
 });
 
 /**
- * Проверка согласия на обработку ПДн.
- * Возвращает true если чекбокс установлен, иначе показывает toast и возвращает false.
+ * Проверка чекбокса согласия на ПДн.
  */
 function checkConsent(form) {
     const consent = form.querySelector('input[name="consent"]');
@@ -75,27 +79,33 @@ function checkConsent(form) {
     return true;
 }
 
+/**
+ * Форма контактов (contacts.html)
+ */
 async function handleContactSubmit(e) {
     e.preventDefault();
     const form = e.target;
     if (!checkConsent(form)) return;
 
     const data = Object.fromEntries(new FormData(form));
-    const msg = `📩 Заявка с сайта\n👤 ${data.name}\n📞 ${data.phone}\n✉️ ${data.email || '-'}\n💬 ${data.message || '-'}`;
+    const emailBody = buildContactEmail(data);
 
     if (typeof ToastModule !== 'undefined') ToastModule.show('Отправляем сообщение...', 'info');
-    const result = await sendToTelegram(msg);
+    const result = await sendToEmail('📨 Новое сообщение с сайта ФТО', emailBody);
 
     if (result.ok) {
-        if (typeof ToastModule !== 'undefined') ToastModule.show('Сообщение отправлено! Мы свяжемся с вами в ближайшее время.', 'success');
+        if (typeof ToastModule !== 'undefined') ToastModule.show('Сообщение отправлено! Ответим в течение 1 рабочего дня.', 'success');
         form.reset();
     } else {
         if (typeof ToastModule !== 'undefined') {
-            ToastModule.show(`Не удалось отправить: ${result.error}. Позвоните нам +7 (960) 178-67-38`, 'error');
+            ToastModule.show(`Не удалось отправить: ${result.error}. Позвоните +7 (960) 178-67-38`, 'error');
         }
     }
 }
 
+/**
+ * Форма заказа из корзины
+ */
 async function handleOrderSubmit(e) {
     e.preventDefault();
     const form = e.target;
@@ -107,11 +117,10 @@ async function handleOrderSubmit(e) {
     }
 
     const data = Object.fromEntries(new FormData(form));
-    const items = CartModule.getItems().map(i => `▪️ ${i.name} x${i.qty} - ${Utils.formatPrice(i.price*i.qty)}`).join('\n');
-    const msg = `🛒 НОВЫЙ ЗАКАЗ\n👤 ${data.name}\n📞 ${data.phone}\n📍 ${data.address || '-'}\n\n${items}\n💰 Итого: ${Utils.formatPrice(CartModule.getTotal())}`;
+    const emailBody = buildOrderEmail(data, CartModule.getItems(), CartModule.getTotal());
 
     if (typeof ToastModule !== 'undefined') ToastModule.show('Оформляем заказ...', 'info');
-    const result = await sendToTelegram(msg);
+    const result = await sendToEmail('🛒 НОВЫЙ ЗАКАЗ с сайта ФТО', emailBody);
 
     if (result.ok) {
         if (typeof ToastModule !== 'undefined') ToastModule.show('Заказ оформлен! Менеджер свяжется с вами в течение рабочего дня.', 'success');
@@ -126,22 +135,109 @@ async function handleOrderSubmit(e) {
 }
 
 /**
- * Отправка сообщения через backend-прокси (без раскрытия Telegram-токена).
- *
- * Backend endpoint: POST /api/send  body: { text: "..." }
- * Backend читает TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID из env и проксирует запрос.
- *
- * Если backend не настроен (APP_CONFIG.backendUrl пустой) — возвращает честную ошибку,
- * а НЕ отправляет запрос напрямую в Telegram (токен не должен быть в front-end коде).
+ * Форма расчёта стоимости (на главной странице)
  */
-async function sendToTelegram(text) {
+async function handleLeadSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    if (!checkConsent(form)) return;
+
+    const data = Object.fromEntries(new FormData(form));
+    const emailBody = buildLeadEmail(data);
+
+    if (typeof ToastModule !== 'undefined') ToastModule.show('Отправляем заявку...', 'info');
+    const result = await sendToEmail('📋 ЗАЯВКА НА РАСЧЁТ СТОИМОСТИ', emailBody);
+
+    if (result.ok) {
+        if (typeof ToastModule !== 'undefined') ToastModule.show('Заявка отправлена! Технолог свяжется в течение 30 минут.', 'success');
+        form.reset();
+    } else {
+        if (typeof ToastModule !== 'undefined') {
+            ToastModule.show(`Ошибка отправки: ${result.error}. Позвоните +7 (960) 178-67-38`, 'error');
+        }
+    }
+}
+
+// ━━ Шаблоны писем ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+function buildContactEmail(d) {
+    return `
+НОВОЕ СООБЩЕНИЕ С САЙТА ФТО
+============================
+
+Имя: ${d.name || '-'}
+Телефон: ${d.phone || '-'}
+Email: ${d.email || '-'}
+
+Сообщение:
+${d.message || '-'}
+
+-------------------
+Отправлено: ${new Date().toLocaleString('ru-RU')}
+Страница: contacts.html
+`.trim();
+}
+
+function buildOrderEmail(d, items, total) {
+    const itemsList = items.map(i =>
+        `  • ${i.name} × ${i.qty} = ${Utils.formatPrice(i.price * i.qty)}`
+    ).join('\n');
+    return `
+НОВЫЙ ЗАКАЗ С САЙТА ФТО
+========================
+
+Имя: ${d.name || '-'}
+Телефон: ${d.phone || '-'}
+Адрес доставки: ${d.address || '-'}
+
+ТОВАРЫ:
+${itemsList}
+
+ИТОГО: ${Utils.formatPrice(total)}
+
+-------------------
+Отправлено: ${new Date().toLocaleString('ru-RU')}
+Страница: заказ из корзины
+`.trim();
+}
+
+function buildLeadEmail(d) {
+    return `
+ЗАЯВКА НА РАСЧЁТ СТОИМОСТИ
+==========================
+
+Имя: ${d.name || '-'}
+Телефон: ${d.phone || '-'}
+Email: ${d.email || '-'}
+
+Тип объекта: ${d.object_type || '-'}
+Площадь: ${d.area ? d.area + ' м²' : 'не указана'}
+Город: ${d.city || '-'}
+
+Комментарий:
+${d.comment || '-'}
+
+-------------------
+Отправлено: ${new Date().toLocaleString('ru-RU')}
+Страница: главная (форма расчёта)
+`.trim();
+}
+
+// ━━ Отправка через backend (email) ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+/**
+ * Отправка email через backend-прокси.
+ *
+ * Backend endpoint: POST /api/send  body: { subject, text }
+ * Backend использует nodemailer + SMTP Mail.ru для отправки на alfat@list.ru.
+ */
+async function sendToEmail(subject, text) {
     const backendUrl = (typeof APP_CONFIG !== 'undefined' && APP_CONFIG.backend && APP_CONFIG.backend.url)
         ? APP_CONFIG.backend.url
         : '';
 
-    // Если backend не настроен — честная ошибка, никаких ложных «Заказ оформлен!»
     if (!backendUrl) {
-        console.warn('[FTO] Backend URL не настроен в APP_CONFIG.backend.url. Заказ не отправлен.');
+        console.warn('[FTO] Backend URL не настроен в APP_CONFIG.backend.url. Письмо не отправлено.');
         return {
             ok: false,
             error: 'форма обратной связи не настроена'
@@ -152,7 +248,7 @@ async function sendToTelegram(text) {
         const resp = await fetch(`${backendUrl}/api/send`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text })
+            body: JSON.stringify({ subject, text })
         });
         if (!resp.ok) {
             const errData = await resp.json().catch(() => ({}));

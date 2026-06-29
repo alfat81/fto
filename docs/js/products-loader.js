@@ -14,7 +14,7 @@ const ProductsLoader = (function() {
     async function loadCatalog() {
         const container = document.getElementById('catalog-grid');
         const filtersContainer = document.getElementById('catalog-filters');
-        
+
         if (!container) return;
 
         try {
@@ -26,10 +26,8 @@ const ProductsLoader = (function() {
 
             allProducts = [];
 
-            // ==========================================
-            // ПАРАЛЛЕЛЬНАЯ ЗАГРУЗКА (Быстро!)
-            // ==========================================
-            const fetchPromises = files.map(file => 
+            // Параллельная загрузка всех JSON
+            const fetchPromises = files.map(file =>
                 fetch(`data/products/${file}`)
                     .then(resp => resp.ok ? resp.json() : null)
                     .catch(() => null)
@@ -40,7 +38,7 @@ const ProductsLoader = (function() {
 
             // Если нет даты в JSON, добавим индекс как прокси даты
             allProducts.forEach((p, index) => {
-                if (!p.dateAdded) p.dateAdded = index; 
+                if (!p.dateAdded) p.dateAdded = index;
             });
 
             if (allProducts.length === 0) {
@@ -48,10 +46,26 @@ const ProductsLoader = (function() {
                 return;
             }
 
+            // Обработка URL-параметров: ?cat=N (категория) и ?search=запрос
+            const urlParams = new URLSearchParams(window.location.search);
+            const catParam = urlParams.get('cat');
+            const searchParam = urlParams.get('search');
+            if (catParam !== null) {
+                setCategory(catParam === '0' || catParam === 'all' ? 'all' : catParam);
+            }
+            if (searchParam) {
+                state.search = searchParam.trim().toLowerCase();
+                // Отобразить в инпуте поиска, если он есть
+                const searchInput = document.getElementById('site-search-input');
+                if (searchInput) searchInput.value = searchParam;
+            } else {
+                state.search = '';
+            }
+
             // 1. Рендерим кнопки категорий
             if (filtersContainer) renderCategoryFilters(filtersContainer);
 
-            // 2. Инициализируем события инпутов (Цена/Сортировка)
+            // 2. Инициализируем события инпутов (Цена/Сортировка/Поиск)
             initAdvancedFilters();
 
             // 3. Применяем начальные фильтры
@@ -63,13 +77,22 @@ const ProductsLoader = (function() {
         }
     }
 
-    // --- Инициализация событий инпутов (Цена и Сортировка) ---
+    // --- Инициализация событий инпутов (Цена, Сортировка, Поиск) ---
     function initAdvancedFilters() {
         const minInput = document.getElementById('min-price');
         const maxInput = document.getElementById('max-price');
         const sortSelect = document.getElementById('sort-date');
+        const searchInput = document.getElementById('catalog-search');
 
-        // Слушаем ввод цены "От"
+        // Поиск (на странице каталога)
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                state.search = e.target.value.trim().toLowerCase();
+                applyFilters();
+            });
+        }
+
+        // Цена "От"
         if (minInput) {
             minInput.addEventListener('input', (e) => {
                 state.minPrice = e.target.value ? Number(e.target.value) : null;
@@ -77,7 +100,7 @@ const ProductsLoader = (function() {
             });
         }
 
-        // Слушаем ввод цены "До"
+        // Цена "До"
         if (maxInput) {
             maxInput.addEventListener('input', (e) => {
                 state.maxPrice = e.target.value ? Number(e.target.value) : null;
@@ -85,7 +108,7 @@ const ProductsLoader = (function() {
             });
         }
 
-        // Слушаем сортировку
+        // Сортировка
         if (sortSelect) {
             sortSelect.addEventListener('change', (e) => {
                 state.sortBy = e.target.value;
@@ -103,7 +126,16 @@ const ProductsLoader = (function() {
             filtered = filtered.filter(p => p.category == state.category);
         }
 
-        // 2. Фильтр по Цене
+        // 2. Фильтр по Поиску (по названию и описанию)
+        if (state.search) {
+            const q = state.search.toLowerCase();
+            filtered = filtered.filter(p =>
+                (p.name && p.name.toLowerCase().includes(q)) ||
+                (p.description && p.description.toLowerCase().includes(q))
+            );
+        }
+
+        // 3. Фильтр по Цене
         if (state.minPrice !== null) {
             filtered = filtered.filter(p => p.price >= state.minPrice);
         }
@@ -111,17 +143,21 @@ const ProductsLoader = (function() {
             filtered = filtered.filter(p => p.price <= state.maxPrice);
         }
 
-        // 3. Сортировка по Дате
+        // 4. Сортировка по Дате
         filtered.sort((a, b) => {
             if (state.sortBy === 'new') {
-                return b.dateAdded - a.dateAdded; // Новые (больший индекс) сверху
+                return b.dateAdded - a.dateAdded;
             } else {
-                return a.dateAdded - b.dateAdded; // Старые (меньший индекс) сверху
+                return a.dateAdded - b.dateAdded;
             }
         });
 
         // Рендерим результат
         renderProducts(filtered, document.getElementById('catalog-grid'));
+
+        // Обновляем счётчик
+        const counter = document.getElementById('catalog-count');
+        if (counter) counter.textContent = filtered.length;
     }
 
     // --- Рендер карточек (ИСПРАВЛЕНО: добавлены Цена и Название) ---
