@@ -186,3 +186,61 @@
 - [ ] Backend задеплоен, `/api/health` возвращает `{"ok":true}`
 - [ ] После указания `backend.url` в config.js — форма заказа отправляет сообщение в Telegram
 - [ ] При незаполненном backend.url форма показывает честную ошибку, а НЕ «Заказ оформлен!»
+
+---
+
+## 🔧 Hotfix (29 июня 2025)
+
+После тестирования Phase 1 пользователем обнаружены и исправлены 2 проблемы:
+
+### Fix 1: Дублирующий чекбокс согласия на ПДн
+**Симптом:** На странице «Контакты» в форме обратной связи отображалось 2 одинаковых чекбокса согласия.
+
+**Причина:** Скрипт `update_html.py` вызывал `add_consent_to_form()` дважды (один раз для `order-form`, второй для `contact-form`), но `regex` с `count=1` находил первую же `<button type="submit">` в каждой форме, и в `contacts.html` (где обе формы присутствуют) оба вызова вставляли чекбокс перед одной и той же кнопкой `contact-form`.
+
+**Исправление:**
+- `scripts/fix_duplicate_consent.py` — находит подряд идущие дубликаты `.form-consent` блоков и оставляет только один
+- `scripts/add_order_form_consent.py` — добавляет чекбокс обратно в `order-form` (cart-modal) на `contacts.html` (предыдущий скрипт случайно удалил его)
+
+**Финальное состояние (по 1 чекбоксу на форму):**
+| Страница | Чекбоксов | Где |
+|----------|-----------|-----|
+| index.html | 1 | в order-form (cart-modal) |
+| catalog.html | 1 | в order-form (cart-modal) |
+| about.html | 1 | в order-form (cart-modal) |
+| contacts.html | 2 | в contact-form + в order-form (cart-modal) |
+| privacy.html | 1 | в order-form (cart-modal) |
+
+### Fix 2: При клике на «Все товары» товары пропадали
+**Симптом:** В каталоге при нажатии на кнопку «Все товары» все товары исчезали, оставался пустой экран с надписью «Ничего не найдено».
+
+**Причина:** Логический баг в `products-loader.js`:
+- Начальное состояние: `state.category = 'all'` (строка) — работает корректно
+- При клике на «Все товары» вызывается `setCategory(0)` (число 0, потому что в `renderCategoryFilters` категория 0 = «Все товары»)
+- `state.category = 0` (число)
+- В `applyFilters`: `if (state.category !== 'all')` → `0 !== 'all'` → true → фильтр срабатывает
+- `filtered.filter(p => p.category == 0)` — все товары с `category: 4` отфильтровываются, каталог пустой
+
+**Дополнительно:** кнопка «Все товары» появлялась только если в каталоге были товары без поля `category` (тогда `p.category || 0` = 0). После Phase 1 все 20 товаров имеют `category: 4`, поэтому кнопка вообще не отображалась — это плохо UX.
+
+**Исправление (в `docs/js/products-loader.js`):**
+
+1. `setCategory(catId)` теперь явно нормализует 0 → 'all':
+```js
+window.setCategory = function(catId) {
+    state.category = (catId == 0 || catId === 'all') ? 'all' : catId;
+    ...
+};
+```
+
+2. `renderCategoryFilters()` теперь ВСЕГДА отображает кнопку «Все товары» первой, плюс кнопки реальных категорий с количеством товаров:
+```js
+// Кнопка "Все товары" — всегда первая
+html += `<button ... onclick="ProductsLoader.setCategory(0)">Все товары</button>`;
+// Кнопки реальных категорий с count
+html += `<button ...>${name} <span>(${count})</span></button>`;
+```
+
+3. Категории с пустым/undefined полем `category` больше не попадают в `categories` (раньше `p.category || 0` превращал undefined в 0, что создавало ложную категорию «Все товары»).
+
+**Проверка:** Simulation-тест на Python подтвердил, что логика работает корректно для всех сценариев: `setCategory(0)`, `setCategory(4)`, `setCategory('all')` — во всех случаях показывается правильное количество товаров (20).

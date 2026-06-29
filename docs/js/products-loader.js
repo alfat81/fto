@@ -157,28 +157,38 @@ const ProductsLoader = (function() {
     }
 
     // --- Рендер кнопок категорий ---
+    // Кнопка "Все товары" (catId=0) ВСЕГДА отображается первой, далее — реальные
+    // категории, встречающиеся в каталоге. Это стандартное UX-поведение.
     function renderCategoryFilters(container) {
+        // Собираем категории, встречающиеся в товарах (пропускаем пустые)
         const categories = {};
         allProducts.forEach(p => {
-            const cat = p.category || 0;
+            const cat = p.category;
+            if (cat === undefined || cat === null || cat === '') return;
             if (!categories[cat]) categories[cat] = 0;
             categories[cat]++;
         });
 
-        const categoryNames = { 
-            0: 'Все товары', 
-            1: 'Торговое оборудование', 
-            2: 'Складское оборудование', 
-            3: 'Армейская мебель', 
-            4: 'Кресла и стулья' 
+        const categoryNames = {
+            0: 'Все товары',
+            1: 'Торговое оборудование',
+            2: 'Складское оборудование',
+            3: 'Армейская мебель',
+            4: 'Кресла и стулья'
         };
 
         let html = '<div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">';
 
-        Object.keys(categories).sort().forEach(catId => {
-            const isActive = catId == state.category ? 'btn-primary' : '';
+        // 1) Кнопка "Все товары" — всегда первая, активна когда state.category === 'all'
+        const allActive = state.category === 'all' ? 'btn-primary' : '';
+        html += `<button class="btn ${allActive}" style="background: ${allActive ? '' : 'white'}; color: ${allActive ? 'white' : 'black'}; border:1px solid #ddd;" onclick="ProductsLoader.setCategory(0)">Все товары</button>`;
+
+        // 2) Кнопки реальных категорий (отсортированы по id)
+        Object.keys(categories).sort((a, b) => Number(a) - Number(b)).forEach(catId => {
+            const isActive = (catId == state.category) ? 'btn-primary' : '';
             const name = categoryNames[catId] || `Раздел ${catId}`;
-            html += `<button class="btn ${isActive}" style="background: ${isActive ? '' : 'white'}; color: ${isActive ? 'white' : 'black'}; border:1px solid #ddd;" onclick="ProductsLoader.setCategory(${catId})">${name}</button>`;
+            const count = categories[catId];
+            html += `<button class="btn ${isActive}" style="background: ${isActive ? '' : 'white'}; color: ${isActive ? 'white' : 'black'}; border:1px solid #ddd;" onclick="ProductsLoader.setCategory(${catId})">${name} <span style="opacity:0.6; font-size:0.85em;">(${count})</span></button>`;
         });
         html += '</div>';
         container.innerHTML = html;
@@ -187,8 +197,9 @@ const ProductsLoader = (function() {
     // --- Публичные методы ---
     
     // Смена категории (вызывается из HTML onclick)
+    // catId = 0 означает "Все товары" — internally храним как 'all'
     window.setCategory = function(catId) {
-        state.category = catId;
+        state.category = (catId == 0 || catId === 'all') ? 'all' : catId;
         // Обновляем визуально кнопки
         const container = document.getElementById('catalog-filters');
         if (container) renderCategoryFilters(container);
